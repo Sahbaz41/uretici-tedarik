@@ -1,0 +1,7 @@
+{
+  "name": "Üretici Tedarik Teknik Plastik Polimer Metal Ltd. Şti.®",
+  "description": "Mühendislik plastikleri imalatı ve ithalatı, 3 & 5 eksen CNC işleme, kayar otomat ve savunma sanayi üretimi. ‘Siz İsteyin Biz Üretelim’.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
