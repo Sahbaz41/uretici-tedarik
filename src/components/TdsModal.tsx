@@ -12,19 +12,24 @@ import {
 } from 'lucide-react';
 import { PRODUCTS } from '../data/materials';
 
+import { Language, TRANSLATIONS } from '../data/translations';
+
 interface TdsModalProps {
   productId: string | null;
   onClose: () => void;
   onRequestQuote: (productId: string) => void;
+  language?: Language;
 }
 
 export const TdsModal: React.FC<TdsModalProps> = ({
   productId,
   onClose,
   onRequestQuote,
+  language = 'tr',
 }) => {
   if (!productId) return null;
 
+  const t = TRANSLATIONS[language].productModal;
   const product = PRODUCTS.find((p) => p.id === productId) || PRODUCTS[0];
 
   const handleDownloadStep = () => {
@@ -69,7 +74,7 @@ END-ISO-10303-21;`;
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#282a2f] text-[#4cd7f6] font-bold">
+                <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#282a2f] text-[#38bdf8] font-bold">
                   {product.code}
                 </span>
                 <span className="text-xs text-[#8d90a0]">
@@ -77,14 +82,15 @@ END-ISO-10303-21;`;
                 </span>
               </div>
               <h3 className="font-display text-lg font-bold text-[#e2e2e9] mt-0.5">
-                {product.name} — Teknik Şartname & Föy
+                {product.name} — {t.specsTitle}
               </h3>
             </div>
           </div>
           <button
             id="tds-modal-close-btn"
             onClick={onClose}
-            className="w-8 h-8 rounded-lg bg-[#282a2f] hover:bg-[#33353a] text-[#c3c6d7] flex items-center justify-center transition-colors"
+            title={t.close}
+            className="w-8 h-8 rounded-lg bg-[#282a2f] hover:bg-[#33353a] text-[#c3c6d7] flex items-center justify-center transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -103,7 +109,7 @@ END-ISO-10303-21;`;
                 />
               </div>
             ) : (
-              <div className="h-32 rounded-lg bg-[#1e1f25] flex items-center justify-center text-[#4cd7f6]">
+              <div className="h-32 rounded-lg bg-[#1e1f25] flex items-center justify-center text-[#38bdf8]">
                 <Layers className="w-12 h-12 opacity-50" />
               </div>
             )}
@@ -114,21 +120,21 @@ END-ISO-10303-21;`;
                 </p>
                 <div className="flex flex-wrap gap-2 mt-3 font-mono text-[11px]">
                   <span className="px-2 py-1 rounded bg-[#282a2f] text-[#e2e2e9]">
-                    Yoğunluk: {product.density} g/cm³
+                    {t.density}: {product.density} g/cm³
                   </span>
                   <span className="px-2 py-1 rounded bg-[#282a2f] text-[#ffb77d]">
-                    Sıcaklık: {product.workingTemp}
+                    {t.temperature}: {product.workingTemp}
                   </span>
                   {product.hardness && (
-                    <span className="px-2 py-1 rounded bg-[#282a2f] text-[#4cd7f6]">
-                      Sertlik: {product.hardness}
+                    <span className="px-2 py-1 rounded bg-[#282a2f] text-[#38bdf8]">
+                      {t.hardness}: {product.hardness}
                     </span>
                   )}
                 </div>
               </div>
-              <div className="flex items-center gap-2 mt-3 text-xs text-[#4cd7f6] font-mono">
-                <CheckCircle2 className="w-4 h-4" />
-                <span>Çayırova depomuzda hazır kesim stoğu mevcuttur.</span>
+              <div className="flex items-center gap-2 mt-3 text-xs text-[#38bdf8] font-mono">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                <span>{t.stockReady}</span>
               </div>
             </div>
           </div>
@@ -136,7 +142,7 @@ END-ISO-10303-21;`;
           {/* Parametrik Teknik Özellikler Tablosu */}
           <div>
             <h4 className="font-display font-bold text-sm text-[#e2e2e9] mb-2 uppercase tracking-wider font-mono text-[11px]">
-              Fiziksel ve Mekanik Değerler
+              {t.physicalMechanical}
             </h4>
             <div className="rounded-xl border border-[#434655]/30 overflow-hidden">
               <table className="w-full text-left font-mono text-xs">
@@ -158,7 +164,7 @@ END-ISO-10303-21;`;
                   ))}
                   <tr className="bg-[#1a1b21]">
                     <td className="p-3 text-[#c3c6d7] font-medium border-b border-[#434655]/20">
-                      Standardizasyon / DIN Normu
+                      {t.standardization}
                     </td>
                     <td className="p-3 text-[#b4c5ff] font-bold border-b border-[#434655]/20">
                       {product.dinNorm || 'DIN EN ISO / ASTM'}
@@ -166,10 +172,10 @@ END-ISO-10303-21;`;
                   </tr>
                   <tr className="bg-[#1e1f25]">
                     <td className="p-3 text-[#c3c6d7] font-medium">
-                      Menşei & Sertifikasyon
+                      {t.origin}
                     </td>
                     <td className="p-3 text-[#e2e2e9] font-bold">
-                      AB / Yerli Üretim (EN 10204 3.1 Sertifikalı)
+                      {language === 'tr' ? 'AB / Yerli Üretim (EN 10204 3.1 Sertifikalı)' : 'EU / Certified Domestic Production (EN 10204 3.1)'}
                     </td>
                   </tr>
                 </tbody>
@@ -180,39 +186,39 @@ END-ISO-10303-21;`;
           {/* Kimyasal ve Çevresel Direnç Çizelgesi */}
           <div>
             <h4 className="font-display font-bold text-sm text-[#e2e2e9] mb-2 uppercase tracking-wider font-mono text-[11px]">
-              Kimyasal ve Ortam Dayanım Özeti
+              {t.chemicalResistance}
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-xs">
               <div className="p-2.5 rounded-lg bg-[#1a1b21] border border-[#434655]/25">
                 <span className="text-[#8d90a0] block text-[10px]">
-                  Asit / Asidik Ortam
+                  {t.acidResistance}
                 </span>
-                <span className="font-bold text-[#4cd7f6] mt-0.5 block">
-                  Üstün Dayanım
-                </span>
-              </div>
-              <div className="p-2.5 rounded-lg bg-[#1a1b21] border border-[#434655]/25">
-                <span className="text-[#8d90a0] block text-[10px]">
-                  Baz / Alkali
-                </span>
-                <span className="font-bold text-[#4cd7f6] mt-0.5 block">
-                  Tam Direnç
+                <span className="font-bold text-[#38bdf8] mt-0.5 block">
+                  {language === 'tr' ? 'Üstün Dayanım' : 'High Resistance'}
                 </span>
               </div>
               <div className="p-2.5 rounded-lg bg-[#1a1b21] border border-[#434655]/25">
                 <span className="text-[#8d90a0] block text-[10px]">
-                  Aşınma & Sürtünme
+                  {t.alkaliResistance}
+                </span>
+                <span className="font-bold text-[#38bdf8] mt-0.5 block">
+                  {language === 'tr' ? 'Tam Direnç' : 'Full Resistance'}
+                </span>
+              </div>
+              <div className="p-2.5 rounded-lg bg-[#1a1b21] border border-[#434655]/25">
+                <span className="text-[#8d90a0] block text-[10px]">
+                  {t.wearFriction}
                 </span>
                 <span className="font-bold text-[#b4c5ff] mt-0.5 block">
-                  Sıfır Aşınma
+                  {language === 'tr' ? 'Sıfır Aşınma' : 'Ultra Low Wear'}
                 </span>
               </div>
               <div className="p-2.5 rounded-lg bg-[#1a1b21] border border-[#434655]/25">
                 <span className="text-[#8d90a0] block text-[10px]">
-                  Gıda Teması (FDA)
+                  {t.fdaCompliance}
                 </span>
                 <span className="font-bold text-[#ffb77d] mt-0.5 block">
-                  Uyumlu
+                  {language === 'tr' ? 'Uyumlu' : 'Compliant'}
                 </span>
               </div>
             </div>
@@ -226,8 +232,8 @@ END-ISO-10303-21;`;
             onClick={handleDownloadStep}
             className="h-11 px-4 rounded-lg bg-[#282a2f] hover:bg-[#33353a] text-[#e2e2e9] text-xs font-semibold flex items-center gap-2 border border-[#434655]/40 transition-colors cursor-pointer"
           >
-            <Download className="w-4 h-4 text-[#4cd7f6]" />
-            <span>3D STEP / CAD Çizimini İndir</span>
+            <Download className="w-4 h-4 text-[#38bdf8]" />
+            <span>{t.downloadCad}</span>
           </button>
 
           <button
@@ -239,7 +245,7 @@ END-ISO-10303-21;`;
             className="h-11 px-5 rounded-lg bg-[#2563eb] text-[#eeefff] text-xs font-semibold flex items-center gap-2 shadow-md hover:bg-[#0053db] transition-all cursor-pointer"
           >
             <Send className="w-4 h-4" />
-            <span>Bu Malzemeden Teklif İste</span>
+            <span>{t.requestQuote}</span>
           </button>
         </div>
       </div>

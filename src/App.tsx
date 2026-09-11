@@ -23,9 +23,11 @@ import { OfflineIndicator } from './components/OfflineIndicator';
 import { FadeIn } from './components/FadeIn';
 import { CurrencyCode, RfqCartItem } from './types';
 import { useLiveCurrency } from './hooks/useLiveCurrency';
+import { Language } from './data/translations';
 
 export default function App() {
   const [currency, setCurrency] = useState<CurrencyCode>('USD');
+  const [language, setLanguage] = useState<Language>('tr');
   const {
     rates: liveRates,
     isLoading: isLoadingRates,
@@ -132,6 +134,8 @@ export default function App() {
           rates={liveRates}
           isLoadingRates={isLoadingRates}
           onRefreshRates={refreshRates}
+          language={language}
+          onLanguageChange={setLanguage}
         />
         <Header
           cartCount={cartItems.length}
@@ -140,6 +144,8 @@ export default function App() {
           onOpenCatalog={() => setIsCatalogOpen(true)}
           onOpenContact={() => setIsContactOpen(true)}
           onSelectCategoryFilter={handleCategoryClick}
+          onOpenTds={(id) => setTdsProductId(id)}
+          language={language}
         />
       </header>
 
@@ -253,6 +259,7 @@ export default function App() {
         productId={tdsProductId}
         onClose={() => setTdsProductId(null)}
         onRequestQuote={handleSelectProductForRfq}
+        language={language}
       />
 
       <CatalogModal
