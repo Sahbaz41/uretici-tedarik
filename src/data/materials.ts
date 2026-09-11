@@ -343,8 +343,7 @@ export const PRODUCTS: ProductItem[] = [
     categoryId: 'muhendislik-plastikleri',
     description:
       'Sarı ve natürel döküm polyamid. Yüksek mekanik dayanım, darbe sönümleme ve bronz/çelik yerine mükemmel aşınma performansı sunan temel imalat polimeri.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/kestamit-pa6g.jpg',
     badge: 'DÖKÜM PA6G',
     badgeType: 'primary',
     secondaryBadge: 'Sarı / Natürel',
@@ -370,8 +369,7 @@ export const PRODUCTS: ProductItem[] = [
     categoryId: 'muhendislik-plastikleri',
     description:
       'Beyaz ve siyah teknik asetal polimer. Suda ve nemli ortamlarda genleşmez; hassas CNC torna ve freze işleme toleranslarında sektör lideri.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    imageUrl: '/images/pom-c-delrin.jpg',
     badge: 'HASSAS TOLERANS',
     badgeType: 'tertiary',
     secondaryBadge: 'Beyaz & Siyah',
