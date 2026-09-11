@@ -1,0 +1,54 @@
+{
+  "name": "Üretici Tedarik Teknik Plastik Polimer Metal Ltd. Şti.®",
+  "short_name": "Üretici Tedarik",
+  "description": "Mühendislik plastikleri imalatı ve ithalatı, 3 & 5 eksen CNC işleme, kayar otomat ve savunma sanayi üretimi. ‘Siz İsteyin Biz Üretelim’.",
+  "start_url": "/",
+  "id": "/",
+  "display": "standalone",
+  "background_color": "#111318",
+  "theme_color": "#0c0e13",
+  "orientation": "portrait-primary",
+  "lang": "tr",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Hızlı RFQ Teklif Formu",
+      "short_name": "Teklif Al",
+      "url": "/#rfq-formu",
+      "description": "Mühendislik polimeri ve metal fiyat teklifi hesaplayıcı"
+    },
+    {
+      "name": "2025 Teknik Katalog",
+      "short_name": "Katalog",
+      "url": "/#katalog",
+      "description": "42 Sayfalık 2025 Teknik Ürün Kataloğu"
+    },
+    {
+      "name": "Teknik SSS & Bilgi Bankası",
+      "short_name": "SSS Rehberi",
+      "url": "/#teknik-bilgi-ve-sss",
+      "description": "Malzeme seçim kılavuzu ve teknik toleranslar"
+    }
+  ]
+}

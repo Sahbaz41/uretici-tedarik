@@ -8,3 +8,18 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 );
+
+// PWA Service Worker Kaydı
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/sw.js')
+      .then((reg) => {
+        console.log('PWA Service Worker aktif:', reg.scope);
+      })
+      .catch((err) => {
+        console.log('PWA Service Worker kaydı notu:', err);
+      });
+  });
+}
+

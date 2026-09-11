@@ -1,3 +1,5 @@
+export type CurrencyCode = 'USD' | 'TRY' | 'EUR';
+
 export interface MaterialCategory {
   id: string;
   number: string;

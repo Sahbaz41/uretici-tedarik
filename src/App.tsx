@@ -15,11 +15,20 @@ import { CatalogModal } from './components/CatalogModal';
 import { MaterialShortcutFab } from './components/MaterialShortcutFab';
 import { FaqSection } from './components/FaqSection';
 import { LegalModal, LegalDocType } from './components/LegalModal';
-import { RfqCartItem } from './types';
-
+import { PwaInstallPrompt } from './components/PwaInstallPrompt';
+import { OfflineIndicator } from './components/OfflineIndicator';
+import { FadeIn } from './components/FadeIn';
+import { CurrencyCode, RfqCartItem } from './types';
+import { useLiveCurrency } from './hooks/useLiveCurrency';
 
 export default function App() {
-  const [currency, setCurrency] = useState<'USD' | 'TRY' | 'EUR'>('USD');
+  const [currency, setCurrency] = useState<CurrencyCode>('USD');
+  const {
+    rates: liveRates,
+    isLoading: isLoadingRates,
+    refresh: refreshRates,
+  } = useLiveCurrency();
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [activeRfqProduct, setActiveRfqProduct] = useState<string>('pe-1000-levha');
   const [cartItems, setCartItems] = useState<RfqCartItem[]>([
@@ -107,11 +116,14 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#111318] text-[#e2e2e9] selection:bg-[#2563eb] selection:text-white font-sans antialiased">
-      {/* 1. Üst Bilgi Çubuğu */}
+    <div className="min-h-screen flex flex-col bg-[#0b0d13] text-[#e2e2e9] selection:bg-[#2563eb] selection:text-white font-sans antialiased overflow-x-hidden w-full max-w-full relative">
+      {/* 1. Üst Bilgi Çubuğu (Canlı Döviz Ticker'ı ile) */}
       <TopBar
         selectedCurrency={currency}
         onCurrencyChange={setCurrency}
+        rates={liveRates}
+        isLoadingRates={isLoadingRates}
+        onRefreshRates={refreshRates}
       />
 
       {/* 2. Ana Navigasyon Başlığı */}
@@ -124,8 +136,8 @@ export default function App() {
       />
 
       {/* 3. Ana İçerik */}
-      <main className="flex-1 flex flex-col">
-        {/* Hero Alanı & Öne Çıkan Polimer Specimen Kartı */}
+      <main className="flex-1 flex flex-col w-full max-w-full overflow-x-hidden">
+        {/* Hero Alanı & Öne Çıkan İnteraktif Malzeme İstasyonu */}
         <HeroSection
           onOpenRfq={() => {
             const rfqElement = document.getElementById('rfq-formu');
@@ -139,63 +151,76 @@ export default function App() {
         />
 
         {/* Endüstriyel Kategoriler Izgarası (10 Grup) */}
-        <CategoriesSection
-          selectedCategory={selectedCategory}
-          onSelectCategory={handleCategoryClick}
-          onNavigateToRfq={(catId) => {
-            setSelectedCategory(catId);
-            const elem = document.getElementById('urunler-bolumu');
-            if (elem) {
-              elem.scrollIntoView({ behavior: 'smooth' });
-            }
-          }}
-        />
+        <FadeIn>
+          <CategoriesSection
+            selectedCategory={selectedCategory}
+            onSelectCategory={handleCategoryClick}
+            onNavigateToRfq={(catId) => {
+              setSelectedCategory(catId);
+              const elem = document.getElementById('urunler-bolumu');
+              if (elem) {
+                elem.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          />
+        </FadeIn>
 
         {/* Çok Satan Ürünler Izgarası */}
-        <ProductsSection
-          selectedCategory={selectedCategory}
-          onClearFilter={() => setSelectedCategory(null)}
-          onSelectProductForRfq={handleSelectProductForRfq}
-          onOpenTds={(id) => setTdsProductId(id)}
-          currency={currency}
-        />
+        <FadeIn>
+          <ProductsSection
+            selectedCategory={selectedCategory}
+            onClearFilter={() => setSelectedCategory(null)}
+            onSelectProductForRfq={handleSelectProductForRfq}
+            onOpenTds={(id) => setTdsProductId(id)}
+            currency={currency}
+          />
+        </FadeIn>
 
         {/* Kurumsal Hikaye & Hızlı RFQ Hesaplayıcı Formu (İkili Kolon) */}
-        <section className="w-full py-16 lg:py-24 bg-[#111318]">
-          <div className="w-full px-4 sm:px-6 mx-auto max-w-[90rem]">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-              {/* Sol: Kurumsal Kimlik & Avantajlar (6 Sütun) */}
-              <div className="lg:col-span-6">
-                <CorporateSection />
-              </div>
+        <FadeIn>
+          <section className="w-full py-16 lg:py-24 bg-[#08090d]">
+            <div className="w-full px-4 sm:px-6 mx-auto max-w-[90rem]">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                {/* Sol: Kurumsal Kimlik & Avantajlar (6 Sütun) */}
+                <div className="lg:col-span-6">
+                  <CorporateSection />
+                </div>
 
-              {/* Sağ: Teknik Teklif & RFQ Hesaplayıcı (6 Sütun) */}
-              <div className="lg:col-span-6">
-                <RfqSection
-                  initialProductId={activeRfqProduct}
-                  onAddToCart={handleAddToCart}
-                  currency={currency}
-                />
+                {/* Sağ: Teknik Teklif & RFQ Hesaplayıcı (6 Sütun) */}
+                <div className="lg:col-span-6">
+                  <RfqSection
+                    initialProductId={activeRfqProduct}
+                    onAddToCart={handleAddToCart}
+                    currency={currency}
+                    liveRates={liveRates}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </FadeIn>
 
         {/* Hizmet Verilen Ağır Sanayi Kolları & Uzman Destek Şeridi */}
-        <SectorsSection />
+        <FadeIn>
+          <SectorsSection />
+        </FadeIn>
 
-        {/* 4. Yapay Zeka Destekli Malzeme Seçim & Sıkça Sorulan Teknik Sorular (AEO) */}
-        <FaqSection onSelectProductForRfq={handleSelectProductForRfq} />
+        {/* Yapay Zeka Destekli Malzeme Seçim & Sıkça Sorulan Teknik Sorular (AEO) */}
+        <FadeIn>
+          <FaqSection onSelectProductForRfq={handleSelectProductForRfq} />
+        </FadeIn>
       </main>
 
-      {/* 5. Kurumsal Alt Bilgi (Footer) */}
-      <Footer
-        onSelectCategoryFilter={handleCategoryClick}
-        onOpenCatalog={() => setIsCatalogOpen(true)}
-        onOpenLegal={(tab) => setLegalModalTab(tab)}
-      />
+      {/* 4. Kurumsal Alt Bilgi (Footer) */}
+      <FadeIn yOffset={16}>
+        <Footer
+          onSelectCategoryFilter={handleCategoryClick}
+          onOpenCatalog={() => setIsCatalogOpen(true)}
+          onOpenLegal={(tab) => setLegalModalTab(tab)}
+        />
+      </FadeIn>
 
-      {/* 6. Modallar ve Drawer'lar */}
+      {/* 5. Modallar ve Drawer'lar */}
       <RfqDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
@@ -233,6 +258,10 @@ export default function App() {
         initialTab={legalModalTab || 'kvkk'}
       />
 
+      {/* 6. PWA Kurulum & Çevrimdışı Bildirimi */}
+      <PwaInstallPrompt />
+      <OfflineIndicator />
+
       {/* 7. Hızlı Malzeme Seçici Yüzen Eylem Çubuğu (FAB / Shortcut Menu) */}
       <MaterialShortcutFab
         selectedCategory={selectedCategory}
@@ -242,4 +271,3 @@ export default function App() {
     </div>
   );
 }
-

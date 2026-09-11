@@ -51,46 +51,27 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
     }
   };
 
-  const getAccentColor = (colorType: string) => {
-    switch (colorType) {
-      case 'primary':
-        return 'text-[#b4c5ff] hover:border-[#2563eb]/60';
-      case 'tertiary':
-        return 'text-[#4cd7f6] hover:border-[#4cd7f6]/60';
-      case 'secondary':
-        return 'text-[#ffb77d] hover:border-[#d97707]/60';
-      case 'surface-tint':
-        return 'text-[#b4c5ff] hover:border-[#b4c5ff]/60';
-      case 'error':
-        return 'text-[#ffb4ab] hover:border-[#93000a]/60';
-      default:
-        return 'text-[#b4c5ff] hover:border-[#2563eb]/60';
-    }
-  };
-
   return (
     <section
       id="katalog-bolumu"
-      className="w-full bg-[#0c0e13]/60 border-y border-[#434655]/30 py-16 lg:py-20"
+      className="w-full bg-[#08090d]/80 border-y border-[#434655]/30 py-16 lg:py-20 relative"
     >
       <div className="w-full px-4 sm:px-6 mx-auto max-w-[90rem] flex flex-col gap-10">
         {/* Bölüm Başlığı & Açıklama */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1.5">
             <div className="flex items-center gap-2">
-              <span className="h-0.5 w-6 bg-[#4cd7f6]" />
-              <span className="font-mono text-xs font-bold text-[#4cd7f6] uppercase tracking-wider">
-                Hassas Malzeme Portföyü
+              <span className="h-0.5 w-6 bg-[#00f0ff]" />
+              <span className="font-mono text-xs font-bold text-[#00f0ff] uppercase tracking-wider">
+                Hassas Malzeme Portföyü // 10 Ana Grup
               </span>
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold text-[#e2e2e9] tracking-tight">
-              Endüstriyel Kategoriler // Geniş Ürün Yelpazesi
+            <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#e2e2e9] tracking-tight">
+              Endüstriyel Polimer &amp; Alaşımlı Metal Kategorileri
             </h2>
           </div>
           <p className="text-sm text-[#c3c6d7] max-w-lg leading-relaxed">
-            Doğrudan Çayırova ana depomuzdan sertifikalı, yüksek toleranslı ve
-            istenilen milimetrik ebatlarda kesime hazır endüstriyel polimer ve
-            metal grupları.
+            Doğrudan Çayırova depomuzdan sertifikalı, yüksek toleranslı ve istenilen milimetrik ebatlarda kesime hazır endüstriyel polimer ve metal grupları.
           </p>
         </div>
 
@@ -99,6 +80,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
           {CATEGORIES.map((cat) => {
             const isSelected = selectedCategory === cat.id;
             const productCount = PRODUCTS.filter((p) => p.categoryId === cat.id).length;
+
             return (
               <div
                 key={cat.id}
@@ -106,17 +88,19 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                 onClick={() => onSelectCategory(cat.id)}
                 className={`group flex flex-col rounded-2xl p-4 sm:p-5 transition-all duration-300 shadow-lg cursor-pointer border relative overflow-hidden ${
                   isSelected
-                    ? 'bg-[#1e1f25] border-[#2563eb] ring-1 ring-[#2563eb] shadow-[0_0_24px_rgba(37,99,235,0.25)]'
-                    : 'bg-[#14161d] border-[#434655]/30 hover:border-[#2563eb]/50 hover:bg-[#1a1b21]'
-                } ${getAccentColor(cat.colorType)}`}
+                    ? 'bg-[#181b24] border-[#00f0ff] ring-1 ring-[#00f0ff] shadow-[0_0_24px_rgba(0,240,255,0.25)] -translate-y-1'
+                    : 'bg-[#12141c] border-[#434655]/40 hover:border-[#2563eb]/70 hover:bg-[#181b24] hover:-translate-y-1'
+                }`}
               >
                 {/* Üst İkon & Kategori No & Ürün Sayacı */}
                 <div className="flex items-center justify-between mb-3">
-                  <span className="p-2.5 rounded-xl bg-[#282a2f] text-inherit transition-transform duration-300 group-hover:scale-110 shadow-sm">
+                  <span className={`p-2.5 rounded-xl transition-all duration-300 group-hover:scale-110 shadow-sm ${
+                    isSelected ? 'bg-[#2563eb] text-white' : 'bg-[#1e222d] text-[#00f0ff]'
+                  }`}>
                     {getIcon(cat.icon)}
                   </span>
                   <div className="flex items-center gap-1.5 font-mono text-xs">
-                    <span className="px-2 py-0.5 rounded bg-[#1e1f25] text-[#4cd7f6] text-[10px] font-bold border border-[#434655]/40">
+                    <span className="px-2 py-0.5 rounded bg-[#181b24] text-[#00f0ff] text-[10px] font-bold border border-[#00f0ff]/30">
                       {productCount} Ürün
                     </span>
                     <span className="text-[#8d90a0]">
@@ -126,7 +110,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                 </div>
 
                 {/* Kategori Başlığı */}
-                <h3 className="font-display text-[17px] text-[#e2e2e9] group-hover:text-inherit transition-colors font-bold leading-snug">
+                <h3 className="font-display text-[16px] sm:text-[17px] text-[#e2e2e9] group-hover:text-[#00f0ff] transition-colors font-bold leading-snug">
                   {cat.name}
                 </h3>
 
@@ -140,7 +124,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                   {cat.tags.map((tag, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-0.5 rounded bg-[#1e1f25] text-[#c3c6d7] font-mono text-[10px] border border-[#434655]/30"
+                      className="px-2 py-0.5 rounded bg-[#181b24] text-[#c3c6d7] font-mono text-[10px] border border-[#434655]/30"
                     >
                       {tag}
                     </span>
@@ -148,17 +132,20 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                 </div>
 
                 {/* Aksiyon Linki */}
-                <div className="pt-2 border-t border-[#434655]/20 flex items-center justify-between mt-auto text-inherit">
-                  <span className="text-[11px] font-semibold group-hover:translate-x-0.5 transition-transform flex items-center">
+                <div className="pt-2.5 border-t border-[#434655]/20 flex items-center justify-between mt-auto">
+                  <span className={`text-[11px] font-semibold group-hover:translate-x-0.5 transition-transform flex items-center ${
+                    isSelected ? 'text-[#00f0ff]' : 'text-[#8d90a0] group-hover:text-[#e2e2e9]'
+                  }`}>
                     {isSelected ? 'Filtre Aktif' : 'Malzemeleri Listele'}
                   </span>
-                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight className={`w-4 h-4 group-hover:translate-x-1 transition-transform ${
+                    isSelected ? 'text-[#00f0ff]' : 'text-[#8d90a0] group-hover:text-[#00f0ff]'
+                  }`} />
                 </div>
               </div>
             );
           })}
         </div>
-
       </div>
     </section>
   );

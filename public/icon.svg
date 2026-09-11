@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14161d"/>
+      <stop offset="100%" stop-color="#0c0e13"/>
+    </linearGradient>
+    <linearGradient id="neonCyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff" />
+      <stop offset="40%" stop-color="#38bdf8" />
+      <stop offset="80%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#00d2ff" />
+    </linearGradient>
+    <filter id="iconNeonGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur1" />
+      <feGaussianBlur stdDeviation="14" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Arka Plan Yuvarlak Kutu (App Icon Kasa) -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" stroke="#2563eb" stroke-opacity="0.4" stroke-width="4"/>
+
+  <!-- Üst Siber Çizgi -->
+  <rect x="96" y="36" width="320" height="4" rx="2" fill="#00f0ff" opacity="0.8" />
+
+  <!-- Gerçek ÜT Monogramı -->
+  <g transform="translate(146, 75) scale(1.35)" filter="url(#iconNeonGlow)">
+    <path
+      d="M 13,10 H 145 Q 151,10 151,16 Q 151,22 145,22 H 27 Q 24,22 24,25 V 59 Q 24,62 27,62 H 59 Q 62,62 62,65 V 138 L 80,150 L 98,138 V 65 Q 98,62 101,62 H 144 Q 147,62 147,65 V 168 L 80,218 L 13,168 V 120 H 21 Q 24,120 24,117 V 95 Q 24,92 21,92 H 13 V 168 L 80,200 L 136,168 V 78 Q 136,75 133,75 H 112 Q 109,75 109,78 V 132 L 80,144 L 51,132 V 78 Q 51,75 48,75 H 13 Z"
+      fill="none"
+      stroke="url(#neonCyanGrad)"
+      stroke-width="5"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+    />
+    <path
+      d="M 13,10 H 145 Q 151,10 151,16 Q 151,22 145,22 H 27 Q 24,22 24,25 V 59 Q 24,62 27,62 H 59 Q 62,62 62,65 V 138 L 80,150 L 98,138 V 65 Q 98,62 101,62 H 144 Q 147,62 147,65 V 168 L 80,218 L 13,168 V 120 H 21 Q 24,120 24,117 V 95 Q 24,92 21,92 H 13 V 168 L 80,200 L 136,168 V 78 Q 136,75 133,75 H 112 Q 109,75 109,78 V 132 L 80,144 L 51,132 V 78 Q 51,75 48,75 H 13 Z"
+      fill="none"
+      stroke="#ffffff"
+      stroke-width="1.8"
+      stroke-opacity="0.9"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- Tipografi: ÜRETİCİ TEDARİK -->
+  <text x="256" y="420" text-anchor="middle" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="28" letter-spacing="1.5">
+    ÜRETİCİ TEDARİK
+  </text>
+
+  <!-- Alt Başlık -->
+  <text x="256" y="452" text-anchor="middle" fill="#00f0ff" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="14" letter-spacing="2">
+    TEKNİK PLASTİK &amp; METAL
+  </text>
+</svg>
