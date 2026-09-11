@@ -52,59 +52,38 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header
-      id="main-header"
-      className={`sticky top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-[#080a10]/98 backdrop-blur-2xl border-b border-[#00f0ff]/25 shadow-[0_8px_30px_rgba(0,0,0,0.85)]'
-          : 'bg-[#0c0e13]/95 backdrop-blur-xl border-b border-[#434655]/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
-      }`}
+    <div
+      id="main-header-bar"
+      className="w-full select-none"
     >
-      <div className="h-20 w-full px-4 sm:px-6 mx-auto max-w-[90rem] flex items-center justify-between gap-4">
-        {/* Logo & Şirket Başlığı (Resmi Amblem ve Fabrika Çizimi) */}
+      <div className="h-16 lg:h-17 w-full px-4 sm:px-6 mx-auto max-w-[92rem] flex items-center justify-between gap-2.5 lg:gap-3">
+        {/* 1. Logo & Şirket Başlığı (Orijinal Amblem & Prestijli Başlık) */}
         <button
           id="header-brand-logo"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-3 group shrink-0 cursor-pointer text-left bg-transparent border-none p-0"
+          className="flex items-center gap-2.5 shrink-0 cursor-pointer text-left bg-transparent border-none p-0 mr-1"
         >
           <CompanyLogo
-            className="h-10 sm:h-11"
+            className="h-9 sm:h-10"
             showText={true}
-            showSlogan={true}
+            showSlogan={false}
           />
         </button>
 
-
-        {/* Hızlı Arama Kutusu (Search Box - Genişletilmiş ve Göz Yormayan Siber Endüstriyel Tasarım) */}
-        <div
-          id="search-command-palette-trigger"
-          onClick={onOpenSearch}
-          className="hidden md:flex items-center h-10 px-3.5 rounded-xl bg-[#12141c] border border-[#434655]/40 hover:border-[#00f0ff]/50 hover:shadow-[0_0_16px_rgba(0,240,255,0.16)] transition-all cursor-pointer w-48 lg:w-56 xl:w-72 group shrink-0"
-          title="Hızlı Malzeme Arama (Kısayol: ⌘K veya Ctrl+K)"
-        >
-          <Search className="w-4 h-4 text-[#8d90a0] group-hover:text-[#00f0ff] mr-2 shrink-0 transition-colors" />
-          <span className="text-[12.5px] xl:text-[13px] text-[#8d90a0] group-hover:text-[#c3c6d7] flex-1 truncate transition-colors">
-            Malzeme, DIN normu veya ebat...
-          </span>
-          <kbd className="hidden sm:inline-flex items-center font-mono text-[10.5px] px-1.5 py-0.5 rounded-md bg-[#181b24] text-[#8d90a0] border border-[#434655]/40 group-hover:border-[#00f0ff]/30 group-hover:text-[#00f0ff] transition-colors">
-            ⌘K
-          </kbd>
-        </div>
-
-        {/* Masaüstü Navigasyon - Göz Yormayan Tek Satır Düzenli Pill Menüsü */}
+        {/* 2. Masaüstü Navigasyon - Göz Yormayan Tek Satır Düzenli Pill Menüsü (Esnek & Taşmaz) */}
         <nav
           id="desktop-navigation-menu"
-          className="hidden lg:flex items-center gap-0.5 xl:gap-1 bg-[#12141c]/90 border border-[#434655]/35 p-1 rounded-2xl shadow-sm"
+          className="hidden lg:flex items-center gap-0.5 xl:gap-1 bg-[#12141c]/90 border border-[#434655]/35 p-1 rounded-xl shadow-inner shrink min-w-0"
         >
           {/* 1: Mühendislik Plastikleri */}
           <div className="relative group">
             <button
               id="nav-dropdown-plastics"
-              className="px-2.5 xl:px-3 py-1.5 rounded-xl text-[12.5px] xl:text-[13px] font-semibold text-[#c3c6d7] hover:text-[#e2e2e9] hover:bg-[#181b24] group-hover:text-[#00f0ff] group-hover:bg-[#181b24] transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+              className="px-2 xl:px-2.5 py-1.5 rounded-lg text-[12px] xl:text-[12.5px] font-semibold text-[#c3c6d7] hover:text-[#e2e2e9] hover:bg-[#181b24] group-hover:text-[#00f0ff] group-hover:bg-[#181b24] transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] shrink-0" />
-              <span>Mühendislik Plastikleri</span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#00f0ff] transition-transform duration-200" />
+              <span><span className="hidden 2xl:inline">Mühendislik </span>Plastikleri</span>
+              <ChevronDown className="w-3 h-3 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#00f0ff] transition-transform duration-200" />
             </button>
             <div className="absolute left-0 top-full mt-2 hidden group-hover:flex flex-col w-72 p-2 bg-[#0e1017]/98 border border-[#3b82f6]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-50 animate-in fade-in-50 slide-in-from-top-1">
               <div className="h-0.5 w-full bg-gradient-to-r from-[#2563eb] to-[#00f0ff] rounded-t-xl -mt-2 mb-1.5" />
@@ -159,11 +138,11 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative group">
             <button
               id="nav-dropdown-insulation"
-              className="px-2.5 xl:px-3 py-1.5 rounded-xl text-[12.5px] xl:text-[13px] font-semibold text-[#c3c6d7] hover:text-[#e2e2e9] hover:bg-[#181b24] group-hover:text-[#c084fc] group-hover:bg-[#181b24] transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+              className="px-2 xl:px-2.5 py-1.5 rounded-lg text-[12px] xl:text-[12.5px] font-semibold text-[#c3c6d7] hover:text-[#e2e2e9] hover:bg-[#181b24] group-hover:text-[#c084fc] group-hover:bg-[#181b24] transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#a855f7] shrink-0" />
-              <span>Yüksek Isı &amp; Yalıtım</span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#c084fc] transition-transform duration-200" />
+              <span><span className="hidden xl:inline">Yüksek </span>Isı &amp; Yalıtım</span>
+              <ChevronDown className="w-3 h-3 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#c084fc] transition-transform duration-200" />
             </button>
             <div className="absolute left-0 top-full mt-2 hidden group-hover:flex flex-col w-68 p-2 bg-[#0e1017]/98 border border-[#a855f7]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-50 animate-in fade-in-50 slide-in-from-top-1">
               <div className="h-0.5 w-full bg-gradient-to-r from-[#7e22ce] to-[#c084fc] rounded-t-xl -mt-2 mb-1.5" />
@@ -204,11 +183,11 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative group">
             <button
               id="nav-dropdown-heavy-industry"
-              className="px-2.5 xl:px-3 py-1.5 rounded-xl text-[12.5px] xl:text-[13px] font-semibold text-[#c3c6d7] hover:text-[#e2e2e9] hover:bg-[#181b24] group-hover:text-[#fbbf24] group-hover:bg-[#181b24] transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+              className="px-2 xl:px-2.5 py-1.5 rounded-lg text-[12px] xl:text-[12.5px] font-semibold text-[#c3c6d7] hover:text-[#e2e2e9] hover:bg-[#181b24] group-hover:text-[#fbbf24] group-hover:bg-[#181b24] transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b] shrink-0" />
               <span>Ağır Sanayi</span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#fbbf24] transition-transform duration-200" />
+              <ChevronDown className="w-3 h-3 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#fbbf24] transition-transform duration-200" />
             </button>
             <div className="absolute left-0 top-full mt-2 hidden group-hover:flex flex-col w-72 p-2 bg-[#0e1017]/98 border border-[#f59e0b]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-50 animate-in fade-in-50 slide-in-from-top-1">
               <div className="h-0.5 w-full bg-gradient-to-r from-[#b45309] to-[#fbbf24] rounded-t-xl -mt-2 mb-1.5" />
@@ -249,11 +228,11 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="relative group">
             <button
               id="nav-dropdown-alloys"
-              className="px-2.5 xl:px-3 py-1.5 rounded-xl text-[12.5px] xl:text-[13px] font-semibold text-[#c3c6d7] hover:text-[#e2e2e9] hover:bg-[#181b24] group-hover:text-[#f87171] group-hover:bg-[#181b24] transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+              className="px-2 xl:px-2.5 py-1.5 rounded-lg text-[12px] xl:text-[12.5px] font-semibold text-[#c3c6d7] hover:text-[#e2e2e9] hover:bg-[#181b24] group-hover:text-[#f87171] group-hover:bg-[#181b24] transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#ef4444] shrink-0" />
-              <span>Alaşım &amp; Kablo</span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#f87171] transition-transform duration-200" />
+              <span>Alaşım<span className="hidden xl:inline"> &amp; Kablo</span></span>
+              <ChevronDown className="w-3 h-3 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#f87171] transition-transform duration-200" />
             </button>
             <div className="absolute left-0 top-full mt-2 hidden group-hover:flex flex-col w-68 p-2 bg-[#0e1017]/98 border border-[#ef4444]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-50 animate-in fade-in-50 slide-in-from-top-1">
               <div className="h-0.5 w-full bg-gradient-to-r from-[#b91c1c] to-[#f87171] rounded-t-xl -mt-2 mb-1.5" />
@@ -286,40 +265,37 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="nav-catalog-btn"
             onClick={onOpenCatalog}
-            className="px-2.5 xl:px-3 py-1.5 rounded-xl text-[12.5px] xl:text-[13px] font-semibold text-[#c3c6d7] hover:text-[#00f0ff] hover:bg-[#181b24] transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+            className="px-2 xl:px-2.5 py-1.5 rounded-lg text-[12px] xl:text-[12.5px] font-semibold text-[#00f0ff] hover:bg-[#181b24] transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer"
           >
             <FileText className="w-3.5 h-3.5 text-[#00f0ff]" />
             <span>Katalog</span>
           </button>
-
-          {/* 6: Hakkımızda */}
-          <button
-            id="nav-about-btn"
-            onClick={() => handleNavClick('kurumsal-bolum')}
-            className="px-2.5 xl:px-3 py-1.5 rounded-xl text-[12.5px] xl:text-[13px] font-semibold text-[#c3c6d7] hover:text-[#e2e2e9] hover:bg-[#181b24] transition-all whitespace-nowrap cursor-pointer"
-          >
-            Hakkımızda
-          </button>
-
-          {/* 7: B2B İletişim & Teklif Formu */}
-          <button
-            id="nav-contact-btn"
-            onClick={onOpenContact || (() => handleNavClick('rfq-formu'))}
-            className="px-2.5 xl:px-3 py-1.5 rounded-xl text-[12.5px] xl:text-[13px] font-semibold text-[#00f0ff] hover:text-white hover:bg-[#181b24] transition-all whitespace-nowrap cursor-pointer flex items-center gap-1"
-          >
-            <MessageCircle className="w-3.5 h-3.5 text-[#00f0ff]" />
-            <span>İletişim</span>
-          </button>
         </nav>
 
-        {/* Sağ Aksiyonlar & RFQ Sepeti */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Mobil arama butonu */}
-          <button
-            id="mobile-search-btn"
+        {/* 3. Sağ Taraf: Esnek Arama + Sepet + Hızlı RFQ + İletişim (ASLA TAŞMAZ) */}
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 ml-auto">
+          {/* Masaüstü Geniş Arama Kutusu (>= 1380px) */}
+          <div
+            id="search-command-palette-trigger"
             onClick={onOpenSearch}
-            className="xl:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-[#1e1f25] text-[#c3c6d7] hover:text-[#e2e2e9] border border-[#434655]/40"
-            title="Ara"
+            className="hidden min-[1380px]:flex items-center h-9 px-3 rounded-xl bg-[#12141c] border border-[#434655]/40 hover:border-[#00f0ff]/50 hover:shadow-[0_0_12px_rgba(0,240,255,0.15)] transition-all cursor-pointer w-40 shrink-0 group"
+            title="Hızlı Malzeme Arama (Kısayol: ⌘K veya Ctrl+K)"
+          >
+            <Search className="w-3.5 h-3.5 text-[#8d90a0] group-hover:text-[#00f0ff] mr-2 shrink-0 transition-colors" />
+            <span className="text-xs text-[#8d90a0] group-hover:text-[#c3c6d7] truncate">
+              Malzeme ara...
+            </span>
+            <kbd className="inline-flex items-center font-mono text-[9.5px] px-1.5 py-0.5 rounded bg-[#181b24] text-[#8d90a0] border border-[#434655]/40 ml-auto group-hover:border-[#00f0ff]/30 group-hover:text-[#00f0ff]">
+              ⌘K
+            </kbd>
+          </div>
+
+          {/* Laptop & Mobil Kompakt Arama İkonu (< 1380px) */}
+          <button
+            id="compact-search-btn"
+            onClick={onOpenSearch}
+            className="min-[1380px]:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-[#12141c] hover:bg-[#181b24] text-[#8d90a0] hover:text-[#00f0ff] border border-[#434655]/40 transition-colors cursor-pointer shrink-0"
+            title="Malzeme Ara (⌘K)"
           >
             <Search className="w-4 h-4" />
           </button>
@@ -328,53 +304,43 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="header-rfq-cart-btn"
             onClick={onOpenCart}
-            className="relative flex items-center justify-center h-10 px-3 rounded-lg bg-[#1e1f25] text-[#c3c6d7] hover:text-[#e2e2e9] hover:bg-[#282a2f] border border-[#434655]/40 transition-colors cursor-pointer"
+            className="relative flex items-center justify-center h-9 px-2.5 sm:px-3 rounded-xl bg-[#141824] hover:bg-[#1e2333] border border-[#434655]/40 text-[#e2e2e9] transition-all cursor-pointer shrink-0"
             title="Teklif Sepetini Görüntüle"
           >
-            <FileText className="w-4 h-4" />
+            <FileText className="w-4 h-4 text-[#00f0ff]" />
             <span className="hidden sm:inline-block ml-1.5 text-xs font-semibold text-[#e2e2e9]">
-              Teklif Sepetim
+              Teklif Sepeti
             </span>
             {cartCount > 0 && (
               <span
                 id="header-rfq-cart-badge"
-                className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#d97707] text-[#432100] text-[11px] font-bold shadow-md animate-pulse"
+                className="ml-1.5 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-[#d97707] text-white text-[10px] font-bold shadow-md animate-pulse"
               >
                 {cartCount}
               </span>
             )}
           </button>
 
-          {/* Hızlı RFQ Al Butonu */}
+          {/* Hızlı RFQ Butonu */}
           <button
             id="header-quick-rfq-btn"
             onClick={() => handleNavClick('rfq-formu')}
-            className="hidden sm:flex items-center justify-center h-10 px-4 rounded-lg bg-[#2563eb] text-[#eeefff] font-semibold text-xs shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:bg-[#0053db] transition-all cursor-pointer"
+            className="flex items-center justify-center h-9 px-3 sm:px-4 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold text-xs shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all cursor-pointer shrink-0"
+            title="Hızlı Fiyat Teklifi Al"
           >
-            <Zap className="w-3.5 h-3.5 mr-1.5 text-[#acedff]" />
-            <span>Hızlı RFQ Al</span>
+            <Zap className="w-3.5 h-3.5 mr-1 text-[#acedff]" />
+            <span>Hızlı RFQ</span>
           </button>
 
-          {/* WhatsApp Canlı RFQ Hattı */}
-          <a
-            id="header-whatsapp-btn"
-            href="https://api.whatsapp.com/send?phone=905333771897&text=Merhaba,%20teknik%20plastik%20ve%20metal%20fiyat%20listesi%20almak%20istiyorum."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center w-10 h-10 rounded-lg bg-[#1e1f25] hover:bg-[#282a2f] text-[#4cd7f6] border border-[#434655]/40 transition-colors"
-            title="WhatsApp Canlı RFQ Hattı"
-          >
-            <MessageCircle className="w-4 h-4" />
-          </a>
-
-          {/* Müşteri Girişi / Profil */}
+          {/* B2B İletişim Butonu */}
           <button
-            id="header-profile-btn"
-            className="w-9 h-9 rounded-full bg-[#b4c5ff] flex items-center justify-center text-[#002a78] shadow-sm hover:opacity-90 transition-opacity"
-            title="Müşteri & Mühendislik Girişi"
-            onClick={() => handleNavClick('rfq-formu')}
+            id="header-contact-btn"
+            onClick={onOpenContact || (() => handleNavClick('rfq-formu'))}
+            className="hidden sm:flex items-center justify-center h-9 px-3 rounded-xl bg-[#121520] hover:bg-[#1a1f2e] border border-[#00f0ff]/40 hover:border-[#00f0ff] text-[#00f0ff] hover:text-white font-semibold text-xs transition-all cursor-pointer shrink-0 gap-1"
+            title="Kurumsal İletişim & Teklif Formu"
           >
-            <User className="w-4 h-4" />
+            <MessageCircle className="w-3.5 h-3.5 text-[#00f0ff]" />
+            <span>İletişim</span>
           </button>
 
           {/* Mobil Menü Butonu */}
@@ -450,6 +416,6 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </div>
       )}
-    </header>
+    </div>
   );
 };

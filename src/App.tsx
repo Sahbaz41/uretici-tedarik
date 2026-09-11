@@ -121,24 +121,27 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#0b0d13] text-[#e2e2e9] selection:bg-[#2563eb] selection:text-white font-sans antialiased overflow-x-clip w-full max-w-full relative">
-      {/* 1. Üst Bilgi Çubuğu (Canlı Döviz Ticker'ı ile) */}
-      <TopBar
-        selectedCurrency={currency}
-        onCurrencyChange={setCurrency}
-        rates={liveRates}
-        isLoadingRates={isLoadingRates}
-        onRefreshRates={refreshRates}
-      />
-
-      {/* 2. Ana Navigasyon Başlığı (Sabit / Sticky) */}
-      <Header
-        cartCount={cartItems.length}
-        onOpenCart={() => setIsCartOpen(true)}
-        onOpenSearch={() => setIsSearchOpen(true)}
-        onOpenCatalog={() => setIsCatalogOpen(true)}
-        onOpenContact={() => setIsContactOpen(true)}
-        onSelectCategoryFilter={handleCategoryClick}
-      />
+      {/* YEKPARE STICKY MASTER KONSOL (TEK BİR BLOK) */}
+      <header
+        id="master-sticky-header"
+        className="sticky top-0 left-0 right-0 z-50 w-full bg-[#080a11]/98 backdrop-blur-2xl border-b border-[#2d3142]/70 shadow-[0_12px_40px_rgba(0,0,0,0.85)]"
+      >
+        <TopBar
+          selectedCurrency={currency}
+          onCurrencyChange={setCurrency}
+          rates={liveRates}
+          isLoadingRates={isLoadingRates}
+          onRefreshRates={refreshRates}
+        />
+        <Header
+          cartCount={cartItems.length}
+          onOpenCart={() => setIsCartOpen(true)}
+          onOpenSearch={() => setIsSearchOpen(true)}
+          onOpenCatalog={() => setIsCatalogOpen(true)}
+          onOpenContact={() => setIsContactOpen(true)}
+          onSelectCategoryFilter={handleCategoryClick}
+        />
+      </header>
 
       {/* 3. Ana İçerik */}
       <main className="flex-1 flex flex-col w-full max-w-full overflow-x-clip">
