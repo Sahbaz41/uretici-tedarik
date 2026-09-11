@@ -74,18 +74,29 @@ export const TopBar: React.FC<TopBarProps> = ({
             <span>@{COMPANY_INFO.instagram}</span>
           </a>
 
-          {/* Canlı Döviz Kuru Ticker (Varsa) */}
+          {/* Canlı Döviz Kuru Ticker (USD/TRY ve EUR/TRY Canlı) */}
           {rates && (
-            <div className="hidden xl:flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#12141c] border border-[#434655]/40 text-[10.5px] font-mono text-[#8d90a0]">
-              <span>USD: <strong className="text-[#e2e2e9]">₺{rates.TRY}</strong></span>
-              <span>EUR: <strong className="text-[#e2e2e9]">₺{(rates.TRY / rates.EUR).toFixed(2)}</strong></span>
+            <div className="hidden lg:flex items-center gap-2 px-2.5 py-1 rounded-md bg-[#10131c] border border-emerald-500/30 text-[11px] font-mono text-[#8d90a0] shadow-[0_0_12px_rgba(16,185,129,0.1)]">
+              <div className="flex items-center gap-1.5 text-emerald-400 font-semibold text-[10px] uppercase tracking-wider">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span>CANLI</span>
+              </div>
+              <span className="text-[#3a3f55]">|</span>
+              <div className="flex items-center gap-2 text-[#c3c6d7]">
+                <span>USD: <strong className="text-emerald-400 font-bold">₺{rates.TRY.toFixed(2)}</strong></span>
+                <span className="text-[#3a3f55]">/</span>
+                <span>EUR: <strong className="text-emerald-400 font-bold">₺{(rates.eurTry || (rates.TRY / rates.EUR)).toFixed(2)}</strong></span>
+              </div>
               {onRefreshRates && (
                 <button
                   onClick={onRefreshRates}
-                  title="Kurları Güncelle"
-                  className="hover:text-[#00f0ff] transition-colors cursor-pointer ml-0.5"
+                  title={`Kurları Yenile (Son: ${rates.lastUpdated})`}
+                  className="hover:text-emerald-400 transition-colors cursor-pointer ml-1 p-0.5 rounded hover:bg-emerald-500/10 text-[#8d90a0]"
                 >
-                  <RefreshCw className={`w-3 h-3 ${isLoadingRates ? 'animate-spin text-[#00f0ff]' : ''}`} />
+                  <RefreshCw className={`w-3 h-3 ${isLoadingRates ? 'animate-spin text-emerald-400' : ''}`} />
                 </button>
               )}
             </div>

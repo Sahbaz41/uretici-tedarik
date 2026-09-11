@@ -121,7 +121,7 @@ export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
     <aside
       id="material-shortcut-dock"
       aria-label="Hızlı Malzeme Seçim Çubuğu"
-      className="fixed bottom-5 right-4 sm:right-6 z-40 flex flex-col items-end gap-2 pointer-events-auto select-none"
+      className="fixed bottom-5 left-4 sm:left-6 z-40 flex flex-col items-start gap-2 pointer-events-auto select-none"
     >
       {/* 1. Anlık Geri Bildirim Bildirimi (Kullanıcı kaydırmadan seçim yaptığında bilgi verir) */}
       {showNotification && (

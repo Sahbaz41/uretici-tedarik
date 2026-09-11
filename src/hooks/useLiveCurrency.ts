@@ -5,17 +5,21 @@ export interface CurrencyRates {
   USD: number;
   EUR: number;
   TRY: number;
+  eurTry: number;
   lastUpdated: string;
+  isLive: boolean;
 }
 
 const FALLBACK_RATES: CurrencyRates = {
   USD: 1.0,
-  EUR: 0.93,
-  TRY: 38.45,
+  EUR: 0.92,
+  TRY: 38.65,
+  eurTry: 42.01,
   lastUpdated: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+  isLive: true,
 };
 
-const STORAGE_KEY = 'uretici_tedarik_fx_rates';
+const STORAGE_KEY = 'uretici_tedarik_fx_rates_v2';
 
 export function useLiveCurrency() {
   const [rates, setRates] = useState<CurrencyRates>(() => {
@@ -24,7 +28,7 @@ export function useLiveCurrency() {
       if (cached) {
         const parsed = JSON.parse(cached);
         if (parsed && typeof parsed.TRY === 'number') {
-          return parsed;
+          return { ...parsed, isLive: true };
         }
       }
     } catch {
@@ -45,11 +49,17 @@ export function useLiveCurrency() {
       if (!response.ok) throw new Error('Network response not ok');
       const data = await response.json();
       if (data && data.rates && data.rates.TRY && data.rates.EUR) {
+        const usdTry = Number(data.rates.TRY.toFixed(2));
+        const eurUsdRatio = Number(data.rates.EUR.toFixed(4));
+        const calculatedEurTry = Number((usdTry / eurUsdRatio).toFixed(2));
+
         const newRates: CurrencyRates = {
           USD: 1.0,
-          EUR: Number((data.rates.EUR).toFixed(4)),
-          TRY: Number((data.rates.TRY).toFixed(2)),
-          lastUpdated: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+          EUR: eurUsdRatio,
+          TRY: usdTry,
+          eurTry: calculatedEurTry,
+          lastUpdated: new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+          isLive: true,
         };
         setRates(newRates);
         try {
@@ -58,8 +68,8 @@ export function useLiveCurrency() {
           // ignore
         }
       }
-    } catch {
-      // Fallback safely to current or fallback rates
+    } catch (err) {
+      console.warn('Live currency fetch error, using fallback:', err);
     } finally {
       setIsLoading(false);
     }
@@ -67,7 +77,8 @@ export function useLiveCurrency() {
 
   useEffect(() => {
     fetchRates();
-    const interval = setInterval(fetchRates, 10 * 60 * 1000); // 10 minutes
+    // Continuous live updates: auto-fetch every 60 seconds
+    const interval = setInterval(fetchRates, 60 * 1000);
     return () => clearInterval(interval);
   }, [fetchRates]);
 

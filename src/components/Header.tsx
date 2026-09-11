@@ -17,6 +17,7 @@ interface HeaderProps {
   onOpenCart: () => void;
   onOpenSearch: () => void;
   onOpenCatalog: () => void;
+  onOpenContact?: () => void;
   onSelectCategoryFilter?: (catId: string) => void;
 }
 
@@ -25,9 +26,19 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCart,
   onOpenSearch,
   onOpenCatalog,
+  onOpenContact,
   onSelectCategoryFilter,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleNavClick = (sectionId: string, categoryId?: string) => {
     if (categoryId && onSelectCategoryFilter) {
@@ -43,7 +54,11 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header
       id="main-header"
-      className="sticky top-0 left-0 right-0 z-40 bg-[#0c0e13]/95 backdrop-blur-xl border-b border-[#434655]/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)] transition-all"
+      className={`sticky top-0 left-0 right-0 z-40 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-[#080a10]/98 backdrop-blur-2xl border-b border-[#00f0ff]/25 shadow-[0_8px_30px_rgba(0,0,0,0.85)]'
+          : 'bg-[#0c0e13]/95 backdrop-blur-xl border-b border-[#434655]/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
+      }`}
     >
       <div className="h-20 w-full px-4 sm:px-6 mx-auto max-w-[90rem] flex items-center justify-between gap-4">
         {/* Logo & Şirket Başlığı (Resmi Amblem ve Fabrika Çizimi) */}
@@ -285,6 +300,16 @@ export const Header: React.FC<HeaderProps> = ({
           >
             Hakkımızda
           </button>
+
+          {/* 7: B2B İletişim & Teklif Formu */}
+          <button
+            id="nav-contact-btn"
+            onClick={onOpenContact || (() => handleNavClick('rfq-formu'))}
+            className="px-2.5 xl:px-3 py-1.5 rounded-xl text-[12.5px] xl:text-[13px] font-semibold text-[#00f0ff] hover:text-white hover:bg-[#181b24] transition-all whitespace-nowrap cursor-pointer flex items-center gap-1"
+          >
+            <MessageCircle className="w-3.5 h-3.5 text-[#00f0ff]" />
+            <span>İletişim</span>
+          </button>
         </nav>
 
         {/* Sağ Aksiyonlar & RFQ Sepeti */}
@@ -409,6 +434,19 @@ export const Header: React.FC<HeaderProps> = ({
             className="flex items-center justify-between p-2.5 rounded-lg text-left text-sm font-medium text-[#e2e2e9] hover:bg-[#1e1f25]"
           >
             <span>Kurumsal & Hakkımızda</span>
+          </button>
+          <button
+            onClick={() => {
+              if (onOpenContact) {
+                onOpenContact();
+              } else {
+                handleNavClick('rfq-formu');
+              }
+              setMobileMenuOpen(false);
+            }}
+            className="flex items-center justify-between p-2.5 rounded-lg text-left text-sm font-semibold text-[#00f0ff] hover:bg-[#1e1f25]"
+          >
+            <span>B2B Teklif & İletişim Formu</span>
           </button>
         </div>
       )}

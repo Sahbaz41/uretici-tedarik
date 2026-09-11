@@ -15,6 +15,9 @@ import { CatalogModal } from './components/CatalogModal';
 import { MaterialShortcutFab } from './components/MaterialShortcutFab';
 import { FaqSection } from './components/FaqSection';
 import { LegalModal, LegalDocType } from './components/LegalModal';
+import { ContactModal } from './components/ContactModal';
+import { ScrollToTop } from './components/ScrollToTop';
+import { WhatsAppFab } from './components/WhatsAppFab';
 import { PwaInstallPrompt } from './components/PwaInstallPrompt';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { FadeIn } from './components/FadeIn';
@@ -52,6 +55,7 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const [tdsProductId, setTdsProductId] = useState<string | null>(null);
   const [legalModalTab, setLegalModalTab] = useState<LegalDocType | null>(null);
 
@@ -116,7 +120,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0b0d13] text-[#e2e2e9] selection:bg-[#2563eb] selection:text-white font-sans antialiased overflow-x-hidden w-full max-w-full relative">
+    <div className="min-h-screen flex flex-col bg-[#0b0d13] text-[#e2e2e9] selection:bg-[#2563eb] selection:text-white font-sans antialiased overflow-x-clip w-full max-w-full relative">
       {/* 1. Üst Bilgi Çubuğu (Canlı Döviz Ticker'ı ile) */}
       <TopBar
         selectedCurrency={currency}
@@ -126,17 +130,18 @@ export default function App() {
         onRefreshRates={refreshRates}
       />
 
-      {/* 2. Ana Navigasyon Başlığı */}
+      {/* 2. Ana Navigasyon Başlığı (Sabit / Sticky) */}
       <Header
         cartCount={cartItems.length}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenCatalog={() => setIsCatalogOpen(true)}
+        onOpenContact={() => setIsContactOpen(true)}
         onSelectCategoryFilter={handleCategoryClick}
       />
 
       {/* 3. Ana İçerik */}
-      <main className="flex-1 flex flex-col w-full max-w-full overflow-x-hidden">
+      <main className="flex-1 flex flex-col w-full max-w-full overflow-x-clip">
         {/* Hero Alanı & Öne Çıkan İnteraktif Malzeme İstasyonu */}
         <HeroSection
           onOpenRfq={() => {
@@ -258,16 +263,27 @@ export default function App() {
         initialTab={legalModalTab || 'kvkk'}
       />
 
+      <ContactModal
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+      />
+
       {/* 6. PWA Kurulum & Çevrimdışı Bildirimi */}
       <PwaInstallPrompt />
       <OfflineIndicator />
 
-      {/* 7. Hızlı Malzeme Seçici Yüzen Eylem Çubuğu (FAB / Shortcut Menu) */}
+      {/* 7. Hızlı Malzeme Seçici Yüzen Eylem Çubuğu (Sol Alt) */}
       <MaterialShortcutFab
         selectedCategory={selectedCategory}
         onSelectCategory={handleCategoryClick}
         onSelectProductForRfq={handleSelectProductForRfq}
       />
+
+      {/* 8. Sayfa Başına Dön Butonu (Sağ Alt) */}
+      <ScrollToTop />
+
+      {/* 9. Canlı WhatsApp B2B Destek & İletişim Butonu (Sağ Alt) */}
+      <WhatsAppFab />
     </div>
   );
 }
