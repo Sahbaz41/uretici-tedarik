@@ -24,10 +24,11 @@ import { FadeIn } from './components/FadeIn';
 import { CurrencyCode, RfqCartItem } from './types';
 import { useLiveCurrency } from './hooks/useLiveCurrency';
 import { Language } from './data/translations';
+import { useLanguage } from './context/LanguageContext';
 
 export default function App() {
   const [currency, setCurrency] = useState<CurrencyCode>('USD');
-  const [language, setLanguage] = useState<Language>('tr');
+  const { language, setLanguage } = useLanguage();
   const {
     rates: liveRates,
     isLoading: isLoadingRates,

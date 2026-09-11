@@ -8,10 +8,11 @@ import {
   ChevronDown,
   Menu,
   X,
+  Globe,
 } from 'lucide-react';
 import { LOGO_URL, COMPANY_INFO } from '../data/materials';
 import { CompanyLogo } from './CompanyLogo';
-import { Language, TRANSLATIONS } from '../data/translations';
+import { useLanguage } from '../context/LanguageContext';
 
 interface HeaderProps {
   cartCount: number;
@@ -21,7 +22,7 @@ interface HeaderProps {
   onOpenContact?: () => void;
   onSelectCategoryFilter?: (catId: string) => void;
   onOpenTds?: (productId: string) => void;
-  language?: Language;
+  language?: 'tr' | 'en';
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -32,12 +33,11 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenContact,
   onSelectCategoryFilter,
   onOpenTds,
-  language = 'tr',
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = React.useState(false);
-
-  const t = TRANSLATIONS[language].header;
+  const { language, setLanguage, t: currentT } = useLanguage();
+  const t = currentT.header;
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -452,8 +452,40 @@ export const Header: React.FC<HeaderProps> = ({
       {mobileMenuOpen && (
         <div
           id="mobile-nav-panel"
-          className="lg:hidden bg-[#111318] border-b border-[#434655]/40 px-4 py-4 flex flex-col gap-2"
+          className="lg:hidden bg-[#111318] border-b border-[#434655]/40 px-4 py-4 flex flex-col gap-2.5"
         >
+          {/* Mobil Dil Seçici */}
+          <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[#181b24] border border-[#434655]/40">
+            <span className="text-xs font-mono text-[#8d90a0] flex items-center gap-1.5">
+              <Globe className="w-3.5 h-3.5 text-[#38bdf8]" />
+              Dil / Language:
+            </span>
+            <div className="flex items-center gap-1 bg-[#12141c] p-0.5 rounded-lg border border-[#2d3142]">
+              <button
+                id="mobile-lang-tr"
+                onClick={() => setLanguage('tr')}
+                className={`px-3 py-1 rounded text-xs font-bold transition-all ${
+                  language === 'tr'
+                    ? 'bg-[#2563eb] text-white shadow'
+                    : 'text-[#8d90a0] hover:text-[#e2e2e9]'
+                }`}
+              >
+                TR
+              </button>
+              <button
+                id="mobile-lang-en"
+                onClick={() => setLanguage('en')}
+                className={`px-3 py-1 rounded text-xs font-bold transition-all ${
+                  language === 'en'
+                    ? 'bg-[#2563eb] text-white shadow'
+                    : 'text-[#8d90a0] hover:text-[#e2e2e9]'
+                }`}
+              >
+                EN
+              </button>
+            </div>
+          </div>
+
           <button
             onClick={() => {
               onOpenSearch();
@@ -462,19 +494,19 @@ export const Header: React.FC<HeaderProps> = ({
             className="flex items-center gap-2 p-2.5 rounded-lg bg-[#1a1b21] text-[#c3c6d7] text-left text-xs"
           >
             <Search className="w-4 h-4 text-[#8d90a0]" />
-            <span>Malzeme veya DIN Ara...</span>
+            <span>{t.searchPlaceholder}</span>
           </button>
           <button
             onClick={() => handleNavClick('katalog-bolumu')}
             className="flex items-center justify-between p-2.5 rounded-lg text-left text-sm font-medium text-[#e2e2e9] hover:bg-[#1e1f25]"
           >
-            <span>Tüm Endüstriyel Kategoriler</span>
+            <span>{t.viewAllCategories}</span>
           </button>
           <button
             onClick={() => handleNavClick('rfq-formu')}
             className="flex items-center justify-between p-2.5 rounded-lg text-left text-sm font-medium text-[#b4c5ff] hover:bg-[#1e1f25]"
           >
-            <span>Teknik Teklif & RFQ Hesaplayıcı</span>
+            <span>{t.rfqCalculator}</span>
           </button>
           <button
             onClick={() => {
@@ -483,13 +515,13 @@ export const Header: React.FC<HeaderProps> = ({
             }}
             className="flex items-center justify-between p-2.5 rounded-lg text-left text-sm font-medium text-[#4cd7f6] hover:bg-[#1e1f25]"
           >
-            <span>2025 Teknik Ürün Kataloğu (PDF)</span>
+            <span>{t.catalogPdf}</span>
           </button>
           <button
             onClick={() => handleNavClick('kurumsal-bolum')}
             className="flex items-center justify-between p-2.5 rounded-lg text-left text-sm font-medium text-[#e2e2e9] hover:bg-[#1e1f25]"
           >
-            <span>Kurumsal & Hakkımızda</span>
+            <span>{t.aboutUs}</span>
           </button>
           <button
             onClick={() => {
@@ -502,7 +534,7 @@ export const Header: React.FC<HeaderProps> = ({
             }}
             className="flex items-center justify-between p-2.5 rounded-lg text-left text-sm font-semibold text-[#00f0ff] hover:bg-[#1e1f25]"
           >
-            <span>B2B Teklif & İletişim Formu</span>
+            <span>{t.contactForm}</span>
           </button>
         </div>
       )}

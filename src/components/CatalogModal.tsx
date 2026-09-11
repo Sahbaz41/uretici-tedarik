@@ -13,13 +13,15 @@ import {
   Factory,
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/materials';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 interface CatalogModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const CATALOG_SECTIONS = [
+const CATALOG_SECTIONS_TR = [
   { page: '01', title: 'Kurumsal Profil, İmalat & İthalat, 3-5 Eksen CNC Parkuru', tag: 'Genel Bakış' },
   { page: '02-03', title: 'Polietilen Levha (HDPE) & Ulpolen 1000 (UHMWPE)', tag: 'Aşınma Plakaları' },
   { page: '04-05', title: 'Kestamit P6 G (Cast Polyamid Döküm Naylon) & PA6', tag: 'Mühendislik Plastiği' },
@@ -43,76 +45,74 @@ const CATALOG_SECTIONS = [
   { page: '42', title: 'Civa Çeliği H8 (1.2210 / 115CrV3 - 60-63 HRC Sertlik)', tag: 'Kalıp & Miller' },
 ];
 
+const CATALOG_SECTIONS_EN = [
+  { page: '01', title: 'Corporate Profile, Manufacturing & Import, 3-5 Axis CNC Fleet', tag: 'Overview' },
+  { page: '02-03', title: 'Polyethylene Sheet (HDPE) & Ulpolen 1000 (UHMWPE)', tag: 'Wear Liners' },
+  { page: '04-05', title: 'Cast Polyamide (Kestamit PA6G) & Extruded PA6', tag: 'Engineering Plastic' },
+  { page: '06', title: 'POM-C (Polyacetal / Delrin)', tag: 'Dimensional Stability' },
+  { page: '07', title: 'Virgin PTFE (Teflon) Sheet, Rod & Film (-260°C ~ +260°C)', tag: 'High Temperature' },
+  { page: '08-10', title: 'Polypropylene [PP], PVC-U B1 Flame Retardant & PVDF', tag: 'Chemical Resistance' },
+  { page: '11-13', title: 'PET, PEEK (260°C) & PBI Polybenzimidazole (310-500°C)', tag: 'Extreme Polymers' },
+  { page: '14-17', title: 'Expanded PTFE Tape (Contalon), Hoses & Gland Packings', tag: 'Sealing Solutions' },
+  { page: '18', title: 'PTFE Glass Fabric (Teflon Mesh) Belts (260°C+)', tag: 'Dryer Belts' },
+  { page: '19-20', title: 'FR4 Epoxy Glass Sheet & Phenolic Cotton Laminated Sheet/Rod', tag: 'Electrical / Mechanical Insulation' },
+  { page: '21', title: 'Polyurethane - Elastomer - Vulkollan (Die Springs & Rods)', tag: 'Shock Absorption' },
+  { page: '22-24', title: 'Solid Polycarbonate, Multiwall Sheet & PET-G', tag: 'Impact Transparent' },
+  { page: '25', title: 'Micanite Sheet (500-700°C Heater Insulation)', tag: 'Thermal Resistance' },
+  { page: '26-27', title: 'Rubber Sheets (Viton, EPDM, Neoprene, NBR) & Silicone Sheet', tag: 'Elastomers' },
+  { page: '28', title: 'PVC Transparent Strip Curtain Systems', tag: 'Thermal / Dust Barrier' },
+  { page: '29-32', title: 'Flame Retardant Fabrics (280-1200°C) & Ceramic Fiber Blanket', tag: '1200-1600°C High Temp' },
+  { page: '33-35', title: 'Ceramic & Glass Fiber Products, PP & PE Welding Rods', tag: 'Technical Insulation' },
+  { page: '36', title: 'Fire-Proof Nickel-Plated Copper Wire (400°C Safety)', tag: 'Certified Cable' },
+  { page: '37-40', title: 'Aluminum (1050-7075), Special Copper Alloys, Bronze & Brass', tag: 'Industrial Metals' },
+  { page: '41', title: 'Crane Outrigger Pad (Virgin HDPE 75-Ton Pressure Rating)', tag: 'Heavy Duty Safety' },
+  { page: '42', title: 'Silver Steel H8 Drill Rod (1.2210 / 115CrV3 - 60-63 HRC)', tag: 'Tooling & Shafts' },
+];
+
 export const CatalogModal: React.FC<CatalogModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const { language } = useLanguage();
+  const t = TRANSLATIONS[language].catalog;
+  const sections = language === 'tr' ? CATALOG_SECTIONS_TR : CATALOG_SECTIONS_EN;
+
   if (!isOpen) return null;
 
   const handleDownloadCatalogPdf = () => {
+    const isEn = language === 'en';
     const content = `=====================================================
 ${COMPANY_INFO.fullName}
-Resmi Slogan: ${COMPANY_INFO.slogan}
-Yetkili: ${COMPANY_INFO.authorizedPerson} | Tel: ${COMPANY_INFO.phone}
-Web: ${COMPANY_INFO.website} | E-posta: ${COMPANY_INFO.email}
+${isEn ? 'Official Slogan:' : 'Resmi Slogan:'} ${COMPANY_INFO.slogan}
+${isEn ? 'Authorized:' : 'Yetkili:'} ${COMPANY_INFO.authorizedPerson} | ${isEn ? 'Tel:' : 'Tel:'} ${COMPANY_INFO.phone}
+${isEn ? 'Web:' : 'Web:'} ${COMPANY_INFO.website} | ${isEn ? 'Email:' : 'E-posta:'} ${COMPANY_INFO.email}
 Instagram: @${COMPANY_INFO.instagram}
-Adres: ${COMPANY_INFO.location}
+${isEn ? 'Address:' : 'Adres:'} ${COMPANY_INFO.location}
 =====================================================
 
-42 SAYFALIK RESMİ TEKNİK ÜRÜN VE İMALAT KATALOĞU İÇİNDEKİLER:
+${isEn ? '42-PAGE OFFICIAL TECHNICAL PRODUCT & MACHINING CATALOG TABLE OF CONTENTS:' : '42 SAYFALIK RESMİ TEKNİK ÜRÜN VE İMALAT KATALOĞU İÇİNDEKİLER:'}
 
-1. Kurumsal Profil, İmalat ve İthalat Portföyü, 3 ve 5 Eksen CNC Parkuru
-2. Polietilen Levha (HDPE PE-HD / PE 300 / PE 500)
-3. Ulpolen1000 (UHMWPE) Aşınma ve Bunker Plakaları
-4. Kestamit P6 G (Cast Polyamid Döküm Naylon - Sarı ve Natürel)
-5. Poliamid PA6 (-20°C ile +85°C)
-6. POM-C (Delrin / Polioksimetilen)
-7. PTFE (Teflon) Levha - Çubuk - Film (-260°C ile +260°C)
-8. Polypropylene [PP] Homopolimer ve Kopolimer
-9. PVC-U Polivinil Klorür DIN 4102 B1 Yanmazlık
-10. PVDF Poliviniliden Florür (-30°C ile +140°C)
-11. PET Polyethylene Terephthalate
-12. PEEK Polietereterketon (260°C Sürekli Çalışma)
-13. PBI Polybenzimidazole (310°C - 500°C Ekstrem Termoplastik)
-14. Teflon (PTFE) Contalon Genişletilmiş Conta Bandı (-296°C ~ +300°C)
-15. PTFE (Teflon) Hortum
-16. Teflon Salmastralar (Saf ve Grafitli)
-17. Zebra Örgülü ve Aramid İçerikli Salmastra
-18. PTFE Cam Elyaf Kumaş
-19. FR4 Yeşil Epoksi Levha ve Çubuk (180°C)
-20. Fenolik Pamuk Fiber Levha ve Çubuk (140°C)
-21. Poliüretan - Elastomer - Vulkollan Kalıp Yayları ve Çubuk
-22. Solid Polikarbonat Levhalar (Camdan 200 Kat Dayanıklı)
-23. Polikarbonat Oluklu Levha
-24. PET-G Levhalar
-25. Mikanit Levha (500-700°C Isıtıcı İzolasyonu)
-26. Kauçuk Levhalar (Viton, EPDM, Nitril, Neopren)
-27. Silikon Kauçuk Levha (-50°C ile +250°C)
-28. PVC Şeffaf Şerit Perde
-29-32. Yanmaz Kumaşlar (280°C - 1200°C) & Seramik Elyaf Battaniye (1200°C - 1600°C)
-33. Seramik ve Cam Elyaf Ürünler
-34. Kalsiyum Silikat ve Monolite İzolasyon Plakaları
-35. PP ve PE Kaynak Telleri
-36. Yanmaz Kablo (Nikel Kaplı Bakır Kablo - 400°C)
-37. Alüminyum Serileri (1050, 5754, 5083, 6013, 6061, 6082, 7075)
-38. Özel Alaşımlı Bakırlar (CuCr, Küp2, CuCrZr, CuNiBe, CuCo2Be, CuNiSiCr)
-39. Kızıl-Bronz Alaşımları (Rg5, Rg7, CuSn6, CuSn8, CuSn10, CuSn12, Alüminyum Bronz)
-40. Sarı-Pirinç (%60 Bakır, %40 Çinko)
-41. Vinç Ayak Denge Takozu (Orijinal HDPE 75 Ton Taşıma Kapasitesi)
-42. Civa Çeliği H8 (1.2210 / 115CrV3 - 60-63 HRC Sertlik)
+${sections.map((s, idx) => `${idx + 1}. [${s.page}] ${s.title} (${s.tag})`).join('\n')}
 
-ÖZEL PROJE VE FASON İMALAT DESTEĞİ:
-3 Eksen, 5 Eksen CNC Frezeleme, Kayar Otomat ve Savunma Sanayi Üretimi.
-İbrahim Şahbaz: 0533 377 18 97
+=====================================================
+${isEn ? 'CUSTOM PROJECTS & CNC MACHINING SUPPORT:' : 'ÖZEL PROJE VE FASON İMALAT DESTEĞİ:'}
+${isEn ? '3-Axis, 5-Axis CNC Milling, Swiss Lathe & Defense Industry Production.' : '3 Eksen, 5 Eksen CNC Frezeleme, Kayar Otomat ve Savunma Sanayi Üretimi.'}
+İbrahim Şahbaz: +90 533 377 18 97
 `;
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `Uretici_Tedarik_42_Sayfalik_Teknik_Katalog.txt`;
+    link.download = isEn
+      ? `Uretici_Tedarik_42_Page_Technical_Catalog.txt`
+      : `Uretici_Tedarik_42_Sayfalik_Teknik_Katalog.txt`;
     link.click();
     URL.revokeObjectURL(url);
   };
+
+  const whatsappMsg = language === 'en'
+    ? encodeURIComponent("Hello, I would like to receive detailed technical and pricing information regarding the products in your 42-page catalog.")
+    : encodeURIComponent("Merhaba, Üretici Tedarik 42 sayfalık kataloğunuzdaki ürünler hakkında bilgi almak istiyorum.");
 
   return (
     <div
@@ -134,14 +134,14 @@ Adres: ${COMPANY_INFO.location}
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-mono text-[10px] text-[#4cd7f6] uppercase tracking-wider font-bold">
-                  Resmi Şirket Kataloğu • 42 Sayfa
+                  {t.badgeOfficial}
                 </span>
                 <span className="hidden sm:inline font-mono text-[9px] text-[#ffb77d] px-1.5 py-0.5 rounded bg-[#33353a] font-bold">
                   {COMPANY_INFO.slogan}
                 </span>
               </div>
               <h3 className="font-display text-base sm:text-lg font-bold text-[#e2e2e9]">
-                Üretici Tedarik Teknik Plastik Polimer Metal Kataloğu
+                {t.modalTitle}
               </h3>
             </div>
           </div>
@@ -164,7 +164,7 @@ Adres: ${COMPANY_INFO.location}
               </div>
               <div>
                 <span className="text-[10px] font-mono text-[#8d90a0] uppercase block">
-                  Katalog Sorumlusu & Teknik Satış
+                  {t.responsible}
                 </span>
                 <span className="font-bold text-[#e2e2e9]">
                   {COMPANY_INFO.authorizedPerson}
@@ -184,7 +184,7 @@ Adres: ${COMPANY_INFO.location}
 
               <a
                 id="catalog-whatsapp-link"
-                href={`https://wa.me/905333771897?text=Merhaba,%20Üretici%20Tedarik%2042%20sayfalık%20kataloğunuzdaki%20ürünler%20hakkında%20bilgi%20almak%20istiyorum.`}
+                href={`https://wa.me/905333771897?text=${whatsappMsg}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#15803d] hover:bg-[#166534] text-white font-mono text-xs font-bold transition-colors"
@@ -198,18 +198,18 @@ Adres: ${COMPANY_INFO.location}
           {/* Katalog İndeksi */}
           <div className="flex flex-col gap-2">
             <span className="font-mono text-xs text-[#8d90a0] uppercase font-semibold flex items-center justify-between">
-              <span>Katalog Sayfa Dizinleri (42 Sayfa Tam Liste)</span>
-              <span className="text-[#4cd7f6]">Tüm Sayfalar İndirilebilir</span>
+              <span>{t.indexTitle}</span>
+              <span className="text-[#4cd7f6]">{t.allDownloadable}</span>
             </span>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {CATALOG_SECTIONS.map((sec) => (
+              {sections.map((sec) => (
                 <div
                   key={sec.page}
                   className="p-2.5 rounded-lg bg-[#14161d] border border-[#434655]/30 flex items-start gap-2.5 hover:border-[#b4c5ff]/40 transition-colors"
                 >
                   <span className="font-mono text-[10px] text-[#4cd7f6] px-1.5 py-0.5 rounded bg-[#1e1f25] border border-[#434655]/40 shrink-0 mt-0.5">
-                    S.{sec.page}
+                    {t.pageLabel} {sec.page}
                   </span>
                   <div className="flex-1 min-w-0">
                     <span className="font-medium text-xs text-[#e2e2e9] block truncate">
@@ -252,17 +252,17 @@ Adres: ${COMPANY_INFO.location}
               id="catalog-print-btn"
               onClick={() => window.print()}
               className="px-4 h-10 rounded-lg bg-[#282a2f] hover:bg-[#33353a] text-[#4cd7f6] text-xs font-semibold flex items-center gap-2 border border-[#434655]/40 transition-colors cursor-pointer"
-              title="Tarayıcıdan PDF Olarak Kaydet veya Yazdır"
+              title={t.btnPrint}
             >
               <Printer className="w-4 h-4" />
-              <span>PDF Olarak Kaydet / Yazdır</span>
+              <span>{t.btnPrint}</span>
             </button>
             <button
               id="catalog-close-bottom"
               onClick={onClose}
               className="px-4 h-10 rounded-lg bg-[#282a2f] hover:bg-[#33353a] text-[#e2e2e9] text-xs font-semibold transition-colors cursor-pointer"
             >
-              Kapat
+              {t.btnClose}
             </button>
             <button
               id="catalog-download-pdf-btn"
@@ -270,7 +270,7 @@ Adres: ${COMPANY_INFO.location}
               className="px-5 h-10 rounded-lg bg-[#2563eb] text-[#eeefff] text-xs font-bold flex items-center gap-2 shadow-md hover:bg-[#0053db] transition-all cursor-pointer"
             >
               <Download className="w-4 h-4" />
-              <span>42 Sayfalık Föyü İndir (.TXT)</span>
+              <span>{t.btnDownload}</span>
             </button>
           </div>
 

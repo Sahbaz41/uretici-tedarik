@@ -9,6 +9,8 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { TECHNICAL_FAQS } from '../data/materials';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS, FAQS_TRANSLATIONS } from '../data/translations';
 
 interface FaqSectionProps {
   onSelectProductForRfq: (productId: string) => void;
@@ -17,21 +19,40 @@ interface FaqSectionProps {
 export const FaqSection: React.FC<FaqSectionProps> = ({
   onSelectProductForRfq,
 }) => {
+  const { language } = useLanguage();
+  const t = TRANSLATIONS[language].faq;
   const [openId, setOpenId] = useState<string | null>(TECHNICAL_FAQS[0]?.id || null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('Tümü');
+  const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
 
-  const categories = ['Tümü', ...Array.from(new Set(TECHNICAL_FAQS.map((f) => f.category)))];
+  const localizedFaqs = TECHNICAL_FAQS.map((faq) => {
+    const trItem = FAQS_TRANSLATIONS[language]?.[faq.id];
+    return {
+      ...faq,
+      question: trItem?.question || faq.question,
+      shortAnswer: trItem?.shortAnswer || faq.shortAnswer,
+      detailedAnswer: trItem?.detailedAnswer || faq.detailedAnswer,
+      category: trItem?.category || faq.category,
+    };
+  });
 
-  const filteredFaqs = TECHNICAL_FAQS.filter((faq) => {
+  const categories = [
+    { key: 'ALL', label: t.categoryAll },
+    ...Array.from(new Set(localizedFaqs.map((f) => f.category))).map((c) => ({
+      key: c,
+      label: c,
+    })),
+  ];
+
+  const filteredFaqs = localizedFaqs.filter((faq) => {
     const matchesSearch =
       faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
       faq.shortAnswer.toLowerCase().includes(searchQuery.toLowerCase()) ||
       faq.detailedAnswer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      faq.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
+      faq.tags.some((tg) => tg.toLowerCase().includes(searchQuery.toLowerCase()));
 
     const matchesCategory =
-      selectedCategory === 'Tümü' || faq.category === selectedCategory;
+      selectedCategory === 'ALL' || faq.category === selectedCategory;
 
     return matchesSearch && matchesCategory;
   });
@@ -119,27 +140,31 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
               <span className="h-0.5 w-6 bg-[#4cd7f6]" />
               <span className="font-mono text-xs font-bold text-[#4cd7f6] uppercase tracking-wider flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5" />
-                Mühendislik Bilgi Bankası & AEO Rehberi
+                {t.badge}
               </span>
             </div>
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#e2e2e9] tracking-tight">
-              Sıkça Sorulan Sorular // Teknik Malzeme Seçimi
+              {t.title}
             </h2>
             <p className="text-sm text-[#c3c6d7] max-w-2xl leading-relaxed">
-              Doğru polimer ve takım çeliği seçimi; çalışma sıcaklığı, sürtünme katsayısı ve basma toleranslarına doğrudan bağlıdır. Mühendislik ve CNC üretim tecrübemizle en çok merak edilen teknik konuları derledik.
+              {t.subtitle}
             </p>
           </div>
 
           {/* WhatsApp Canlı Mühendislik Danışma */}
           <a
             id="faq-ask-engineer-btn"
-            href="https://api.whatsapp.com/send?phone=905333771897&text=Merhaba%20İbrahim%20Bey,%20projemiz%20için%20teknik%20plastik/metal%20malzeme%20seçiminde%20danışmak%20istiyorum."
+            href={`https://api.whatsapp.com/send?phone=905333771897&text=${encodeURIComponent(
+              language === 'en'
+                ? 'Hello, I would like to ask a technical question regarding engineering plastics/metals for our project.'
+                : 'Merhaba İbrahim Bey, projemiz için teknik plastik/metal malzeme seçiminde danışmak istiyorum.'
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
             className="h-11 px-4 rounded-xl bg-[#1e1f25] hover:bg-[#282a2f] border border-[#434655]/40 text-[#4cd7f6] text-xs font-semibold flex items-center gap-2 transition-all shrink-0 group"
           >
             <MessageCircle className="w-4 h-4 text-[#4cd7f6] group-hover:scale-110 transition-transform" />
-            <span>Teknik Uzmana WhatsApp'tan Sor</span>
+            <span>{t.askEngineer}</span>
           </a>
         </div>
 
@@ -152,7 +177,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Soru veya malzeme ara (örn: Kestamit, PTFE, 64 HRC)..."
+              placeholder={t.searchPlaceholder}
               className="w-full h-9 pl-9 pr-3 rounded-xl bg-[#14161d] border border-[#434655]/30 text-[#e2e2e9] text-xs placeholder-[#8d90a0] focus:outline-none focus:border-[#2563eb]"
             />
           </div>
@@ -161,15 +186,15 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
           <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto no-scrollbar py-0.5">
             {categories.map((cat) => (
               <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
+                key={cat.key}
+                onClick={() => setSelectedCategory(cat.key)}
                 className={`h-8 px-3 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
-                  selectedCategory === cat
+                  selectedCategory === cat.key
                     ? 'bg-[#2563eb] text-white font-semibold'
                     : 'bg-[#282a2f] text-[#c3c6d7] hover:text-[#e2e2e9] hover:bg-[#33353a]'
                 }`}
               >
-                {cat}
+                {cat.label}
               </button>
             ))}
           </div>
@@ -180,8 +205,8 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
           {filteredFaqs.length === 0 ? (
             <div className="p-8 rounded-2xl bg-[#1a1b21] border border-[#434655]/30 text-center text-[#8d90a0]">
               <HelpCircle className="w-10 h-10 mx-auto mb-2 opacity-50" />
-              <p className="text-sm font-semibold text-[#e2e2e9]">Aramanızla eşleşen teknik soru bulunamadı</p>
-              <p className="text-xs mt-1">Lütfen farklı anahtar kelimeler deneyin veya doğrudan WhatsApp hattımızdan teknik destek alın.</p>
+              <p className="text-sm font-semibold text-[#e2e2e9]">{t.noResultsTitle}</p>
+              <p className="text-xs mt-1">{t.noResultsDesc}</p>
             </div>
           ) : (
             filteredFaqs.map((faq) => {
@@ -223,7 +248,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
                             {faq.category}
                           </span>
                           <span className="font-mono text-[10px] text-[#ffb77d] px-2 py-0.5 rounded bg-[#ffb77d]/10 border border-[#ffb77d]/20">
-                            AEO Cevap Snippet'ı
+                            {t.aeoBadge}
                           </span>
                         </div>
                         <h3 className={`font-display text-sm sm:text-base font-bold text-[#e2e2e9] leading-snug group-hover:${theme.badgeText} transition-colors`}>
@@ -247,7 +272,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
                         <CheckCircle2 className="w-4 h-4 text-[#4cd7f6] shrink-0 mt-0.5" />
                         <div>
                           <strong className="block text-[#e2e2e9] font-bold mb-0.5 font-mono text-[11px] uppercase tracking-wider">
-                            Özet Mühendislik Tanımı:
+                            {t.summaryTitle}
                           </strong>
                           <span>{faq.shortAnswer}</span>
                         </div>
@@ -261,12 +286,12 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
                       {/* Etiketler ve Doğrudan RFQ Aksiyonu */}
                       <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#434655]/20">
                         <div className="flex flex-wrap items-center gap-1.5">
-                          {faq.tags.map((t, idx) => (
+                          {faq.tags.map((tagItem, idx) => (
                             <span
                               key={idx}
                               className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#282a2f] text-[#8d90a0]"
                             >
-                              #{t}
+                              #{tagItem}
                             </span>
                           ))}
                         </div>
@@ -278,7 +303,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
                             className="h-8 px-3.5 rounded-lg bg-[#2563eb] hover:bg-[#0053db] text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer ml-auto"
                           >
                             <Send className="w-3 h-3" />
-                            <span>Bu Malzemeden Teklif İste</span>
+                            <span>{t.requestQuoteForThis}</span>
                           </button>
                         )}
                       </div>

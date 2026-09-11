@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Download, X, Smartphone, Monitor, Share, CheckCircle2 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/materials';
+import { useLanguage } from '../context/LanguageContext';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -8,6 +9,8 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 export const PwaInstallPrompt: React.FC = () => {
+  const { language } = useLanguage();
+  const isEn = language === 'en';
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
@@ -58,7 +61,9 @@ export const PwaInstallPrompt: React.FC = () => {
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
       if (isIOS) {
-        alert("iOS Cihazlarda Yükleme: Safari'nin altındaki 'Paylaş' (Kare ve yukarı ok) simgesine dokunun ve ardından 'Ana Ekrana Ekle' seçeneğini tıklayın.");
+        alert(isEn
+          ? "Installing on iOS: Tap 'Share' icon in Safari (square with arrow up) and select 'Add to Home Screen'."
+          : "iOS Cihazlarda Yükleme: Safari'nin altındaki 'Paylaş' (Kare ve yukarı ok) simgesine dokunun ve ardından 'Ana Ekrana Ekle' seçeneğini tıklayın.");
       }
       return;
     }
@@ -87,19 +92,19 @@ export const PwaInstallPrompt: React.FC = () => {
       {/* 1. Başarılı Yükleme Toast Bildirimi */}
       {installed && (
         <aside
-          aria-label="Uygulama Yüklendi Bildirimi"
+          aria-label={isEn ? "App Installed Notification" : "Uygulama Yüklendi Bildirimi"}
           className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-4 py-3 rounded-2xl bg-[#00788c] text-white shadow-2xl flex items-center gap-2.5 font-sans text-xs sm:text-sm animate-in fade-in"
         >
           <CheckCircle2 className="w-5 h-5 text-[#acedff]" />
-          <span>Üretici Tedarik uygulaması başarıyla masaüstünüze / cihazınıza yüklendi!</span>
+          <span>{isEn ? 'Uretici Tedarik app installed successfully on your device!' : 'Üretici Tedarik uygulaması başarıyla masaüstünüze / cihazınıza yüklendi!'}</span>
         </aside>
       )}
 
-      {/* 2. PWA Akıllı Yükleme Çubuğu (Floating Banner - Sol Alt Köşe, Sağ FAB Çubuğunu Asla Engellemez) */}
+      {/* 2. PWA Akıllı Yükleme Çubuğu */}
       {showPrompt && (
         <aside
           id="pwa-install-banner"
-          aria-label="PWA Uygulama Yükleme Bildirimi"
+          aria-label={isEn ? "PWA App Install Notice" : "PWA Uygulama Yükleme Bildirimi"}
           className="fixed bottom-6 left-4 sm:left-6 z-40 w-[92%] max-w-sm p-3.5 rounded-2xl bg-[#0c0e13]/98 border border-[#00f0ff]/40 shadow-[0_12px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl animate-in fade-in slide-in-from-bottom-4"
         >
           <div className="flex items-start justify-between gap-3">
@@ -107,7 +112,7 @@ export const PwaInstallPrompt: React.FC = () => {
               {/* Uygulama İkonu */}
               <img
                 src="/icon-192.png"
-                alt="Üretici Tedarik App İkonu"
+                alt="App Icon"
                 className="w-11 h-11 rounded-xl object-cover border border-[#434655]/50 shadow-md shrink-0"
               />
               <div>
@@ -115,13 +120,13 @@ export const PwaInstallPrompt: React.FC = () => {
                   <span className="font-mono text-[9.5px] px-1.5 py-0.5 rounded bg-[#2563eb]/30 text-[#00f0ff] font-bold uppercase border border-[#00f0ff]/30">
                     PWA App
                   </span>
-                  <span className="text-[11px] text-[#8d90a0] font-mono">Çevrimdışı Destekli</span>
+                  <span className="text-[11px] text-[#8d90a0] font-mono">{isEn ? 'Offline Ready' : 'Çevrimdışı Destekli'}</span>
                 </div>
                 <h4 className="font-display text-xs sm:text-sm font-bold text-[#e2e2e9] leading-snug mt-0.5">
-                  Üretici Tedarik Masaüstü &amp; Mobil Uygulaması
+                  {isEn ? 'Uretici Tedarik Desktop & Mobile App' : 'Üretici Tedarik Masaüstü & Mobil Uygulaması'}
                 </h4>
                 <p className="text-[10.5px] text-[#c3c6d7] leading-tight mt-0.5">
-                  Masaüstünüzden veya ana ekranınızdan tek tıkla RFQ ve teknik föylere erişin.
+                  {isEn ? 'Access RFQ quotes and technical data sheets with 1-click.' : 'Masaüstünüzden veya ana ekranınızdan tek tıkla RFQ ve teknik föylere erişin.'}
                 </p>
               </div>
             </div>
@@ -129,7 +134,7 @@ export const PwaInstallPrompt: React.FC = () => {
             <button
               onClick={handleDismiss}
               className="text-[#8d90a0] hover:text-[#e2e2e9] p-1 shrink-0 cursor-pointer"
-              title="Kapat"
+              title="Close"
             >
               <X className="w-4 h-4" />
             </button>
@@ -140,7 +145,7 @@ export const PwaInstallPrompt: React.FC = () => {
               onClick={handleDismiss}
               className="px-3 py-1.5 rounded-lg text-xs font-medium text-[#8d90a0] hover:text-[#e2e2e9] transition-colors cursor-pointer"
             >
-              Daha Sonra
+              {isEn ? 'Later' : 'Daha Sonra'}
             </button>
 
             <button
@@ -151,12 +156,12 @@ export const PwaInstallPrompt: React.FC = () => {
               {isIOS ? (
                 <>
                   <Share className="w-3.5 h-3.5" />
-                  <span>Nasıl Yüklenir?</span>
+                  <span>{isEn ? 'How to Install?' : 'Nasıl Yüklenir?'}</span>
                 </>
               ) : (
                 <>
                   <Download className="w-3.5 h-3.5 text-[#00f0ff]" />
-                  <span>Uygulamayı Yükle</span>
+                  <span>{isEn ? 'Install App' : 'Uygulamayı Yükle'}</span>
                 </>
               )}
             </button>

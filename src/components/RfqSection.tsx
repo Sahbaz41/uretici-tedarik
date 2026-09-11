@@ -15,12 +15,14 @@ import {
 import { calculateWeight, MATERIAL_BASE_RATES, PRODUCTS } from '../data/materials';
 import { CurrencyCode, RfqCartItem } from '../types';
 import { CurrencyRates } from '../hooks/useLiveCurrency';
+import { useLanguage } from '../context/LanguageContext';
 
 interface RfqSectionProps {
   initialProductId?: string;
   onAddToCart: (item: RfqCartItem) => void;
   currency: CurrencyCode;
   liveRates?: CurrencyRates;
+  language?: 'tr' | 'en';
 }
 
 export const RfqSection: React.FC<RfqSectionProps> = ({
@@ -29,6 +31,9 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
   currency,
   liveRates,
 }) => {
+  const { language, isEN, t: currentT } = useLanguage();
+  const r = currentT.rfq;
+
   const [selectedProductId, setSelectedProductId] = useState(initialProductId);
   const [shape, setShape] = useState<'plate' | 'rod'>('plate');
   const [width, setWidth] = useState<number>(500);
@@ -79,10 +84,30 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
   const estimatedCost = Math.round(totalWeightKg * baseRate * rateMultiplier);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setAttachedFileName(file.name);
+    if (e.target.files && e.target.files[0]) {
+      setAttachedFileName(e.target.files[0].name);
     }
+  };
+
+  const getWhatsAppMessage = () => {
+    if (isEN) {
+      let msg = `Hello Uretici Tedarik, I would like to request an RFQ for the following material:\n\n`;
+      msg += `Material: ${currentProduct.name}\n`;
+      msg += `Shape: ${shape === 'plate' ? 'Sheet/Plate' : 'Solid Round Rod'}\n`;
+      msg += `Dimensions: ${width} x ${length} ${shape === 'plate' ? `x ${thickness} mm` : 'mm'}\n`;
+      msg += `Quantity: ${quantity} pcs (Theoretical weight: ${totalWeightKg} kg)\n`;
+      msg += `Machining: ${processing}${companyName ? `\nCompany: ${companyName}` : ''}\n\n`;
+      msg += `Could you please provide formal pricing and delivery terms? Thank you.`;
+      return msg;
+    }
+    let msg = `Merhaba Üretici Tedarik, aşağıdaki teknik malzeme için RFQ fiyat teklifi almak istiyorum:\n\n`;
+    msg += `Malzeme: ${currentProduct.name}\n`;
+    msg += `Şekil: ${shape === 'plate' ? 'Levha/Plaka' : 'Dolu Yuvarlak Çubuk'}\n`;
+    msg += `Ölçü: ${width}x${length}${shape === 'plate' ? `x${thickness}` : ''} mm\n`;
+    msg += `Adet: ${quantity} (Teorik: ${totalWeightKg} kg)\n`;
+    msg += `İşleme: ${processing}${companyName ? `\nFirma: ${companyName}` : ''}\n\n`;
+    msg += `En kısa sürede teklifinizi rica ederim.`;
+    return msg;
   };
 
   const handleAddToCart = () => {
@@ -124,28 +149,28 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
             </div>
             <div>
               <span className="font-display text-lg sm:text-xl text-[#e2e2e9] font-extrabold block">
-                Teknik Teklif &amp; RFQ Hesaplayıcı
+                {r.title}
               </span>
               <span className="font-mono text-[10px] text-[#8d90a0]">
-                Doğrudan Çayırova Fabrika Satış Ekibi
+                {isEN ? 'Direct Cayirova Factory Sales Team' : 'Doğrudan Çayırova Fabrika Satış Ekibi'}
               </span>
             </div>
           </div>
           <div className="flex items-center gap-1.5 font-mono text-xs text-[#00f0ff] px-2.5 py-1 rounded bg-[#181b24] border border-[#00f0ff]/30">
             <Clock className="w-3.5 h-3.5" />
-            <span>2 Saatte Yanıt</span>
+            <span>{isEN ? '2-Hour Response' : '2 Saatte Yanıt'}</span>
           </div>
         </div>
 
         <p className="text-xs sm:text-sm text-[#c3c6d7] my-4 leading-relaxed">
-          İhtiyaç duyduğunuz teknik polimer veya alaşımlı metalin ölçülerini giriniz. Mühendislerimiz CAD toleransları ve fire optimizasyonu ile en uygun teklifi hazırlayacaktır.
+          {r.subtitle}
         </p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {/* Malzeme Grubu Seçimi */}
           <div className="flex flex-col gap-1.5">
             <label className="font-mono text-[11px] text-[#8d90a0] uppercase font-semibold">
-              Malzeme Grubu Seçimi *
+              {r.selectMaterial} *
             </label>
             <select
               id="rfq-material-select"
@@ -174,7 +199,7 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
               }`}
             >
               <Box className="w-4 h-4" />
-              <span>Levha / Plaka / Takoz</span>
+              <span>{r.shapePlate}</span>
             </button>
             <button
               type="button"
@@ -187,7 +212,7 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
               }`}
             >
               <Cylinder className="w-4 h-4" />
-              <span>Dolu Çubuk / Mil</span>
+              <span>{r.shapeRod}</span>
             </button>
           </div>
 
@@ -195,7 +220,7 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
           <div className="grid grid-cols-3 gap-3">
             <div className="flex flex-col gap-1.5">
               <label className="font-mono text-[11px] text-[#8d90a0] uppercase font-semibold">
-                {shape === 'plate' ? 'En (mm)' : 'Çap Ø (mm)'}
+                {shape === 'plate' ? r.width : r.diameter}
               </label>
               <input
                 id="rfq-width-input"
@@ -211,7 +236,7 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
 
             <div className="flex flex-col gap-1.5">
               <label className="font-mono text-[11px] text-[#8d90a0] uppercase font-semibold">
-                Boy (mm)
+                {r.length}
               </label>
               <input
                 id="rfq-length-input"
@@ -225,29 +250,39 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
               />
             </div>
 
-            <div className="flex flex-col gap-1.5">
-              <label className="font-mono text-[11px] text-[#8d90a0] uppercase font-semibold">
-                {shape === 'plate' ? 'Kalınlık (mm)' : 'Et Kalınlığı'}
-              </label>
-              <input
-                id="rfq-thickness-input"
-                type="number"
-                min="1"
-                disabled={shape === 'rod'}
-                value={shape === 'rod' ? '-' : thickness}
-                onChange={(e) => setThickness(Math.max(1, Number(e.target.value)))}
-                className="h-11 px-3 rounded-xl bg-[#141722] border border-[#434655]/40 text-[#e2e2e9] font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#00f0ff] disabled:opacity-40"
-                placeholder="Örn: 20"
-                required={shape === 'plate'}
-              />
-            </div>
+            {shape === 'plate' ? (
+              <div className="flex flex-col gap-1.5">
+                <label className="font-mono text-[11px] text-[#8d90a0] uppercase font-semibold">
+                  {r.thickness}
+                </label>
+                <input
+                  id="rfq-thickness-input"
+                  type="number"
+                  min="1"
+                  value={thickness}
+                  onChange={(e) => setThickness(Math.max(1, Number(e.target.value)))}
+                  className="h-11 px-3 rounded-xl bg-[#141722] border border-[#434655]/40 text-[#e2e2e9] font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#00f0ff]"
+                  placeholder="Örn: 20"
+                  required
+                />
+              </div>
+            ) : (
+              <div className="flex flex-col gap-1.5">
+                <label className="font-mono text-[11px] text-[#8d90a0] uppercase font-semibold">
+                  {isEN ? 'Profile' : 'Profil'}
+                </label>
+                <div className="h-11 px-3 rounded-xl bg-[#141722] border border-[#434655]/30 text-[#8d90a0] font-mono text-xs flex items-center">
+                  {isEN ? 'Round Rod' : 'Silindirik Dolu'}
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Miktar & İşleme Talebi */}
+          {/* Adet & İşleme Seçeneği */}
           <div className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
               <label className="font-mono text-[11px] text-[#8d90a0] uppercase font-semibold">
-                Adet / Miktar
+                {r.quantity}
               </label>
               <input
                 id="rfq-quantity-input"
@@ -262,7 +297,7 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
 
             <div className="flex flex-col gap-1.5">
               <label className="font-mono text-[11px] text-[#8d90a0] uppercase font-semibold">
-                İşleme Talebi
+                {r.processing}
               </label>
               <select
                 id="rfq-processing-select"
@@ -270,10 +305,10 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
                 onChange={(e) => setProcessing(e.target.value)}
                 className="h-11 px-3 rounded-xl bg-[#141722] border border-[#434655]/40 text-[#e2e2e9] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#00f0ff]"
               >
-                <option>Sadece Ham Kesim</option>
-                <option>CNC Çizime Göre İşleme (3-5 Eksen)</option>
-                <option>Pah Kırma &amp; Delik Delme</option>
-                <option>Numune Parça Talebi</option>
+                <option>{r.procRaw}</option>
+                <option>{r.procCnc}</option>
+                <option>{r.procGrinding}</option>
+                <option>{r.procCustom}</option>
               </select>
             </div>
           </div>
@@ -282,14 +317,14 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
           <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#141722] border border-[#00f0ff]/30 text-xs font-mono shadow-inner">
             <div className="flex items-center gap-2">
               <Calculator className="w-4 h-4 text-[#00f0ff]" />
-              <span className="text-[#c3c6d7]">Teorik Toplam Ağırlık:</span>
+              <span className="text-[#c3c6d7]">{r.totalWeight}</span>
               <span className="text-[#00f0ff] font-bold">
                 {totalWeightKg} kg
               </span>
             </div>
             <div className="flex items-center gap-1.5 text-right">
               <span className="text-[#8d90a0] hidden sm:inline">
-                Tahmini Tutar:
+                {r.estimatedCost}
               </span>
               <span className="text-[#00f0ff] font-extrabold text-sm">
                 ~{currency === 'TRY' ? '₺' : currency === 'EUR' ? '€' : '$'}
@@ -302,14 +337,14 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
               <label className="font-mono text-[11px] text-[#8d90a0] uppercase font-semibold">
-                Firma / Yetkili Adı *
+                {isEN ? 'Company / Contact Person *' : 'Firma / Yetkili Adı *'}
               </label>
               <input
                 id="rfq-company-input"
                 type="text"
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                placeholder="Firma Ünvanı veya Ad Soyad"
+                placeholder={r.companyNamePlaceholder}
                 required
                 className="h-11 px-3 rounded-xl bg-[#141722] border border-[#434655]/40 text-[#e2e2e9] text-sm focus:outline-none focus:ring-2 focus:ring-[#00f0ff]"
               />
@@ -317,14 +352,14 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
 
             <div className="flex flex-col gap-1.5">
               <label className="font-mono text-[11px] text-[#8d90a0] uppercase font-semibold">
-                Telefon / GSM *
+                {isEN ? 'Phone / WhatsApp *' : 'Telefon / GSM *'}
               </label>
               <input
                 id="rfq-phone-input"
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="Örn: 0533 123 45 67"
+                placeholder={r.phonePlaceholder}
                 required
                 className="h-11 px-3 rounded-xl bg-[#141722] border border-[#434655]/40 text-[#e2e2e9] font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#00f0ff]"
               />
@@ -334,7 +369,7 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
           {/* Teknik Not & CAD STEP Dosyası Yükleme */}
           <div className="flex flex-col gap-1.5">
             <label className="font-mono text-[11px] text-[#8d90a0] uppercase font-semibold">
-              Teknik Not / CAD STEP Çizimi
+              {isEN ? 'Technical Notes / CAD STEP Drawing' : 'Teknik Not / CAD STEP Çizimi'}
             </label>
             <div className="flex flex-col sm:flex-row gap-2">
               <textarea
@@ -342,7 +377,7 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
                 rows={2}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="Varsa özel tolerans, çalışma sıcaklığı veya alaşım notlarınız..."
+                placeholder={r.notesPlaceholder}
                 className="flex-1 p-3 rounded-xl bg-[#141722] border border-[#434655]/40 text-[#e2e2e9] text-xs focus:outline-none focus:ring-2 focus:ring-[#00f0ff]"
               />
 
@@ -352,7 +387,7 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
               >
                 <Upload className="w-4 h-4 text-[#00f0ff] mb-1" />
                 <span className="text-[11px] text-[#c3c6d7] leading-tight font-medium truncate max-w-full">
-                  {attachedFileName ? attachedFileName : 'CAD / STEP Yükle'}
+                  {attachedFileName ? attachedFileName : r.uploadFileBtn}
                 </span>
                 <span className="text-[9px] text-[#8d90a0] mt-0.5">
                   .step, .dwg, .pdf
@@ -375,7 +410,7 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
               className="h-12 w-full rounded-xl bg-gradient-to-r from-[#2563eb] to-[#0053db] text-[#eeefff] font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_24px_rgba(0,240,255,0.5)] transition-all cursor-pointer"
             >
               <Send className="w-4 h-4" />
-              <span>Teklif Talebi Gönder</span>
+              <span>{isEN ? 'Send RFQ Request' : 'Teklif Talebi Gönder'}</span>
             </button>
 
             <button
@@ -385,18 +420,18 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
               className="h-12 w-full rounded-xl bg-[#181b24] hover:bg-[#222632] text-[#e2e2e9] font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 border border-[#434655]/50 transition-colors cursor-pointer"
             >
               <PlusCircle className="w-4 h-4 text-[#00f0ff]" />
-              <span>Sepete Ekle</span>
+              <span>{r.btnAddToCart}</span>
             </button>
 
             <a
               id="rfq-direct-whatsapp-btn"
-              href={`https://api.whatsapp.com/send?phone=905333771897&text=Merhaba,%20${encodeURIComponent(currentProduct.name)}%20için%20RFQ%20fiyat%20teklifi%20almak%20istiyorum.%0AŞekil:%20${shape === 'plate' ? 'Levha' : 'Çubuk'}%0AÖlçü:%20${width}x${length}${shape === 'plate' ? `x${thickness}` : ''}mm%0AAdet:%20${quantity}%20(Teorik:%20${totalWeightKg}%20kg)%0Aİşleme:%20${encodeURIComponent(processing)}${companyName ? `%0AFirma:%20${encodeURIComponent(companyName)}` : ''}`}
+              href={`https://api.whatsapp.com/send?phone=905333771897&text=${encodeURIComponent(getWhatsAppMessage())}`}
               target="_blank"
               rel="noopener noreferrer"
               className="h-12 w-full rounded-xl bg-[#15803d] hover:bg-[#166534] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-colors shadow-sm"
             >
               <MessageCircle className="w-4 h-4" />
-              <span>WhatsApp'a Aktar</span>
+              <span>{isEN ? 'WhatsApp RFQ' : "WhatsApp'a Aktar"}</span>
             </a>
           </div>
 
@@ -409,10 +444,10 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
               <CheckCircle className="w-5 h-5 text-[#00f0ff] shrink-0 mt-0.5" />
               <div>
                 <p className="font-bold text-[#00f0ff]">
-                  Talebiniz Çayırova Satış &amp; Mühendislik Ekibimize İletilmiştir!
+                  {isEN ? 'Your RFQ Has Been Transmitted to Cayirova Engineering Team!' : 'Talebiniz Çayırova Satış & Mühendislik Ekibimize İletilmiştir!'}
                 </p>
                 <p className="mt-0.5 text-[#c3c6d7]">
-                  {quantity} adet {currentProduct.name} ({totalWeightKg} kg) için 2 saat içinde teknik şartname ve fiyat teklifi sunulacaktır.
+                  {quantity} x {currentProduct.name} ({totalWeightKg} kg) - {isEN ? 'Our team will submit your formal quotation within 2 hours.' : '2 saat içinde teknik şartname ve fiyat teklifi sunulacaktır.'}
                 </p>
               </div>
             </div>

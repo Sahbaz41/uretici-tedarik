@@ -13,11 +13,13 @@ import {
   Grid,
 } from 'lucide-react';
 import { CATEGORIES, PRODUCTS } from '../data/materials';
+import { useLanguage } from '../context/LanguageContext';
 
 interface CategoriesSectionProps {
   selectedCategory: string | null;
   onSelectCategory: (categoryId: string) => void;
   onNavigateToRfq: (categoryId: string) => void;
+  language?: 'tr' | 'en';
 }
 
 interface CategoryColorTheme {
@@ -150,6 +152,9 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
   onSelectCategory,
   onNavigateToRfq,
 }) => {
+  const { language, isEN, t: currentT } = useLanguage();
+  const c = currentT.categories;
+
   const getIcon = (iconName: string) => {
     switch (iconName) {
       case 'Layers':
@@ -188,24 +193,26 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
             <div className="flex items-center gap-2">
               <span className="h-0.5 w-6 bg-[#00f0ff]" />
               <span className="font-mono text-xs font-bold text-[#00f0ff] uppercase tracking-wider">
-                Hassas Malzeme Portföyü // 10 Ana Grup
+                {c.badge}
               </span>
             </div>
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#e2e2e9] tracking-tight">
-              Endüstriyel Polimer &amp; Alaşımlı Metal Kategorileri
+              {c.title}
             </h2>
           </div>
           <p className="text-sm text-[#c3c6d7] max-w-lg leading-relaxed">
-            Her malzeme grubu için Çayırova ana depomuzdan sertifikalı, yüksek toleranslı ve istenilen milimetrik ebatlarda kesime hazır stok güvencesi.
+            {c.subtitle}
           </p>
         </div>
 
-        {/* 10'lu Kategori Izgarası (Her Biri Kendine Has Canlı Neon Renkte!) */}
+        {/* 10'lu Kategori Izgarası */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {CATEGORIES.map((cat) => {
             const isSelected = selectedCategory === cat.id;
             const productCount = PRODUCTS.filter((p) => p.categoryId === cat.id).length;
             const theme = CATEGORY_THEMES[cat.id] || CATEGORY_THEMES['muhendislik-plastikleri'];
+            const categoryName = c.names[cat.id] || cat.name;
+            const categoryDesc = c.descriptions[cat.id] || cat.description;
 
             return (
               <div
@@ -222,7 +229,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                     : `bg-[#12141c] border-[#434655]/40 hover:bg-[#181b24] hover:-translate-y-1.5 ${theme.borderHover} ${theme.glowShadow}`
                 } ${theme.bgGradient}`}
               >
-                {/* Üst Renkli Çizgi (Her Karta Özel Renk) */}
+                {/* Üst Renkli Çizgi */}
                 <div
                   className="absolute top-0 left-0 right-0 h-1 transition-all duration-300"
                   style={{
@@ -245,7 +252,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                     <span
                       className={`px-2 py-0.5 rounded text-[10px] font-bold border ${theme.badgeBg} ${theme.badgeText} ${theme.badgeBorder}`}
                     >
-                      {productCount} Ürün
+                      {productCount} {isEN ? 'Products' : 'Ürün'}
                     </span>
                     <span className="text-[#8d90a0]">
                       #{cat.number}
@@ -260,15 +267,15 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                     color: isSelected ? theme.primary : undefined,
                   }}
                 >
-                  {cat.name}
+                  {categoryName}
                 </h3>
 
                 {/* Açıklama */}
                 <p className="text-[12px] text-[#c3c6d7] mt-2 mb-3.5 flex-1 leading-relaxed line-clamp-3">
-                  {cat.description}
+                  {categoryDesc}
                 </p>
 
-                {/* Etiketler (Her Karta Özel Renkli Kenarlık ve Arka Plan) */}
+                {/* Etiketler */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {cat.tags.map((tag, idx) => (
                     <span
@@ -288,7 +295,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                       color: isSelected ? theme.primary : undefined,
                     }}
                   >
-                    {isSelected ? 'Filtre Aktif' : 'Malzemeleri Listele'}
+                    {isSelected ? (isEN ? 'Filter Active' : 'Filtre Aktif') : c.viewProducts}
                   </span>
                   <ChevronRight
                     className="w-4 h-4 group-hover:translate-x-1 transition-transform"

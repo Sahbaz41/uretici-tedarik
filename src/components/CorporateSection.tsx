@@ -9,36 +9,35 @@ import {
   Instagram,
   Globe,
   User,
-  Sparkles,
-  CheckCircle2,
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/materials';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 export const CorporateSection: React.FC = () => {
+  const { language } = useLanguage();
+  const t = TRANSLATIONS[language].corporate;
+
   return (
     <div id="kurumsal-bolum" className="flex flex-col gap-6">
       {/* Üst Rozet & Resmi Slogan */}
       <div className="flex items-center gap-2.5 flex-wrap">
         <span className="px-3 py-1 rounded-lg bg-[#00f0ff]/15 text-[#00f0ff] font-mono text-[11px] uppercase tracking-wider font-bold border border-[#00f0ff]/30">
-          {COMPANY_INFO.fullName}
+          {t.badgeName}
         </span>
         <span className="px-3 py-1 rounded-lg bg-[#ffb77d]/15 text-[#ffb77d] font-mono text-[11px] uppercase tracking-widest font-extrabold border border-[#ffb77d]/35">
-          {COMPANY_INFO.slogan}
+          {t.badgeSlogan}
         </span>
       </div>
 
       <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#e2e2e9] tracking-tight leading-tight">
-        Mühendislik Plastikleri İmalatı, İthalatı ve Savunma Sanayi Üretim Gücü
+        {t.title}
       </h2>
 
       {/* Katalogdan Kurumsal Açıklama & İmalat / İthalat Ayrımı */}
       <div className="flex flex-col gap-3.5 text-[#c3c6d7] text-sm sm:text-base leading-relaxed bg-[#0e1017] border border-[#434655]/40 p-6 rounded-3xl shadow-xl">
         <p>
-          <strong className="text-[#e2e2e9] font-bold">
-            {COMPANY_INFO.fullName}
-          </strong>{' '}
-          mühendislik plastiklerinin imalatı ve ithalatında uzman, Çayırova/Gebze merkezli endüstriyel tedarikçidir. Başlıca{' '}
-          <strong className="text-[#00f0ff]">savunma sanayi</strong> olmak üzere ağır makine, otomotiv ve konveyör hatlarında geniş bir ürün portföyü ve yüksek hassasiyetli talaşlı imalat sunar.
+          {t.description}
         </p>
 
         {/* İmalat vs İthalat İkili Tablo (Özel Neon Kartlar) */}
@@ -51,16 +50,11 @@ export const CorporateSection: React.FC = () => {
                 <Factory className="w-4 h-4" />
               </div>
               <span className="font-mono text-xs font-bold text-[#00f0ff] uppercase tracking-wider">
-                Üretimini Yapmış Olduğumuz
+                {t.producedTitle}
               </span>
             </div>
             <p className="text-xs text-[#e2e2e9] leading-relaxed">
-              <strong className="text-[#93c5fd]">Cast Polyamid (Kestamit PA6G)</strong>,{' '}
-              <strong className="text-[#93c5fd]">Polyamid PA6</strong>,{' '}
-              <strong className="text-[#93c5fd]">HDPE Polietilen</strong>,{' '}
-              <strong className="text-[#93c5fd]">PE 1000 (Ulpolen UHMWPE)</strong>,{' '}
-              <strong className="text-[#93c5fd]">POM-C Delrin</strong>, <strong className="text-[#93c5fd]">PTFE Teflon</strong> ve{' '}
-              <strong className="text-[#93c5fd]">Vinç Denge Takozları</strong> başlıca imalat ürünlerimizdir.
+              {t.producedItems}
             </p>
           </div>
 
@@ -72,25 +66,18 @@ export const CorporateSection: React.FC = () => {
                 <Globe className="w-4 h-4" />
               </div>
               <span className="font-mono text-xs font-bold text-[#c084fc] uppercase tracking-wider">
-                İthalatını Yapmış Olduğumuz
+                {t.importedTitle}
               </span>
             </div>
             <p className="text-xs text-[#e2e2e9] leading-relaxed">
-              <strong className="text-[#e9d5ff]">FR4 Epoksi</strong>, <strong className="text-[#e9d5ff]">Mikanit Levha</strong>,{' '}
-              <strong className="text-[#e9d5ff]">Fenolik Bezli Fiber</strong>, PTFE (Teflon) türevleri,{' '}
-              <strong className="text-[#e9d5ff]">PEEK</strong>, <strong className="text-[#e9d5ff]">PVDF &amp; PET</strong>, Silikon ve Kauçuk levhalar,{' '}
-              <strong className="text-[#e9d5ff]">Yanmaz Kumaşlar</strong> ve Alaşımlı Metaller.
+              {t.importedItems}
             </p>
           </div>
         </div>
 
         {/* Yüksek Teknoloji CNC & Makina Parkuru Vurgusu */}
         <p className="text-xs sm:text-sm text-[#c3c6d7] pt-1 border-t border-[#434655]/25">
-          Beklenti ve teknik şartnamelerinizi karşılamak için deneyimli mühendislik kadromuzla yüksek teknoloji{' '}
-          <span className="text-[#00f0ff] font-semibold">
-            3 Eksen, 5 Eksen CNC frezeleme ve kayar otomat
-          </span>{' '}
-          hizmeti sunuyoruz. Savunma sanayi ve makine imalatında stratejik iş ortaklığı sağlıyoruz.
+          {t.cncHighTech}
         </p>
 
         {/* Yetkili & İletişim Şeridi */}
@@ -101,7 +88,7 @@ export const CorporateSection: React.FC = () => {
             </div>
             <div>
               <span className="text-[#8d90a0] block text-[10px] uppercase font-mono">
-                Şirket Yetkilisi
+                {t.authorizedPersonTitle}
               </span>
               <span className="font-bold text-[#e2e2e9] text-xs sm:text-sm">
                 {COMPANY_INFO.authorizedPerson}
@@ -143,10 +130,10 @@ export const CorporateSection: React.FC = () => {
           </div>
           <div className="flex flex-col">
             <span className="text-sm text-[#e2e2e9] font-bold group-hover:text-[#00f0ff] transition-colors">
-              3 &amp; 5 Eksen CNC Talaşlı İmalat
+              {t.advantage1Title}
             </span>
             <span className="text-xs text-[#c3c6d7] mt-0.5">
-              Hassas toleranslı frezeleme, torna &amp; kayar otomat parkuru
+              {t.advantage1Desc}
             </span>
           </div>
         </div>
@@ -159,10 +146,10 @@ export const CorporateSection: React.FC = () => {
           </div>
           <div className="flex flex-col">
             <span className="text-sm text-[#e2e2e9] font-bold group-hover:text-[#fbbf24] transition-colors">
-              Savunma Sanayi Standartları
+              {t.advantage2Title}
             </span>
             <span className="text-xs text-[#c3c6d7] mt-0.5">
-              AS9100 ve ISO 9001 sertifikalı stratejik iş ortaklığı
+              {t.advantage2Desc}
             </span>
           </div>
         </div>
@@ -175,10 +162,10 @@ export const CorporateSection: React.FC = () => {
           </div>
           <div className="flex flex-col">
             <span className="text-sm text-[#e2e2e9] font-bold group-hover:text-[#c084fc] transition-colors">
-              Yerli İmalat &amp; Geniş İthalat
+              {t.advantage3Title}
             </span>
             <span className="text-xs text-[#c3c6d7] mt-0.5">
-              Kestamit, PTFE, PEEK, PBI ve FR4 doğrudan depodan sevk
+              {t.advantage3Desc}
             </span>
           </div>
         </div>
@@ -191,10 +178,10 @@ export const CorporateSection: React.FC = () => {
           </div>
           <div className="flex flex-col">
             <span className="text-sm text-[#e2e2e9] font-bold group-hover:text-[#34d399] transition-colors">
-              Çayırova Depodan Doğrudan Sevk
+              {t.advantage4Title}
             </span>
             <span className="text-xs text-[#c3c6d7] mt-0.5">
-              Aynı gün kargo, hızlı lojistik &amp; milimetrik fire optimizasyonu
+              {t.advantage4Desc}
             </span>
           </div>
         </div>

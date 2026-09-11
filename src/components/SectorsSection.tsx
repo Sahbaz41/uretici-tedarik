@@ -9,8 +9,18 @@ import {
   Phone,
   MessageCircle,
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 export const SectorsSection: React.FC = () => {
+  const { language } = useLanguage();
+  const t = TRANSLATIONS[language].sectors;
+
+  const whatsappText =
+    language === 'en'
+      ? 'Hello, I would like to request technical specifications and a price quotation for engineering plastics and metals.'
+      : 'Merhaba, teknik plastik ve metal fiyat listesi almak istiyorum.';
+
   return (
     <section
       id="sektorler-bolumu"
@@ -21,10 +31,10 @@ export const SectorsSection: React.FC = () => {
         <div className="flex flex-col gap-4">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <span className="font-mono text-xs font-bold text-[#8d90a0] uppercase tracking-widest">
-              Hizmet Verdiğimiz Ağır Sanayi Kolları
+              {t.badge}
             </span>
             <span className="font-mono text-xs text-[#b4c5ff] font-semibold">
-              Türkiye Geneli 1200+ Aktif Fabrika
+              {t.factoriesCount}
             </span>
           </div>
 
@@ -37,10 +47,10 @@ export const SectorsSection: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-xs sm:text-sm font-bold text-[#e2e2e9] group-hover:text-[#60a5fa] transition-colors">
-                  Otomotiv Sanayi
+                  {t.automotive}
                 </span>
                 <span className="font-mono text-[11px] text-[#8d90a0]">
-                  Kalıp &amp; Fikstür
+                  {t.automotiveSub}
                 </span>
               </div>
             </div>
@@ -53,10 +63,10 @@ export const SectorsSection: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-xs sm:text-sm font-bold text-[#e2e2e9] group-hover:text-[#00f0ff] transition-colors">
-                  Ağır Makine
+                  {t.heavyMachinery}
                 </span>
                 <span className="font-mono text-[11px] text-[#8d90a0]">
-                  Dişli &amp; Burç
+                  {t.heavyMachinerySub}
                 </span>
               </div>
             </div>
@@ -69,10 +79,10 @@ export const SectorsSection: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-xs sm:text-sm font-bold text-[#e2e2e9] group-hover:text-[#fbbf24] transition-colors">
-                  Savunma Sanayi
+                  {t.defenseAero}
                 </span>
                 <span className="font-mono text-[11px] text-[#8d90a0]">
-                  Hassas Tolerans
+                  {t.defenseAeroSub}
                 </span>
               </div>
             </div>
@@ -85,10 +95,10 @@ export const SectorsSection: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-xs sm:text-sm font-bold text-[#e2e2e9] group-hover:text-[#c084fc] transition-colors">
-                  Kimya &amp; İlaç
+                  {t.chemicalFood}
                 </span>
                 <span className="font-mono text-[11px] text-[#8d90a0]">
-                  PTFE Korozyon
+                  {t.chemicalFoodSub}
                 </span>
               </div>
             </div>
@@ -101,10 +111,10 @@ export const SectorsSection: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-xs sm:text-sm font-bold text-[#e2e2e9] group-hover:text-[#34d399] transition-colors">
-                  Konveyör Hatları
+                  {t.conveyorLogistics}
                 </span>
                 <span className="font-mono text-[11px] text-[#8d90a0]">
-                  PE 1000 Kılavuz
+                  {t.conveyorLogisticsSub}
                 </span>
               </div>
             </div>
@@ -119,10 +129,10 @@ export const SectorsSection: React.FC = () => {
             </div>
             <div>
               <h4 className="font-display text-base sm:text-lg text-[#e2e2e9] font-bold">
-                Teknik Malzeme Uzmanımızla Canlı Görüşün
+                {t.ctaTitle}
               </h4>
               <p className="text-xs text-[#c3c6d7] font-mono mt-0.5">
-                Çayırova Merkez: +90 (533) 377 18 97 | info@ureticitedarik.com
+                {t.ctaSubtitle}
               </p>
             </div>
           </div>
@@ -131,20 +141,20 @@ export const SectorsSection: React.FC = () => {
             <a
               id="live-call-btn"
               href="tel:+905333771897"
-              className="flex-1 lg:flex-initial inline-flex items-center justify-center h-11 px-5 rounded-lg bg-[#282a2f] hover:bg-[#37393f] text-[#e2e2e9] text-xs font-semibold transition-colors border border-[#434655]/40"
+              className="flex-1 lg:flex-initial inline-flex items-center justify-center h-11 px-5 rounded-lg bg-[#282a2f] hover:bg-[#33353a] text-[#e2e2e9] text-xs font-semibold transition-colors border border-[#434655]/40"
             >
               <Phone className="w-4 h-4 mr-2 text-[#4cd7f6]" />
-              <span>Doğrudan Ara</span>
+              <span>{t.ctaBtnDirect}</span>
             </a>
             <a
               id="live-whatsapp-btn"
-              href="https://api.whatsapp.com/send?phone=905333771897&text=Merhaba,%20teknik%20plastik%20ve%20metal%20fiyat%20listesi%20almak%20istiyorum."
+              href={`https://api.whatsapp.com/send?phone=905333771897&text=${encodeURIComponent(whatsappText)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 lg:flex-initial inline-flex items-center justify-center h-11 px-6 rounded-lg bg-[#2563eb] text-[#eeefff] text-xs font-bold shadow-md hover:bg-[#0053db] transition-all"
             >
               <MessageCircle className="w-4 h-4 mr-2" />
-              <span>WhatsApp Hızlı Hat</span>
+              <span>{t.ctaBtnWhatsapp}</span>
             </a>
           </div>
         </div>

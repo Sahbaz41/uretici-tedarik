@@ -14,6 +14,7 @@ import {
   Wrench,
 } from 'lucide-react';
 import { PRODUCTS } from '../data/materials';
+import { useLanguage } from '../context/LanguageContext';
 
 interface MaterialShortcutFabProps {
   selectedCategory: string | null;
@@ -30,7 +31,7 @@ interface CommonMaterial {
   iconName: string;
 }
 
-const COMMON_MATERIALS: CommonMaterial[] = [
+const COMMON_MATERIALS_TR: CommonMaterial[] = [
   {
     id: null,
     label: 'Tümü',
@@ -81,19 +82,73 @@ const COMMON_MATERIALS: CommonMaterial[] = [
   },
 ];
 
+const COMMON_MATERIALS_EN: CommonMaterial[] = [
+  {
+    id: null,
+    label: 'All Materials',
+    shortLabel: 'All',
+    badge: 'Full Catalog',
+    sampleProductId: 'pe-1000-levha',
+    iconName: 'Sparkles',
+  },
+  {
+    id: 'teflon-ptfe',
+    label: 'PTFE Teflon',
+    shortLabel: 'PTFE',
+    badge: '260°C Heat',
+    sampleProductId: 'saf-teflon-levha',
+    iconName: 'Flame',
+  },
+  {
+    id: 'muhendislik-plastikleri',
+    label: 'Polyamide (Cast Nylon)',
+    shortLabel: 'PA6G',
+    badge: 'PA6G / Delrin',
+    sampleProductId: 'cast-polyamid-kestamit',
+    iconName: 'Layers',
+  },
+  {
+    id: 'pe1000-hdpe',
+    label: 'UHMWPE (PE 1000)',
+    shortLabel: 'UHMWPE',
+    badge: 'Wear Resistance',
+    sampleProductId: 'pe-1000-levha',
+    iconName: 'Boxes',
+  },
+  {
+    id: 'civa-celigi',
+    label: 'Silver Steel H8',
+    shortLabel: 'Silver Steel',
+    badge: '1.2210 Rod',
+    sampleProductId: 'civa-celigi-h8',
+    iconName: 'Wrench',
+  },
+  {
+    id: 'poliuretan-kalip',
+    label: 'Polyurethane (PU)',
+    shortLabel: 'PU Elastomer',
+    badge: '90-95 Shore',
+    sampleProductId: 'poliuretan-pu-desmadur',
+    iconName: 'Maximize2',
+  },
+];
 
 export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
   selectedCategory,
   onSelectCategory,
   onSelectProductForRfq,
 }) => {
+  const { language } = useLanguage();
+  const isEn = language === 'en';
+  const materialsList = isEn ? COMMON_MATERIALS_EN : COMMON_MATERIALS_TR;
+
   const [isExpanded, setIsExpanded] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [lastSelectedName, setLastSelectedName] = useState<string>('');
 
   const activeMaterial =
-    COMMON_MATERIALS.find((m) => m.id === selectedCategory) ||
-    COMMON_MATERIALS[0];
+    materialsList.find((m) => m.id === selectedCategory) ||
+    materialsList[0];
 
   const filteredCount = selectedCategory
     ? PRODUCTS.filter((p) => p.categoryId === selectedCategory).length
@@ -103,7 +158,7 @@ export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
     // Crucial: toggles without scrolling! If already active, toggle back to null (all)
     const targetId = selectedCategory === mat.id && mat.id !== null ? null : mat.id;
     onSelectCategory(targetId, false);
-    setLastSelectedName(targetId ? mat.label : 'Tümü (Tüm Liste)');
+    setLastSelectedName(targetId ? mat.label : (isEn ? 'All (Full List)' : 'Tümü (Tüm Liste)'));
     setShowNotification(true);
     setTimeout(() => {
       setShowNotification(false);
@@ -120,10 +175,10 @@ export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
   return (
     <aside
       id="material-shortcut-dock"
-      aria-label="Hızlı Malzeme Seçim Çubuğu"
+      aria-label={isEn ? "Quick Material Selector Bar" : "Hızlı Malzeme Seçim Çubuğu"}
       className="fixed bottom-5 left-4 sm:left-6 z-40 flex flex-col items-start gap-2 pointer-events-auto select-none"
     >
-      {/* 1. Anlık Geri Bildirim Bildirimi (Kullanıcı kaydırmadan seçim yaptığında bilgi verir) */}
+      {/* 1. Anlık Geri Bildirim Bildirimi */}
       {showNotification && (
         <div
           id="material-fab-toast"
@@ -132,16 +187,16 @@ export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
         >
           <div className="w-2 h-2 rounded-full bg-[#4cd7f6] animate-ping" />
           <span className="font-mono text-[11px] text-[#4cd7f6]">
-            Aktif Malzeme:
+            {isEn ? 'Active Filter:' : 'Aktif Malzeme:'}
           </span>
           <span className="font-bold text-[#b4c5ff]">{lastSelectedName}</span>
-          <span className="text-[#8d90a0]">({filteredCount} Ürün)</span>
+          <span className="text-[#8d90a0]">({filteredCount} {isEn ? 'Items' : 'Ürün'})</span>
           <button
             id="fab-toast-scroll-btn"
             onClick={handleScrollToProducts}
             className="ml-1 text-[11px] text-[#4cd7f6] hover:underline flex items-center gap-0.5 font-medium"
           >
-            <span>Göster</span>
+            <span>{isEn ? 'Show' : 'Göster'}</span>
             <ArrowDown className="w-3 h-3" />
           </button>
         </div>
@@ -157,16 +212,16 @@ export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
             <div className="flex items-center gap-2">
               <SlidersHorizontal className="w-4 h-4 text-[#4cd7f6]" />
               <span className="font-display text-xs font-bold text-[#e2e2e9] tracking-wide">
-                Hızlı Malzeme Değiştirici
+                {isEn ? 'Quick Material Selector' : 'Hızlı Malzeme Değiştirici'}
               </span>
             </div>
             <span className="font-mono text-[10px] text-[#8d90a0]">
-              Kaydırmasız Filtre
+              {isEn ? 'No-Scroll Filter' : 'Kaydırmasız Filtre'}
             </span>
           </div>
 
           <div className="flex flex-col gap-1 max-h-60 overflow-y-auto pr-0.5">
-            {COMMON_MATERIALS.map((mat) => {
+            {materialsList.map((mat) => {
               const isSelected = selectedCategory === mat.id;
               return (
                 <button
@@ -197,7 +252,7 @@ export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
                     <Check className="w-4 h-4 text-[#4cd7f6] shrink-0" />
                   ) : (
                     <span className="font-mono text-[10px] text-[#8d90a0]">
-                      Seç
+                      {isEn ? 'Select' : 'Seç'}
                     </span>
                   )}
                 </button>
@@ -212,14 +267,14 @@ export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
               className="text-[11px] text-[#4cd7f6] hover:text-[#b4c5ff] flex items-center gap-1 font-medium transition-colors"
             >
               <ArrowDown className="w-3.5 h-3.5" />
-              <span>Ürün Listesine Git ({filteredCount})</span>
+              <span>{isEn ? `Go to Products (${filteredCount})` : `Ürün Listesine Git (${filteredCount})`}</span>
             </button>
             <button
               id="fab-close-menu-btn"
               onClick={() => setIsExpanded(false)}
               className="text-[11px] text-[#8d90a0] hover:text-[#e2e2e9]"
             >
-              Kapat
+              {isEn ? 'Close' : 'Kapat'}
             </button>
           </div>
         </div>
@@ -236,11 +291,11 @@ export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
           type="button"
           onClick={() => setIsExpanded(!isExpanded)}
           className="flex items-center gap-2 h-9 px-3 rounded-xl bg-[#1e1f25] hover:bg-[#282a2f] text-[#e2e2e9] text-xs font-semibold border border-[#434655]/40 transition-colors cursor-pointer group"
-          title="Malzeme menüsünü genişlet veya daralt"
+          title={isEn ? "Expand or collapse material menu" : "Malzeme menüsünü genişlet veya daralt"}
         >
           <Layers className="w-4 h-4 text-[#4cd7f6] group-hover:rotate-12 transition-transform" />
           <span className="hidden sm:inline font-mono text-[11px] text-[#c3c6d7]">
-            Malzeme:
+            {isEn ? 'Material:' : 'Malzeme:'}
           </span>
           <span className="text-[#b4c5ff] font-bold max-w-[90px] sm:max-w-none truncate">
             {activeMaterial.shortLabel}
@@ -252,12 +307,12 @@ export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
           )}
         </button>
 
-        {/* Doğrudan Tek Dokunuşla Değiştirme Butonları (Teflon, Polyamid, UHMWPE) */}
+        {/* Doğrudan Tek Dokunuşla Değiştirme Butonları */}
         <div
           id="material-fab-quick-chips"
           className="flex items-center gap-1 overflow-x-auto no-scrollbar"
         >
-          {COMMON_MATERIALS.slice(1, 4).map((mat) => {
+          {materialsList.slice(1, 4).map((mat) => {
             const isSelected = selectedCategory === mat.id;
             return (
               <button
@@ -269,7 +324,7 @@ export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
                     ? 'bg-[#2563eb] text-white shadow-[0_0_14px_rgba(37,99,235,0.5)] scale-[1.02]'
                     : 'bg-[#1a1b21] hover:bg-[#282a2f] text-[#c3c6d7] hover:text-[#e2e2e9] border border-[#434655]/30'
                 }`}
-                title={`${mat.label} filtresine geç (sayfayı kaydırmadan)`}
+                title={isEn ? `Filter by ${mat.label}` : `${mat.label} filtresine geç`}
               >
                 <span>{mat.shortLabel}</span>
                 {isSelected && (
@@ -283,12 +338,12 @@ export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
           {selectedCategory !== null && (
             <button
               id="fab-quick-chip-reset"
-              onClick={() => handleToggleMaterial(COMMON_MATERIALS[0])}
+              onClick={() => handleToggleMaterial(materialsList[0])}
               className="h-9 px-2 sm:px-2.5 rounded-xl text-xs font-medium text-[#8d90a0] hover:text-[#ffb4ab] hover:bg-[#1e1f25] border border-transparent transition-colors flex items-center gap-1"
-              title="Filtreyi Temizle (Tümünü Göster)"
+              title={isEn ? 'Clear Filter (Show All)' : 'Filtreyi Temizle (Tümünü Göster)'}
             >
               <X className="w-3.5 h-3.5" />
-              <span className="hidden md:inline">Tümü</span>
+              <span className="hidden md:inline">{isEn ? 'All' : 'Tümü'}</span>
             </button>
           )}
         </div>

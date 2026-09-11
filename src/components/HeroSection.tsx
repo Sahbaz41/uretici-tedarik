@@ -22,12 +22,14 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { COMPANY_INFO } from '../data/materials';
+import { useLanguage } from '../context/LanguageContext';
 
 interface HeroSectionProps {
   onOpenRfq: () => void;
   onOpenCatalog: () => void;
   onOpenTds: (productId: string) => void;
   onSelectProductForRfq: (productId: string) => void;
+  language?: 'tr' | 'en';
 }
 
 interface SpecimenData {
@@ -188,6 +190,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onSelectProductForRfq,
 }) => {
   const [activeSpecimenId, setActiveSpecimenId] = useState<string>('pe-1000-levha');
+  const { language, isEN, t: currentT } = useLanguage();
+  const h = currentT.hero;
   const activeSpecimen = SPECIMENS.find((s) => s.id === activeSpecimenId) || SPECIMENS[0];
 
   return (
@@ -204,23 +208,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="mb-6 py-2 px-4 rounded-2xl bg-[#12141c]/90 border border-[#434655]/40 flex items-center justify-between overflow-x-auto no-scrollbar gap-6 text-xs font-mono backdrop-blur-md">
           <div className="flex items-center gap-2 text-[#00f0ff] shrink-0">
             <Zap className="w-3.5 h-3.5 animate-pulse text-[#00f0ff]" />
-            <span className="font-bold">3 &amp; 5 EKSEN CNC İŞLEME</span>
-            <span className="text-[#8d90a0]">| ±0.02 mm Tolerans</span>
+            <span className="font-bold">{h.marqueeCnc}</span>
           </div>
           <div className="flex items-center gap-2 text-[#3b82f6] shrink-0">
             <Truck className="w-3.5 h-3.5 text-[#3b82f6]" />
-            <span className="font-bold">AYNI GÜN SEVK</span>
-            <span className="text-[#8d90a0]">| Çayırova / Gebze Antrepo</span>
+            <span className="font-bold">{h.marqueeShipment}</span>
           </div>
           <div className="flex items-center gap-2 text-[#ffb77d] shrink-0">
             <ShieldCheck className="w-3.5 h-3.5 text-[#ffb77d]" />
-            <span className="font-bold">SAVUNMA SANAYİ STANDARDI</span>
-            <span className="text-[#8d90a0]">| AS9100 / ISO 9001</span>
+            <span className="font-bold">{h.marqueeDefense}</span>
           </div>
           <div className="flex items-center gap-2 text-[#10b981] shrink-0">
             <Factory className="w-3.5 h-3.5 text-[#10b981]" />
-            <span className="font-bold">MİLİMETRİK KESİM</span>
-            <span className="text-[#8d90a0]">| Fire Sıfırlama Garantisi</span>
+            <span className="font-bold">{h.marqueeCut}</span>
           </div>
         </div>
 
@@ -235,30 +235,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00f0ff]"></span>
                 </span>
                 <span className="font-mono text-[11px] font-bold text-[#00f0ff] uppercase tracking-widest">
-                  {COMPANY_INFO.brandName} // ÇAYIROVA - GEBZE TESİSİ
+                  {COMPANY_INFO.brandName} // {h.badgeFacility}
                 </span>
               </div>
 
               <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#ffb77d]/15 border border-[#ffb77d]/35 text-[#ffb77d] font-mono text-[11px] font-extrabold uppercase tracking-wider">
                 <Sparkles className="w-3 h-3 text-[#ffb77d]" />
-                <span>{COMPANY_INFO.slogan}</span>
+                <span>{h.badgeSlogan}</span>
               </div>
             </div>
 
             {/* Ana Başlık */}
             <h1 className="font-display text-3xl sm:text-5xl lg:text-[54px] font-black text-[#e2e2e9] tracking-tight leading-[1.08]">
-              Mühendislik Plastikleri,{' '}
+              {h.titleMain}{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f0ff] via-[#82a4ff] to-[#3b82f6] animate-neon-pulse">
-                3 &amp; 5 Eksen CNC İmalat
+                {h.titleHighlight}
               </span>{' '}
-              ve Endüstriyel Metal Tedariği
+              {h.titleEnd}
             </h1>
 
             {/* Açıklama */}
             <p className="text-base sm:text-lg text-[#c3c6d7] max-w-2xl leading-relaxed">
-              Cast Polyamid (Kestamit PA6G), Saf PTFE Teflon, PE 1000 Ulpolen ve POM-C Delrin
-              imalatı; PEEK, FR4 Epoksi ve alaşımlı metallerde doğrudan üretici ve ithalatçı
-              güvencesiyle mikron toleranslı çözümler.
+              {h.subtitle}
             </p>
 
             {/* Butonlar / CTAs */}
@@ -269,7 +267,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 className="inline-flex items-center justify-center h-12 px-6 rounded-xl bg-gradient-to-r from-[#2563eb] to-[#0053db] text-[#eeefff] font-bold text-sm shadow-[0_0_28px_rgba(37,99,235,0.5)] hover:shadow-[0_0_36px_rgba(0,240,255,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all group cursor-pointer border border-[#00f0ff]/30"
               >
                 <ShoppingCart className="w-4 h-4 mr-2 text-[#00f0ff]" />
-                <span>Teklif Sepetine Git / RFQ</span>
+                <span>{h.btnRfq}</span>
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
 
@@ -279,80 +277,80 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 className="inline-flex items-center justify-center h-12 px-5 rounded-xl bg-[#181b24] hover:bg-[#222632] text-[#e2e2e9] transition-all font-semibold text-sm border border-[#434655]/50 shadow-sm cursor-pointer hover:border-[#00f0ff]/50"
               >
                 <Download className="w-4 h-4 mr-2 text-[#00f0ff]" />
-                <span>42 Sayfa Teknik Katalog</span>
+                <span>{h.btnCatalog}</span>
               </button>
 
               <a
                 id="hero-cta-direct-phone"
                 href={`tel:${COMPANY_INFO.phone}`}
                 className="inline-flex items-center justify-center h-12 px-4 rounded-xl bg-[#12141c] hover:bg-[#181b24] text-[#00f0ff] hover:text-white transition-all font-mono text-xs font-bold border border-[#2563eb]/40 shadow-sm"
-                title={`${COMPANY_INFO.authorizedPerson} - Doğrudan Hat`}
+                title={`${COMPANY_INFO.authorizedPerson} - ${h.btnCall}`}
               >
                 <Phone className="w-4 h-4 mr-2 text-[#00f0ff]" />
                 <span>{COMPANY_INFO.authorizedPerson}: {COMPANY_INFO.phone}</span>
               </a>
             </div>
 
-            {/* 4 Canlı İstatistik / Güvenilirlik Kartı (Her Biri Ayrı Neon Rengi & Mikro Üst Çizgi) */}
+            {/* 4 Canlı İstatistik / Güvenilirlik Kartı */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              {/* Stat 1: CNC - Cobalt Blue */}
+              {/* Stat 1 */}
               <div className="group relative p-3.5 rounded-2xl bg-[#12141c]/95 border border-[#3b82f6]/40 backdrop-blur-md hover:border-[#3b82f6] hover:shadow-[0_4px_20px_rgba(59,130,246,0.3)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#2563eb] to-[#60a5fa]" />
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] font-bold text-[#8d90a0] uppercase tracking-wider block">
-                    CNC Parkuru
+                    {h.stat1Label}
                   </span>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6] shadow-[0_0_8px_#3b82f6]" />
                 </div>
                 <span className="font-display text-lg sm:text-xl font-extrabold text-[#60a5fa] block mt-1">
-                  3 &amp; 5 Eksen
+                  {h.stat1Val}
                 </span>
-                <span className="text-[11px] text-[#c3c6d7]">Kayar Otomat</span>
+                <span className="text-[11px] text-[#c3c6d7]">{isEN ? 'Sliding Head CNC' : 'Kayar Otomat'}</span>
               </div>
 
-              {/* Stat 2: Savunma - Electric Cyan */}
+              {/* Stat 2 */}
               <div className="group relative p-3.5 rounded-2xl bg-[#12141c]/95 border border-[#00f0ff]/40 backdrop-blur-md hover:border-[#00f0ff] hover:shadow-[0_4px_20px_rgba(0,240,255,0.3)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#00788c] to-[#00f0ff]" />
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] font-bold text-[#8d90a0] uppercase tracking-wider block">
-                    Savunma Sanayi
+                    {h.stat2Label}
                   </span>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#00f0ff] shadow-[0_0_8px_#00f0ff]" />
                 </div>
                 <span className="font-display text-lg sm:text-xl font-extrabold text-[#00f0ff] block mt-1">
-                  AS9100 / ISO
+                  {h.stat2Val}
                 </span>
-                <span className="text-[11px] text-[#c3c6d7]">Sertifikalı Üretim</span>
+                <span className="text-[11px] text-[#c3c6d7]">{isEN ? 'Certified Stocks' : 'Sertifikalı Üretim'}</span>
               </div>
 
-              {/* Stat 3: Stok - Golden Amber */}
+              {/* Stat 3 */}
               <div className="group relative p-3.5 rounded-2xl bg-[#12141c]/95 border border-[#f59e0b]/40 backdrop-blur-md hover:border-[#f59e0b] hover:shadow-[0_4px_20px_rgba(245,158,11,0.3)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#b45309] to-[#f59e0b]" />
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] font-bold text-[#8d90a0] uppercase tracking-wider block">
-                    Depo Stoğu
+                    {h.stat3Label}
                   </span>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#f59e0b] shadow-[0_0_8px_#f59e0b]" />
                 </div>
                 <span className="font-display text-lg sm:text-xl font-extrabold text-[#fbbf24] block mt-1">
-                  28+ Ton
+                  {h.stat3Val}
                 </span>
-                <span className="text-[11px] text-[#c3c6d7]">Aynı Gün Sevk</span>
+                <span className="text-[11px] text-[#c3c6d7]">{isEN ? 'Same-Day Dispatch' : 'Aynı Gün Sevk'}</span>
               </div>
 
-              {/* Stat 4: Isı - Flame Crimson */}
+              {/* Stat 4 */}
               <div className="group relative p-3.5 rounded-2xl bg-[#12141c]/95 border border-[#ef4444]/40 backdrop-blur-md hover:border-[#ef4444] hover:shadow-[0_4px_20px_rgba(239,68,68,0.3)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#dc2626] to-[#ef4444]" />
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-[10px] font-bold text-[#8d90a0] uppercase tracking-wider block">
-                    Isı Aralığı
+                    {h.stat4Label}
                   </span>
                   <span className="w-1.5 h-1.5 rounded-full bg-[#ef4444] shadow-[0_0_8px_#ef4444]" />
                 </div>
                 <span className="font-display text-lg sm:text-xl font-extrabold text-[#f87171] block mt-1">
-                  -260° ~ +1600°
+                  {h.stat4Val}
                 </span>
-                <span className="text-[11px] text-[#c3c6d7]">PTFE &amp; Seramik</span>
+                <span className="text-[11px] text-[#c3c6d7]">{isEN ? 'Global Logistics' : 'Global Lojistik'}</span>
               </div>
             </div>
           </div>
@@ -469,7 +467,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <div className="flex items-center justify-between py-1 text-[#c3c6d7] border-b border-[#434655]/20">
                   <span className="flex items-center gap-1.5">
                     <Gauge className="w-3.5 h-3.5 text-[#00f0ff]" />
-                    <span>Yoğunluk (Density):</span>
+                    <span>{h.specDensity}:</span>
                   </span>
                   <span className="text-[#e2e2e9] font-bold">
                     {activeSpecimen.density}
@@ -479,7 +477,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <div className="flex items-center justify-between py-1 text-[#c3c6d7] border-b border-[#434655]/20">
                   <span className="flex items-center gap-1.5">
                     <Flame className="w-3.5 h-3.5 text-[#ffb77d]" />
-                    <span>Çalışma Sıcaklığı:</span>
+                    <span>{h.specTemp}:</span>
                   </span>
                   <span className="text-[#ffb77d] font-bold">
                     {activeSpecimen.workingTemp}
@@ -489,32 +487,54 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <div className="flex items-center justify-between py-1 text-[#c3c6d7] border-b border-[#434655]/20">
                   <span className="flex items-center gap-1.5">
                     <ShieldCheck className="w-3.5 h-3.5" style={{ color: activeSpecimen.colorHex }} />
-                    <span>Sürtünme / Mukavemet:</span>
+                    <span>{h.specFrictionStrength}:</span>
                   </span>
                   <span className="font-bold" style={{ color: activeSpecimen.colorHex }}>
-                    {activeSpecimen.frictionOrStrength}
+                    {isEN
+                      ? activeSpecimen.frictionOrStrength
+                          .replace('Çekme Dayanımı', 'Tensile Strength')
+                          .replace('Sürtünme Katsayısı', 'Friction Coeff.')
+                          .replace('Mukavemet', 'Strength')
+                          .replace('Kendinden Sönümlü', 'Self-Extinguishing')
+                          .replace('Tek Pabuç Basma', 'Per Pad Compression')
+                      : activeSpecimen.frictionOrStrength}
                   </span>
                 </div>
 
                 <div className="flex items-center justify-between py-1 text-[#c3c6d7] border-b border-[#434655]/20">
                   <span className="flex items-center gap-1.5">
                     <Cpu className="w-3.5 h-3.5 text-[#b4c5ff]" />
-                    <span>Sertlik (Hardness):</span>
+                    <span>{h.specHardness}:</span>
                   </span>
                   <span className="text-[#b4c5ff] font-bold">
-                    {activeSpecimen.hardness}
+                    {isEN
+                      ? activeSpecimen.hardness.replace('Yüksek Basma', 'High Comp.').replace('Kırılmaz', 'Unbreakable')
+                      : activeSpecimen.hardness}
                   </span>
                 </div>
 
                 {/* Form Çeşitleri / Geometriler */}
                 <div className="flex items-center gap-1.5 pt-1 overflow-x-auto no-scrollbar">
-                  <span className="text-[10px] text-[#8d90a0] shrink-0">Kesim Tipleri:</span>
+                  <span className="text-[10px] text-[#8d90a0] shrink-0">
+                    {isEN ? 'Cut Forms:' : 'Kesim Tipleri:'}
+                  </span>
                   {activeSpecimen.shapes.map((s, idx) => (
                     <span
                       key={idx}
                       className="px-2 py-0.5 rounded bg-[#181b24] text-[#c3c6d7] text-[10px] font-mono border border-[#434655]/30 shrink-0"
                     >
-                      {s}
+                      {isEN
+                        ? s
+                            .replace('Levha', 'Sheet')
+                            .replace('Çubuk', 'Rod')
+                            .replace('Dolu Çubuk', 'Solid Rod')
+                            .replace('Konveyör Profili', 'Conveyor Profile')
+                            .replace('Saf Plaka', 'Virgin Plate')
+                            .replace('Döküm Takoz', 'Cast Block')
+                            .replace('Boru / Kovan', 'Tube / Bushing')
+                            .replace('Kare Pabuç', 'Square Pad')
+                            .replace('Yuvarlak Takoz', 'Round Pad')
+                        : s}
                     </span>
                   ))}
                 </div>
@@ -534,14 +554,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     />
                   </span>
                   <span className="text-xs text-[#e2e2e9]">
-                    Gebze/Çayırova Depo:{' '}
+                    {isEN ? 'Gebze/Cayirova Stock:' : 'Gebze/Çayırova Depo:'}{' '}
                     <strong className="font-semibold" style={{ color: activeSpecimen.colorHex }}>
-                      {activeSpecimen.stockStatus}
+                      {isEN
+                        ? activeSpecimen.stockStatus
+                            .replace('Stok (Plaka & Takoz Hazır)', 'Ready Stock (Plates & Blocks)')
+                            .replace('Fabrika Stok (Aynı Gün Sevk)', 'Factory Stock (Same-Day Dispatch)')
+                            .replace('Hazır (Rulo & Plaka)', 'Ready (Roll & Sheet)')
+                            .replace('Stok (Beyaz & Siyah)', 'Stock (White & Black)')
+                            .replace('İthal Sertifikalı Stok', 'Imported Certified Stock')
+                            .replace('Çayırova Depodan Aynı Gün Sevk', 'Same-Day Dispatch from Cayirova')
+                        : activeSpecimen.stockStatus}
                     </strong>
                   </span>
                 </div>
                 <span className="font-mono text-[11px] text-[#8d90a0] hidden sm:inline">
-                  Milimetrik Kesim
+                  {isEN ? 'Precision Cut' : 'Milimetrik Kesim'}
                 </span>
               </div>
 
@@ -553,7 +581,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   className="flex items-center justify-center h-10 rounded-xl bg-[#222632] hover:bg-[#2c3140] text-[#e2e2e9] text-xs font-semibold transition-colors border border-[#434655]/40 cursor-pointer hover:border-[#00f0ff]/50"
                 >
                   <FileCheck className="w-4 h-4 mr-1.5 text-[#00f0ff]" />
-                  <span>Şartname / TDS</span>
+                  <span>{h.btnTds}</span>
                 </button>
                 <button
                   id="specimen-quote-btn"
@@ -561,7 +589,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   className="flex items-center justify-center h-10 rounded-xl bg-[#2563eb] text-[#eeefff] text-xs font-bold hover:bg-[#0053db] transition-all cursor-pointer shadow-[0_0_16px_rgba(37,99,235,0.4)] hover:shadow-[0_0_20px_rgba(0,240,255,0.5)]"
                 >
                   <ShoppingCart className="w-4 h-4 mr-1.5 text-[#00f0ff]" />
-                  <span>Bu Malzemeyle RFQ Al</span>
+                  <span>{h.btnOrderRfq}</span>
                 </button>
               </div>
             </div>

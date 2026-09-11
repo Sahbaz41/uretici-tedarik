@@ -15,6 +15,8 @@ import {
   FileCheck
 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/materials';
+import { useLanguage } from '../context/LanguageContext';
+import { TRANSLATIONS } from '../data/translations';
 
 interface ContactModalProps {
   isOpen: boolean;
@@ -27,6 +29,9 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   onClose,
   defaultMaterial = '',
 }) => {
+  const { language } = useLanguage();
+  const t = TRANSLATIONS[language].contact;
+
   const [formData, setFormData] = useState({
     companyName: '',
     taxNumber: '',
@@ -51,19 +56,37 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   };
 
   const handleSendWhatsApp = () => {
-    const text = "*ÜRETİCİ TEDARİK B2B TEKLİF TALEBİ*" + "\n" +
-      "----------------------------------------" + "\n" +
-      "*Firma:* " + (formData.companyName || 'Belirtilmedi') + "\n" +
-      "*Vergi No:* " + (formData.taxNumber || 'Belirtilmedi') + "\n" +
-      "*Yetkili:* " + (formData.contactPerson || 'Belirtilmedi') + "\n" +
-      "*Telefon:* " + (formData.phone || 'Belirtilmedi') + "\n" +
-      "*E-Posta:* " + (formData.email || 'Belirtilmedi') + "\n" +
-      "*Malzeme:* " + formData.materialGroup + "\n" +
-      "*Termin:* " + (formData.urgency === 'urgent' ? '🔴 Acil (Aynı Gün)' : '🟢 Standart') + "\n" +
-      "*Ebat/Teknik Not:* " + (formData.dimensionsNotes || 'Yok') + "\n" +
-      (fileName ? ("*Ekli CAD Dosyası:* " + fileName + "\n") : "") +
-      "----------------------------------------" + "\n" +
-      "Teknik şartname ve fiyat teklifinizi rica ederim.";
+    const isEn = language === 'en';
+    const notSpecified = isEn ? 'Not Specified' : 'Belirtilmedi';
+    const noneText = isEn ? 'None' : 'Yok';
+
+    const text = isEn
+      ? "*URETICI TEDARIK B2B RFQ QUOTATION REQUEST*" + "\n" +
+        "----------------------------------------" + "\n" +
+        "*Company:* " + (formData.companyName || notSpecified) + "\n" +
+        "*Tax ID / No:* " + (formData.taxNumber || notSpecified) + "\n" +
+        "*Contact Person:* " + (formData.contactPerson || notSpecified) + "\n" +
+        "*Phone:* " + (formData.phone || notSpecified) + "\n" +
+        "*Email:* " + (formData.email || notSpecified) + "\n" +
+        "*Material Group:* " + formData.materialGroup + "\n" +
+        "*Urgency:* " + (formData.urgency === 'urgent' ? '🔴 Urgent (Same-Day Dispatch)' : '🟢 Standard') + "\n" +
+        "*Dimensions / CAD Notes:* " + (formData.dimensionsNotes || noneText) + "\n" +
+        (fileName ? ("*Attached CAD File:* " + fileName + "\n") : "") +
+        "----------------------------------------" + "\n" +
+        "Please provide technical specification confirmation and official price quotation."
+      : "*ÜRETİCİ TEDARİK B2B TEKLİF TALEBİ*" + "\n" +
+        "----------------------------------------" + "\n" +
+        "*Firma:* " + (formData.companyName || notSpecified) + "\n" +
+        "*Vergi No:* " + (formData.taxNumber || notSpecified) + "\n" +
+        "*Yetkili:* " + (formData.contactPerson || notSpecified) + "\n" +
+        "*Telefon:* " + (formData.phone || notSpecified) + "\n" +
+        "*E-Posta:* " + (formData.email || notSpecified) + "\n" +
+        "*Malzeme:* " + formData.materialGroup + "\n" +
+        "*Termin:* " + (formData.urgency === 'urgent' ? '🔴 Acil (Aynı Gün)' : '🟢 Standart') + "\n" +
+        "*Ebat/Teknik Not:* " + (formData.dimensionsNotes || noneText) + "\n" +
+        (fileName ? ("*Ekli CAD Dosyası:* " + fileName + "\n") : "") +
+        "----------------------------------------" + "\n" +
+        "Teknik şartname ve fiyat teklifinizi rica ederim.";
 
     const phoneClean = COMPANY_INFO.phone.replace(/[^0-9]/g, '');
     window.open("https://wa.me/" + phoneClean + "?text=" + encodeURIComponent(text), '_blank');
@@ -89,10 +112,10 @@ export const ContactModal: React.FC<ContactModalProps> = ({
             </div>
             <div>
               <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-                Kurumsal B2B Teklif &amp; İletişim Formu
+                {t.modalTitle}
               </h3>
               <p className="text-xs text-[#8d90a0]">
-                Fabrika Satış &amp; 3/5 Eksen CNC İmalat Birimi - Çayırova / Gebze
+                {t.modalSubtitle}
               </p>
             </div>
           </div>
@@ -112,9 +135,9 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center mx-auto">
                 <CheckCircle className="w-8 h-8" />
               </div>
-              <h4 className="text-xl font-bold text-white">Teklif Talebiniz Başarıyla Alındı!</h4>
+              <h4 className="text-xl font-bold text-white">{t.successTitle}</h4>
               <p className="text-sm text-[#c3c6d7] max-w-md mx-auto leading-relaxed">
-                Talebiniz teknik satış ve mühendislik departmanımıza iletildi. İbrahim Şahbaz ve teknik ekibimiz en geç <strong>15 dakika</strong> içinde size dönüş yapacaktır.
+                {t.successDesc}
               </p>
               <div className="pt-4 flex flex-wrap justify-center gap-3">
                 <button
@@ -122,7 +145,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   className="px-5 py-2.5 rounded-xl bg-[#25d366] hover:bg-[#20bd5a] text-black font-bold text-xs flex items-center gap-2 cursor-pointer shadow-[0_0_15px_rgba(37,211,102,0.4)]"
                 >
                   <MessageCircle className="w-4 h-4 fill-current" />
-                  Teklifi WhatsApp'tan da Doğrula
+                  {t.btnSuccessWhatsapp}
                 </button>
                 <button
                   onClick={() => {
@@ -131,7 +154,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   }}
                   className="px-5 py-2.5 rounded-xl bg-[#1f2330] hover:bg-[#2a2f40] text-white text-xs font-semibold cursor-pointer border border-[#434655]/40"
                 >
-                  Pencereyi Kapat
+                  {t.btnCloseModal}
                 </button>
               </div>
             </div>
@@ -141,11 +164,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               <div className="flex items-center justify-between p-3 rounded-xl bg-[#141824] border border-[#434655]/30 text-[11px] text-[#8d90a0]">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-[#00f0ff]" />
-                  <span>Kurumsal E-Fatura, ISO 9001 ve AS9100 Standartlarında Üretim</span>
+                  <span>{t.trustBadge}</span>
                 </div>
                 <div className="hidden sm:flex items-center gap-1.5 text-emerald-400 font-mono">
                   <Clock className="w-3.5 h-3.5" />
-                  <span>Ort. Teklif Süresi: 15 dk</span>
+                  <span>{t.avgTime}</span>
                 </div>
               </div>
 
@@ -153,14 +176,14 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-medium text-[#c3c6d7] mb-1">
-                    Firma Ünvanı <span className="text-[#00f0ff]">*</span>
+                    {t.companyLabel} <span className="text-[#00f0ff]">*</span>
                   </label>
                   <div className="relative">
                     <Building className="w-4 h-4 text-[#8d90a0] absolute left-3 top-2.5" />
                     <input
                       type="text"
                       required
-                      placeholder="Örn: ABC Makina San. Tic. Ltd."
+                      placeholder={t.companyPlaceholder}
                       value={formData.companyName}
                       onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                       className="w-full pl-9 pr-3 py-2 text-xs bg-[#12141c] border border-[#434655]/40 rounded-xl text-white placeholder-[#5a5e73] focus:border-[#00f0ff] focus:outline-none"
@@ -170,11 +193,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-medium text-[#c3c6d7] mb-1">
-                    Vergi Dairesi / No <span className="text-[#8d90a0] font-normal">(E-Fatura için)</span>
+                    {t.taxLabel} <span className="text-[#8d90a0] font-normal">{t.taxSub}</span>
                   </label>
                   <input
                     type="text"
-                    placeholder="Örn: Gebze V.D. / 1234567890"
+                    placeholder={t.taxPlaceholder}
                     value={formData.taxNumber}
                     onChange={(e) => setFormData({ ...formData, taxNumber: e.target.value })}
                     className="w-full px-3 py-2 text-xs bg-[#12141c] border border-[#434655]/40 rounded-xl text-white placeholder-[#5a5e73] focus:border-[#00f0ff] focus:outline-none"
@@ -186,14 +209,14 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-xs font-medium text-[#c3c6d7] mb-1">
-                    Yetkili Ad Soyad <span className="text-[#00f0ff]">*</span>
+                    {t.personLabel} <span className="text-[#00f0ff]">*</span>
                   </label>
                   <div className="relative">
                     <User className="w-4 h-4 text-[#8d90a0] absolute left-3 top-2.5" />
                     <input
                       type="text"
                       required
-                      placeholder="Ad Soyad"
+                      placeholder={t.personPlaceholder}
                       value={formData.contactPerson}
                       onChange={(e) => setFormData({ ...formData, contactPerson: e.target.value })}
                       className="w-full pl-9 pr-3 py-2 text-xs bg-[#12141c] border border-[#434655]/40 rounded-xl text-white placeholder-[#5a5e73] focus:border-[#00f0ff] focus:outline-none"
@@ -203,14 +226,14 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-medium text-[#c3c6d7] mb-1">
-                    Telefon (GSM) <span className="text-[#00f0ff]">*</span>
+                    {t.phoneLabel} <span className="text-[#00f0ff]">*</span>
                   </label>
                   <div className="relative">
                     <Phone className="w-4 h-4 text-[#8d90a0] absolute left-3 top-2.5" />
                     <input
                       type="tel"
                       required
-                      placeholder="05XX XXX XX XX"
+                      placeholder="+90 5XX XXX XX XX"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       className="w-full pl-9 pr-3 py-2 text-xs bg-[#12141c] border border-[#434655]/40 rounded-xl text-white placeholder-[#5a5e73] focus:border-[#00f0ff] focus:outline-none"
@@ -220,13 +243,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-medium text-[#c3c6d7] mb-1">
-                    E-Posta Adresi
+                    {t.emailLabel}
                   </label>
                   <div className="relative">
                     <Mail className="w-4 h-4 text-[#8d90a0] absolute left-3 top-2.5" />
                     <input
                       type="email"
-                      placeholder="ad@firma.com"
+                      placeholder="info@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       className="w-full pl-9 pr-3 py-2 text-xs bg-[#12141c] border border-[#434655]/40 rounded-xl text-white placeholder-[#5a5e73] focus:border-[#00f0ff] focus:outline-none"
@@ -239,35 +262,35 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-medium text-[#c3c6d7] mb-1">
-                    Talep Edilen Malzeme Grubu
+                    {t.materialGroupLabel}
                   </label>
                   <select
                     value={formData.materialGroup}
                     onChange={(e) => setFormData({ ...formData, materialGroup: e.target.value })}
                     className="w-full px-3 py-2 text-xs bg-[#12141c] border border-[#434655]/40 rounded-xl text-white focus:border-[#00f0ff] focus:outline-none cursor-pointer"
                   >
-                    <option value="Kestamit (Cast Polyamid PA6G)">Kestamit (Cast Polyamid PA6G)</option>
-                    <option value="PTFE Saf / Karbonlu Teflon">PTFE Saf / Karbonlu / Bronzlu Teflon</option>
-                    <option value="PE 1000 (Ulpolen UHMWPE)">PE 1000 (Ulpolen UHMWPE)</option>
-                    <option value="POM-C Poliasetal (Delrin)">POM-C Poliasetal (Delrin)</option>
-                    <option value="PEEK 450G (Yüksek Isı / Havacılık)">PEEK 450G (Yüksek Isı / Havacılık)</option>
-                    <option value="Ağır Sanayi Vinç Denge Takozu">Ağır Sanayi Vinç Denge Takozu</option>
-                    <option value="Bronz / Pirinç / Alüminyum Alaşım">Bronz / Pirinç / Alüminyum Alaşım</option>
-                    <option value="Özel 3 & 5 Eksen CNC Talaşlı İmalat">Özel 3 &amp; 5 Eksen CNC Talaşlı İmalat</option>
+                    <option value="Kestamit (Cast Polyamid PA6G)">Cast Polyamide / Kestamit (PA6G)</option>
+                    <option value="PTFE Saf / Karbonlu Teflon">PTFE Virgin / Carbon / Bronze Filled Teflon</option>
+                    <option value="PE 1000 (Ulpolen UHMWPE)">PE 1000 (UHMWPE Ulpolen)</option>
+                    <option value="POM-C Poliasetal (Delrin)">POM-C Polyacetal (Delrin)</option>
+                    <option value="PEEK 450G (Yüksek Isı / Havacılık)">PEEK 450G (High Heat / Aerospace)</option>
+                    <option value="Ağır Sanayi Vinç Denge Takozu">Crane Outrigger Pads (Heavy Duty)</option>
+                    <option value="Bronz / Pirinç / Alüminyum Alaşım">Bronze / Brass / Aluminum Alloys</option>
+                    <option value="Özel 3 & 5 Eksen CNC Talaşlı İmalat">Custom 3 & 5-Axis CNC Machining</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-xs font-medium text-[#c3c6d7] mb-1">
-                    Termin / Sevkiyat Önceliği
+                    {t.urgencyLabel}
                   </label>
                   <select
                     value={formData.urgency}
                     onChange={(e) => setFormData({ ...formData, urgency: e.target.value })}
                     className="w-full px-3 py-2 text-xs bg-[#12141c] border border-[#434655]/40 rounded-xl text-white focus:border-[#00f0ff] focus:outline-none cursor-pointer"
                   >
-                    <option value="normal">🟢 Standart İmalat / Sevkiyat Süreci</option>
-                    <option value="urgent">🔴 ACİL - Fabrika Stoktan Aynı Gün Sevk İhtiyacı</option>
+                    <option value="normal">{t.urgencyNormal}</option>
+                    <option value="urgent">{t.urgencyUrgent}</option>
                   </select>
                 </div>
               </div>
@@ -275,12 +298,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               {/* Ebat, Ölçü, Tolerans ve Notlar */}
               <div>
                 <label className="block text-xs font-medium text-[#c3c6d7] mb-1">
-                  Ölçüler, Adet &amp; Tolerans Notları <span className="text-[#00f0ff]">*</span>
+                  {t.notesLabel} <span className="text-[#00f0ff]">*</span>
                 </label>
                 <textarea
                   required
                   rows={3}
-                  placeholder="Örnek: 50x500x1000 mm Kestamit Plaka 4 adet + 10 adet Ø80x300 mm POM Delrin Takoz CNC işleme..."
+                  placeholder={t.notesPlaceholder}
                   value={formData.dimensionsNotes}
                   onChange={(e) => setFormData({ ...formData, dimensionsNotes: e.target.value })}
                   className="w-full p-3 text-xs bg-[#12141c] border border-[#434655]/40 rounded-xl text-white placeholder-[#5a5e73] focus:border-[#00f0ff] focus:outline-none resize-none"
@@ -290,7 +313,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
               {/* Teknik Çizim / CAD Dosyası Yükleme Simülasyonu */}
               <div>
                 <label className="block text-xs font-medium text-[#c3c6d7] mb-1">
-                  Teknik Resim / CAD Dosyası <span className="text-[#8d90a0] font-normal">(STEP, DXF, DWG, PDF max 25MB)</span>
+                  {t.fileLabel} <span className="text-[#8d90a0] font-normal">{t.fileFormats}</span>
                 </label>
                 <label className="flex flex-col items-center justify-center p-3 sm:p-4 border-2 border-dashed border-[#434655]/50 hover:border-[#00f0ff]/60 rounded-xl bg-[#12141c] cursor-pointer transition-colors">
                   <input
@@ -303,12 +326,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                     <div className="flex items-center gap-2 text-xs text-[#00f0ff]">
                       <FileCheck className="w-5 h-5 text-emerald-400" />
                       <span className="font-semibold">{fileName}</span>
-                      <span className="text-[10px] text-[#8d90a0]">(Değiştirmek için tıklayın)</span>
+                      <span className="text-[10px] text-[#8d90a0]">{t.fileChange}</span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-2 text-xs text-[#8d90a0]">
                       <UploadCloud className="w-5 h-5 text-[#3b82f6]" />
-                      <span>Teknik Çizim Dosyası Yükleyin veya Sürükleyin</span>
+                      <span>{t.fileUploadText}</span>
                     </div>
                   )}
                 </label>
@@ -322,7 +345,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_0_20px_rgba(37,99,235,0.4)] disabled:opacity-50"
                 >
                   <Send className="w-4 h-4" />
-                  {isSubmitting ? 'İletiliyor...' : 'Teklif Formunu İlet (RFQ)'}
+                  {isSubmitting ? t.btnSubmitting : t.btnSubmit}
                 </button>
 
                 <button
@@ -332,7 +355,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   title="Formu Doğrudan WhatsApp'a Aktar"
                 >
                   <MessageCircle className="w-4 h-4 fill-current" />
-                  WhatsApp ile Gönder
+                  {t.btnWhatsapp}
                 </button>
               </div>
             </form>
@@ -342,12 +365,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({
         {/* Modal Alt Bilgi (Footer) */}
         <div className="p-3 bg-[#0a0c13] border-t border-[#434655]/30 flex flex-wrap items-center justify-between text-[11px] text-[#8d90a0] px-5">
           <div className="flex items-center gap-2">
-            <span>Doğrudan Hat:</span>
+            <span>{t.footerDirectLine}</span>
             <a href={"tel:" + COMPANY_INFO.phone} className="text-white hover:text-[#00f0ff] font-mono font-bold">
               {COMPANY_INFO.formattedPhone} ({COMPANY_INFO.authorizedPerson})
             </a>
           </div>
-          <span className="hidden sm:inline">Kocaeli / Gebze Antrepo &amp; CNC İmalat Tesisi</span>
+          <span className="hidden sm:inline">{t.footerFacility}</span>
         </div>
       </div>
     </div>

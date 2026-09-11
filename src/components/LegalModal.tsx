@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Shield, FileText, Lock, Truck, Scale, CheckCircle2 } from 'lucide-react';
 import { COMPANY_INFO } from '../data/materials';
+import { useLanguage } from '../context/LanguageContext';
 
 export type LegalDocType = 'kvkk' | 'privacy' | 'sales' | 'distance';
 
@@ -15,9 +16,12 @@ export const LegalModal: React.FC<LegalModalProps> = ({
   onClose,
   initialTab = 'kvkk',
 }) => {
+  const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState<LegalDocType>(initialTab);
 
   if (!isOpen) return null;
+
+  const isEn = language === 'en';
 
   return (
     <div
@@ -38,7 +42,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             </div>
             <div>
               <span className="font-mono text-[10px] text-[#4cd7f6] uppercase font-bold tracking-wider block">
-                Yasal Uyum & Bilgilendirme
+                {isEn ? 'Legal Compliance & Information' : 'Yasal Uyum & Bilgilendirme'}
               </span>
               <h3 className="font-display text-base sm:text-lg font-bold text-[#e2e2e9]">
                 {COMPANY_INFO.fullName}
@@ -66,7 +70,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             }`}
           >
             <Lock className="w-3.5 h-3.5" />
-            <span>KVKK Aydınlatma Metni</span>
+            <span>{isEn ? 'GDPR / Data Protection' : 'KVKK Aydınlatma Metni'}</span>
           </button>
 
           <button
@@ -78,7 +82,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
-            <span>Gizlilik Politikası</span>
+            <span>{isEn ? 'Privacy Policy' : 'Gizlilik Politikası'}</span>
           </button>
 
           <button
@@ -90,7 +94,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             }`}
           >
             <Truck className="w-3.5 h-3.5" />
-            <span>Satış & Sevkiyat Şartları</span>
+            <span>{isEn ? 'Sales & Shipping Terms' : 'Satış & Sevkiyat Şartları'}</span>
           </button>
 
           <button
@@ -102,7 +106,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({
             }`}
           >
             <Scale className="w-3.5 h-3.5" />
-            <span>Mesafeli Satış Esasları</span>
+            <span>{isEn ? 'Distance Sales Principles' : 'Mesafeli Satış Esasları'}</span>
           </button>
         </div>
 
@@ -197,13 +201,13 @@ export const LegalModal: React.FC<LegalModalProps> = ({
         {/* Alt Kapatma Çubuğu */}
         <div className="p-4 border-t border-[#434655]/40 bg-[#1a1b21] flex items-center justify-between">
           <span className="font-mono text-xs text-[#8d90a0]">
-            Güncelleme: Mart 2026 // Çayırova - Gebze
+            {isEn ? 'Last Updated: March 2026 // Cayirova - Gebze' : 'Güncelleme: Mart 2026 // Çayırova - Gebze'}
           </span>
           <button
             onClick={onClose}
             className="px-5 h-9 rounded-lg bg-[#2563eb] hover:bg-[#0053db] text-white text-xs font-semibold transition-colors cursor-pointer"
           >
-            Anladım, Kapat
+            {isEn ? 'Close Window' : 'Anladım, Kapat'}
           </button>
         </div>
       </div>

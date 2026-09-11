@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { CurrencyCode, ProductItem } from '../types';
 import { PRODUCTS } from '../data/materials';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ProductsSectionProps {
   selectedCategory: string | null;
@@ -20,6 +21,7 @@ interface ProductsSectionProps {
   onSelectProductForRfq: (productId: string) => void;
   onOpenTds: (productId: string) => void;
   currency: CurrencyCode;
+  language?: 'tr' | 'en';
 }
 
 interface ProductTheme {
@@ -181,10 +183,13 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
     }
   };
 
+  const { language, isEN, t: currentT } = useLanguage();
+  const pT = currentT.products;
+
   // Dynamic currency converter for price ranges
   const getCurrencyDisplay = (priceStr: string) => {
     if (priceStr === 'Teklif Alınız' || priceStr === 'Teklif İsteyiniz') {
-      return priceStr;
+      return isEN ? 'Request Quote' : priceStr;
     }
 
     const rateTRY = 38.45;
@@ -221,11 +226,11 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
             <div className="flex items-center gap-2 mb-1.5">
               <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-ping" />
               <span className="font-mono text-xs font-bold text-[#00f0ff] uppercase tracking-widest">
-                Stoktan Doğrudan Sevk // DIN Normlu Hassas Tolerans
+                {pT.badgeStock}
               </span>
             </div>
             <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#e2e2e9] tracking-tight">
-              Mühendislik Malzemeleri &amp; Yüksek Performanslı Polimerler
+              {pT.title}
             </h2>
           </div>
 
@@ -237,14 +242,14 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
                 className="px-3.5 py-1.5 rounded-xl bg-[#2563eb]/20 text-[#00f0ff] hover:bg-[#2563eb]/30 text-xs font-semibold border border-[#2563eb]/50 transition-all flex items-center gap-1.5 cursor-pointer"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Filtreyi Temizle (Tümü: {PRODUCTS.length})</span>
+                <span>{pT.filterClear} ({isEN ? 'All' : 'Tümü'}: {PRODUCTS.length})</span>
               </button>
             )}
             <span className="px-3 py-1.5 rounded-xl bg-[#12141c] border border-[#434655]/40 font-mono text-xs text-[#8d90a0]">
-              Kur: <strong className="text-[#00f0ff]">{currency}</strong> (+KDV Toptan)
+              {pT.rateLabel} <strong className="text-[#00f0ff]">{currency}</strong> {pT.vatWholesale}
             </span>
             <span className="px-3 py-1.5 rounded-xl bg-[#181b24] border border-[#00f0ff]/30 text-[#00f0ff] text-xs font-mono font-bold shadow-sm">
-              Çayırova Ana Fabrika Depo
+              {pT.warehouseLabel}
             </span>
           </div>
         </div>
@@ -257,10 +262,10 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
             </div>
             <div className="max-w-md">
               <h3 className="font-display text-lg font-bold text-[#e2e2e9]">
-                Seçilen Kategoride Şu An Listelenen Ürün Bulunmuyor
+                {pT.emptyTitle}
               </h3>
               <p className="text-xs text-[#c3c6d7] mt-1.5 leading-relaxed">
-                Bu malzeme grubu için Çayırova ana depomuzda özel ölçü takoz, blok veya çubuk stoklarımız mevcuttur. Lütfen teknik teklif formunu kullanarak talep iletiniz.
+                {pT.emptyDesc}
               </p>
             </div>
             <div className="flex items-center gap-3 mt-2">
@@ -268,7 +273,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
                 onClick={onClearFilter}
                 className="px-4 py-2 rounded-xl bg-[#181b24] hover:bg-[#222632] text-xs font-semibold text-[#e2e2e9] transition-colors cursor-pointer"
               >
-                Tüm Ürünleri Göster
+                {pT.btnShowAll}
               </button>
               <button
                 onClick={() => {
@@ -277,7 +282,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
                 }}
                 className="px-5 py-2 rounded-xl bg-[#2563eb] hover:bg-[#0053db] text-xs font-bold text-white shadow-md transition-colors cursor-pointer"
               >
-                Özel Ölçü Teklifi İste (RFQ)
+                {pT.btnCustomRfq}
               </button>
             </div>
           </div>
@@ -286,6 +291,12 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((prod) => {
               const theme = getProductTheme(prod.categoryId);
+              const pTrans = pT.names[prod.id];
+              const prodName = isEN && pTrans ? pTrans.name : prod.name;
+              const prodCategory = isEN && pTrans ? pTrans.category : prod.category;
+              const prodDesc = isEN && pTrans ? pTrans.description : prod.description;
+              const prodAction = isEN && pTrans ? pTrans.actionText : prod.actionText;
+
               return (
                 <div
                   key={prod.id}
@@ -300,7 +311,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
                     {prod.imageUrl ? (
                       <img
                         src={prod.imageUrl}
-                        alt={`${prod.name} - Üretici Tedarik Çayırova`}
+                        alt={`${prodName} - Üretici Tedarik Çayırova`}
                         loading="lazy"
                         className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 brightness-[0.92] group-hover:brightness-100"
                       />
@@ -348,7 +359,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
                     {/* Kategori & Kod */}
                     <div className="flex items-center justify-between">
                       <span className={`font-mono text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-md border ${theme.categoryBadge}`}>
-                        {prod.category}
+                        {prodCategory}
                       </span>
                       <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#181b24] text-[#8d90a0] border border-[#434655]/30">
                         {prod.code}
@@ -359,29 +370,29 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
                     <h4
                       onClick={() => onOpenTds(prod.id)}
                       className={`font-display text-[16px] text-[#e2e2e9] font-bold group-hover:${theme.accentText} transition-colors line-clamp-2 cursor-pointer leading-snug`}
-                      title={prod.name}
+                      title={prodName}
                     >
-                      {prod.name}
+                      {prodName}
                     </h4>
 
                     {/* Açıklama */}
                     <p className="text-[12px] text-[#c3c6d7] line-clamp-2 leading-relaxed">
-                      {prod.description}
+                      {prodDesc}
                     </p>
 
                     {/* Mikro Teknik Parametreler Matrisi */}
                     <div className="grid grid-cols-2 gap-1.5 p-2.5 rounded-xl bg-[#08090d]/80 border border-[#434655]/30 font-mono text-[11px] mt-auto">
                       <div className="flex items-center gap-1.5 text-[#c3c6d7] truncate">
-                        <Flame className="w-3 h-3 text-[#ffb77d] shrink-0" />
+                        <Flame className="w-3.5 h-3.5 text-[#ffb77d] shrink-0" />
                         <span className="truncate">{prod.workingTemp.split('(')[0]}</span>
                       </div>
                       <div className="flex items-center gap-1.5 text-[#c3c6d7] truncate">
-                        <Scale className={`w-3 h-3 ${theme.accentText} shrink-0`} />
+                        <Scale className={`w-3.5 h-3.5 ${theme.accentText} shrink-0`} />
                         <span>{prod.density} g/cm³</span>
                       </div>
                       {prod.hardness && (
                         <div className="col-span-2 flex items-center gap-1.5 text-[#b4c5ff] pt-1 border-t border-[#434655]/20 truncate">
-                          <span className="text-[#8d90a0] text-[10px]">Sertlik:</span>
+                          <span className="text-[#8d90a0] text-[10px]">{pT.hardnessLabel}:</span>
                           <span className="font-bold truncate">{prod.hardness}</span>
                         </div>
                       )}
@@ -392,8 +403,8 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
                       <div>
                         <span className="block font-mono text-[10px] text-[#8d90a0]">
                           {prod.priceDisplay.includes('–')
-                            ? 'Fiyat Aralığı (+KDV)'
-                            : 'Birim Fiyat'}
+                            ? pT.priceRangeLabel
+                            : (isEN ? 'Unit Price' : 'Birim Fiyat')}
                         </span>
                         <span className={`font-display text-[15px] sm:text-[16px] ${theme.priceColor} font-extrabold`}>
                           {getCurrencyDisplay(prod.priceDisplay)}
@@ -405,7 +416,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
                           id={`product-tds-btn-${prod.id}`}
                           onClick={() => onOpenTds(prod.id)}
                           className={`h-9 w-9 rounded-xl bg-[#181b24] hover:bg-[#222632] text-[#c3c6d7] group-hover:${theme.accentText} flex items-center justify-center transition-colors border border-[#434655]/40 cursor-pointer`}
-                          title="Teknik Şartname & Föy (TDS) Görüntüle"
+                          title={pT.btnTdsTooltip}
                         >
                           <Eye className="w-4 h-4" />
                         </button>
@@ -415,7 +426,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({
                           onClick={() => onSelectProductForRfq(prod.id)}
                           className={`h-9 px-3.5 rounded-xl ${theme.buttonBg} text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer`}
                         >
-                          <span>{prod.actionText}</span>
+                          <span>{prodAction}</span>
                           <Send className="w-3 h-3" />
                         </button>
                       </div>
