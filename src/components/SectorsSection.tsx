@@ -28,38 +28,47 @@ export const SectorsSection: React.FC = () => {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {/* 1: Otomotiv */}
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#1a1b21] border border-[#434655]/25 text-[#e2e2e9] hover:border-[#b4c5ff]/40 transition-colors">
-              <Car className="w-5 h-5 text-[#b4c5ff] shrink-0" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+            {/* 1: Otomotiv - Cobalt Blue */}
+            <div className="group relative flex items-center gap-3 p-3.5 rounded-2xl bg-[#12141c] border border-[#434655]/30 text-[#e2e2e9] hover:border-[#3b82f6] hover:shadow-[0_4px_24px_rgba(59,130,246,0.25)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#2563eb] to-[#60a5fa]" />
+              <div className="w-10 h-10 rounded-xl bg-[#2563eb]/15 border border-[#3b82f6]/40 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(59,130,246,0.2)]">
+                <Car className="w-5 h-5 text-[#60a5fa]" />
+              </div>
               <div className="flex flex-col">
-                <span className="text-xs sm:text-sm font-bold">
+                <span className="text-xs sm:text-sm font-bold text-[#e2e2e9] group-hover:text-[#60a5fa] transition-colors">
                   Otomotiv Sanayi
                 </span>
                 <span className="font-mono text-[11px] text-[#8d90a0]">
-                  Kalıp & Fikstür
+                  Kalıp &amp; Fikstür
                 </span>
               </div>
             </div>
 
-            {/* 2: Ağır Makine */}
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#1a1b21] border border-[#434655]/25 text-[#e2e2e9] hover:border-[#4cd7f6]/40 transition-colors">
-              <Cog className="w-5 h-5 text-[#4cd7f6] shrink-0" />
+            {/* 2: Ağır Makine - Electric Cyan */}
+            <div className="group relative flex items-center gap-3 p-3.5 rounded-2xl bg-[#12141c] border border-[#434655]/30 text-[#e2e2e9] hover:border-[#00f0ff] hover:shadow-[0_4px_24px_rgba(0,240,255,0.25)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#00788c] to-[#00f0ff]" />
+              <div className="w-10 h-10 rounded-xl bg-[#00f0ff]/15 border border-[#00f0ff]/40 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(0,240,255,0.2)]">
+                <Cog className="w-5 h-5 text-[#00f0ff]" />
+              </div>
               <div className="flex flex-col">
-                <span className="text-xs sm:text-sm font-bold">
+                <span className="text-xs sm:text-sm font-bold text-[#e2e2e9] group-hover:text-[#00f0ff] transition-colors">
                   Ağır Makine
                 </span>
                 <span className="font-mono text-[11px] text-[#8d90a0]">
-                  Dişli & Burç
+                  Dişli &amp; Burç
                 </span>
               </div>
             </div>
 
-            {/* 3: Savunma Sanayi */}
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#1a1b21] border border-[#434655]/25 text-[#e2e2e9] hover:border-[#ffb77d]/40 transition-colors">
-              <Plane className="w-5 h-5 text-[#ffb77d] shrink-0" />
+            {/* 3: Savunma Sanayi - Golden Amber */}
+            <div className="group relative flex items-center gap-3 p-3.5 rounded-2xl bg-[#12141c] border border-[#434655]/30 text-[#e2e2e9] hover:border-[#f59e0b] hover:shadow-[0_4px_24px_rgba(245,158,11,0.25)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#b45309] to-[#f59e0b]" />
+              <div className="w-10 h-10 rounded-xl bg-[#f59e0b]/15 border border-[#f59e0b]/40 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(245,158,11,0.2)]">
+                <Plane className="w-5 h-5 text-[#fbbf24]" />
+              </div>
               <div className="flex flex-col">
-                <span className="text-xs sm:text-sm font-bold">
+                <span className="text-xs sm:text-sm font-bold text-[#e2e2e9] group-hover:text-[#fbbf24] transition-colors">
                   Savunma Sanayi
                 </span>
                 <span className="font-mono text-[11px] text-[#8d90a0]">
@@ -68,12 +77,15 @@ export const SectorsSection: React.FC = () => {
               </div>
             </div>
 
-            {/* 4: Kimya & İlaç */}
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#1a1b21] border border-[#434655]/25 text-[#e2e2e9] hover:border-[#b4c5ff]/40 transition-colors">
-              <FlaskConical className="w-5 h-5 text-[#b4c5ff] shrink-0" />
+            {/* 4: Kimya & İlaç - Electric Violet */}
+            <div className="group relative flex items-center gap-3 p-3.5 rounded-2xl bg-[#12141c] border border-[#434655]/30 text-[#e2e2e9] hover:border-[#a855f7] hover:shadow-[0_4px_24px_rgba(168,85,247,0.25)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#7e22ce] to-[#a855f7]" />
+              <div className="w-10 h-10 rounded-xl bg-[#a855f7]/15 border border-[#a855f7]/40 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(168,85,247,0.2)]">
+                <FlaskConical className="w-5 h-5 text-[#c084fc]" />
+              </div>
               <div className="flex flex-col">
-                <span className="text-xs sm:text-sm font-bold">
-                  Kimya & İlaç
+                <span className="text-xs sm:text-sm font-bold text-[#e2e2e9] group-hover:text-[#c084fc] transition-colors">
+                  Kimya &amp; İlaç
                 </span>
                 <span className="font-mono text-[11px] text-[#8d90a0]">
                   PTFE Korozyon
@@ -81,11 +93,14 @@ export const SectorsSection: React.FC = () => {
               </div>
             </div>
 
-            {/* 5: Konveyör Hatları */}
-            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-[#1a1b21] border border-[#434655]/25 text-[#e2e2e9] hover:border-[#4cd7f6]/40 transition-colors">
-              <RotateCw className="w-5 h-5 text-[#4cd7f6] shrink-0" />
+            {/* 5: Konveyör Hatları - Cyber Emerald */}
+            <div className="group relative flex items-center gap-3 p-3.5 rounded-2xl bg-[#12141c] border border-[#434655]/30 text-[#e2e2e9] hover:border-[#10b981] hover:shadow-[0_4px_24px_rgba(16,185,129,0.25)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#047857] to-[#10b981]" />
+              <div className="w-10 h-10 rounded-xl bg-[#10b981]/15 border border-[#10b981]/40 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+                <RotateCw className="w-5 h-5 text-[#34d399]" />
+              </div>
               <div className="flex flex-col">
-                <span className="text-xs sm:text-sm font-bold">
+                <span className="text-xs sm:text-sm font-bold text-[#e2e2e9] group-hover:text-[#34d399] transition-colors">
                   Konveyör Hatları
                 </span>
                 <span className="font-mono text-[11px] text-[#8d90a0]">

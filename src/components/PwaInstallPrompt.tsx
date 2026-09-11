@@ -32,10 +32,11 @@ export const PwaInstallPrompt: React.FC = () => {
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      // Kullanıcı bu oturumda henüz kapatmadıysa göster
+      // Kullanıcı bu oturumda henüz kapatmadıysa gecikmeli göster (çakışmayı önlemek için 12 sn sonra)
       const dismissed = sessionStorage.getItem('pwa_prompt_dismissed');
       if (!dismissed) {
-        setShowPrompt(true);
+        const timer = setTimeout(() => setShowPrompt(true), 12000);
+        return () => clearTimeout(timer);
       }
     };
 
@@ -62,12 +63,16 @@ export const PwaInstallPrompt: React.FC = () => {
       return;
     }
 
-    await deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      setShowPrompt(false);
+    try {
+      await deferredPrompt.prompt();
+      const choiceResult = await deferredPrompt.userChoice;
+      if (choiceResult.outcome === 'accepted') {
+        setShowPrompt(false);
+      }
+      setDeferredPrompt(null);
+    } catch {
+      // Hata durumunda yutulur
     }
-    setDeferredPrompt(null);
   };
 
   const handleDismiss = () => {
@@ -83,19 +88,19 @@ export const PwaInstallPrompt: React.FC = () => {
       {installed && (
         <aside
           aria-label="Uygulama Yüklendi Bildirimi"
-          className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-4 py-3 rounded-2xl bg-[#00788c] text-white shadow-2xl flex items-center gap-2.5 font-sans text-xs sm:text-sm animate-in fade-in"
+          className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-4 py-3 rounded-2xl bg-[#00788c] text-white shadow-2xl flex items-center gap-2.5 font-sans text-xs sm:text-sm animate-in fade-in"
         >
           <CheckCircle2 className="w-5 h-5 text-[#acedff]" />
           <span>Üretici Tedarik uygulaması başarıyla masaüstünüze / cihazınıza yüklendi!</span>
         </aside>
       )}
 
-      {/* 2. PWA Akıllı Yükleme Çubuğu (Floating Banner) */}
+      {/* 2. PWA Akıllı Yükleme Çubuğu (Floating Banner - Sol Alt Köşe, Sağ FAB Çubuğunu Asla Engellemez) */}
       {showPrompt && (
         <aside
           id="pwa-install-banner"
           aria-label="PWA Uygulama Yükleme Bildirimi"
-          className="fixed bottom-5 right-5 z-40 w-[92%] max-w-md p-3 sm:p-4 rounded-2xl bg-[#0c0e13]/95 border border-[#00f0ff]/40 shadow-[0_12px_40px_rgba(0,0,0,0.8)] backdrop-blur-2xl animate-in fade-in slide-in-from-bottom-4"
+          className="fixed bottom-6 left-4 sm:left-6 z-40 w-[92%] max-w-sm p-3.5 rounded-2xl bg-[#0c0e13]/98 border border-[#00f0ff]/40 shadow-[0_12px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl animate-in fade-in slide-in-from-bottom-4"
         >
           <div className="flex items-start justify-between gap-3">
             <div className="flex items-center gap-3">
@@ -103,37 +108,37 @@ export const PwaInstallPrompt: React.FC = () => {
               <img
                 src="/icon-192.png"
                 alt="Üretici Tedarik App İkonu"
-                className="w-12 h-12 rounded-xl object-cover border border-[#434655]/50 shadow-md shrink-0"
+                className="w-11 h-11 rounded-xl object-cover border border-[#434655]/50 shadow-md shrink-0"
               />
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#2563eb]/30 text-[#b4c5ff] font-bold uppercase">
+                  <span className="font-mono text-[9.5px] px-1.5 py-0.5 rounded bg-[#2563eb]/30 text-[#00f0ff] font-bold uppercase border border-[#00f0ff]/30">
                     PWA App
                   </span>
-                  <span className="text-xs text-[#8d90a0] font-mono">Çevrimdışı Destekli</span>
+                  <span className="text-[11px] text-[#8d90a0] font-mono">Çevrimdışı Destekli</span>
                 </div>
-                <h4 className="font-display text-sm font-bold text-[#e2e2e9] leading-snug mt-0.5">
+                <h4 className="font-display text-xs sm:text-sm font-bold text-[#e2e2e9] leading-snug mt-0.5">
                   Üretici Tedarik Masaüstü &amp; Mobil Uygulaması
                 </h4>
-                <p className="text-[11px] text-[#c3c6d7] leading-tight mt-0.5">
-                  Doğrudan masaüstünüzden veya ana ekranınızdan tek tıkla RFQ ve katalog erişimi sağlayın.
+                <p className="text-[10.5px] text-[#c3c6d7] leading-tight mt-0.5">
+                  Masaüstünüzden veya ana ekranınızdan tek tıkla RFQ ve teknik föylere erişin.
                 </p>
               </div>
             </div>
 
             <button
               onClick={handleDismiss}
-              className="text-[#8d90a0] hover:text-[#e2e2e9] p-1 shrink-0"
+              className="text-[#8d90a0] hover:text-[#e2e2e9] p-1 shrink-0 cursor-pointer"
               title="Kapat"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
-          <div className="flex items-center justify-end gap-2 mt-3 pt-2.5 border-t border-[#434655]/30">
+          <div className="flex items-center justify-end gap-2 mt-2.5 pt-2 border-t border-[#434655]/30">
             <button
               onClick={handleDismiss}
-              className="px-3 py-1.5 rounded-lg text-xs font-medium text-[#8d90a0] hover:text-[#e2e2e9] transition-colors"
+              className="px-3 py-1.5 rounded-lg text-xs font-medium text-[#8d90a0] hover:text-[#e2e2e9] transition-colors cursor-pointer"
             >
               Daha Sonra
             </button>
@@ -141,10 +146,19 @@ export const PwaInstallPrompt: React.FC = () => {
             <button
               id="pwa-install-action-btn"
               onClick={handleInstallClick}
-              className="px-4 py-1.5 rounded-xl bg-[#2563eb] hover:bg-[#0053db] text-white text-xs font-bold flex items-center gap-1.5 shadow-[0_0_16px_rgba(37,99,235,0.4)] transition-all cursor-pointer"
+              className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#2563eb] to-[#0053db] hover:from-[#0053db] hover:to-[#0036a8] text-white text-xs font-bold shadow-[0_0_12px_rgba(37,99,235,0.4)] flex items-center gap-1.5 transition-all cursor-pointer border border-[#00f0ff]/30"
             >
-              <Download className="w-3.5 h-3.5" />
-              <span>{isIOS ? 'Ana Ekrana Ekle' : 'Uygulamayı Yükle'}</span>
+              {isIOS ? (
+                <>
+                  <Share className="w-3.5 h-3.5" />
+                  <span>Nasıl Yüklenir?</span>
+                </>
+              ) : (
+                <>
+                  <Download className="w-3.5 h-3.5 text-[#00f0ff]" />
+                  <span>Uygulamayı Yükle</span>
+                </>
+              )}
             </button>
           </div>
         </aside>

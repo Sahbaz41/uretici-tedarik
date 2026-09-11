@@ -40,6 +40,68 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
     setOpenId((prev) => (prev === id ? null : id));
   };
 
+  const getFaqTheme = (cat: string) => {
+    const c = (cat || '').toLowerCase();
+    if (c.includes('polimer') || c.includes('kestamit') || c.includes('delrin')) {
+      return {
+        borderOpen: 'border-[#3b82f6]',
+        shadowOpen: 'shadow-[0_4px_24px_rgba(59,130,246,0.25)]',
+        badgeText: 'text-[#60a5fa]',
+        badgeBg: 'bg-[#2563eb]/15 border-[#3b82f6]/30',
+        iconBg: 'bg-[#2563eb]',
+        barGradient: 'from-[#2563eb] to-[#60a5fa]',
+      };
+    }
+    if (c.includes('ptfe') || c.includes('teflon') || c.includes('sıcaklık')) {
+      return {
+        borderOpen: 'border-[#00f0ff]',
+        shadowOpen: 'shadow-[0_4px_24px_rgba(0,240,255,0.25)]',
+        badgeText: 'text-[#00f0ff]',
+        badgeBg: 'bg-[#00f0ff]/15 border-[#00f0ff]/30',
+        iconBg: 'bg-[#00788c]',
+        barGradient: 'from-[#00788c] to-[#00f0ff]',
+      };
+    }
+    if (c.includes('çelik') || c.includes('civa')) {
+      return {
+        borderOpen: 'border-[#94a3b8]',
+        shadowOpen: 'shadow-[0_4px_24px_rgba(148,163,184,0.25)]',
+        badgeText: 'text-[#cbd5e1]',
+        badgeBg: 'bg-[#64748b]/15 border-[#94a3b8]/30',
+        iconBg: 'bg-[#475569]',
+        barGradient: 'from-[#64748b] to-[#cbd5e1]',
+      };
+    }
+    if (c.includes('yalıtım') || c.includes('epoksi') || c.includes('fr4') || c.includes('mikanit')) {
+      return {
+        borderOpen: 'border-[#a855f7]',
+        shadowOpen: 'shadow-[0_4px_24px_rgba(168,85,247,0.25)]',
+        badgeText: 'text-[#c084fc]',
+        badgeBg: 'bg-[#a855f7]/15 border-[#a855f7]/30',
+        iconBg: 'bg-[#7e22ce]',
+        barGradient: 'from-[#7e22ce] to-[#c084fc]',
+      };
+    }
+    if (c.includes('aşınma') || c.includes('pe 1000') || c.includes('uhmwpe') || c.includes('hdpe')) {
+      return {
+        borderOpen: 'border-[#10b981]',
+        shadowOpen: 'shadow-[0_4px_24px_rgba(16,185,129,0.25)]',
+        badgeText: 'text-[#34d399]',
+        badgeBg: 'bg-[#10b981]/15 border-[#10b981]/30',
+        iconBg: 'bg-[#059669]',
+        barGradient: 'from-[#047857] to-[#10b981]',
+      };
+    }
+    return {
+      borderOpen: 'border-[#f59e0b]',
+      shadowOpen: 'shadow-[0_4px_24px_rgba(245,158,11,0.25)]',
+      badgeText: 'text-[#fbbf24]',
+      badgeBg: 'bg-[#f59e0b]/15 border-[#f59e0b]/30',
+      iconBg: 'bg-[#b45309]',
+      barGradient: 'from-[#b45309] to-[#f59e0b]',
+    };
+  };
+
   return (
     <section
       id="teknik-bilgi-ve-sss"
@@ -124,16 +186,20 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
           ) : (
             filteredFaqs.map((faq) => {
               const isOpen = openId === faq.id;
+              const theme = getFaqTheme(faq.category);
               return (
                 <article
                   key={faq.id}
                   id={faq.id}
-                  className={`rounded-2xl transition-all duration-300 border overflow-hidden ${
+                  className={`group relative rounded-2xl transition-all duration-300 border overflow-hidden ${
                     isOpen
-                      ? 'bg-[#1a1b21] border-[#2563eb]/60 shadow-[0_4px_24px_rgba(37,99,235,0.15)]'
-                      : 'bg-[#14161d] border-[#434655]/30 hover:border-[#434655]/70 hover:bg-[#1a1b21]/70'
+                      ? `bg-[#1a1b21] ${theme.borderOpen} ${theme.shadowOpen}`
+                      : 'bg-[#12141c] border-[#434655]/30 hover:border-[#434655]/80 hover:bg-[#181b24]'
                   }`}
                 >
+                  {/* Üst Mikro Renk Çizgisi */}
+                  <div className={`h-0.5 w-full bg-gradient-to-r ${theme.barGradient} transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-30 group-hover:opacity-80'}`} />
+
                   {/* Başlık Butonu */}
                   <button
                     type="button"
@@ -143,24 +209,24 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
                   >
                     <div className="flex items-start sm:items-center gap-3">
                       <div
-                        className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
+                        className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 transition-all ${
                           isOpen
-                            ? 'bg-[#2563eb] text-white shadow-md'
-                            : 'bg-[#282a2f] text-[#4cd7f6]'
+                            ? `${theme.iconBg} text-white shadow-md shadow-[0_0_12px_rgba(0,0,0,0.4)]`
+                            : 'bg-[#181b24] text-[#8d90a0] group-hover:text-[#e2e2e9]'
                         }`}
                       >
                         <HelpCircle className="w-4 h-4" />
                       </div>
                       <div>
                         <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <span className="font-mono text-[10px] text-[#4cd7f6] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-[#282a2f]">
+                          <span className={`font-mono text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded border ${theme.badgeBg} ${theme.badgeText}`}>
                             {faq.category}
                           </span>
                           <span className="font-mono text-[10px] text-[#ffb77d] px-2 py-0.5 rounded bg-[#ffb77d]/10 border border-[#ffb77d]/20">
                             AEO Cevap Snippet'ı
                           </span>
                         </div>
-                        <h3 className="font-display text-sm sm:text-base font-bold text-[#e2e2e9] leading-snug">
+                        <h3 className={`font-display text-sm sm:text-base font-bold text-[#e2e2e9] leading-snug group-hover:${theme.badgeText} transition-colors`}>
                           {faq.question}
                         </h3>
                       </div>
@@ -168,7 +234,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
 
                     <ChevronDown
                       className={`w-5 h-5 text-[#8d90a0] transition-transform duration-300 shrink-0 ${
-                        isOpen ? 'rotate-180 text-[#4cd7f6]' : ''
+                        isOpen ? `rotate-180 ${theme.badgeText}` : 'group-hover:text-[#e2e2e9]'
                       }`}
                     />
                   </button>

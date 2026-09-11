@@ -46,8 +46,18 @@ export const Footer: React.FC<FooterProps> = ({
               showSlogan={true}
             />
 
+            {/* Orijinal Vektör Fabrika & Monogram Amblem Rozeti */}
+            <div className="p-3 rounded-2xl bg-[#12141c]/90 border border-[#2563eb]/30 shadow-[0_0_20px_rgba(0,240,255,0.08)] flex items-center justify-center group/emblem hover:border-[#00f0ff]/50 transition-colors">
+              <img
+                src="/uretici-tedarik-logo.svg"
+                alt="Üretici Tedarik Orijinal Vektör Fabrika & Monogram Amblemi"
+                className="w-full max-w-[240px] h-auto object-contain transition-transform duration-300 group-hover/emblem:scale-[1.02]"
+                loading="lazy"
+              />
+            </div>
+
             <p className="text-xs text-[#c3c6d7] leading-relaxed">
-              Mühendislik plastikleri imalatı, ithalatı, 3 & 5 eksen CNC talaşlı
+              Mühendislik plastikleri imalatı, ithalatı, 3 &amp; 5 eksen CNC talaşlı
               işleme, kayar otomat ve savunma sanayi makine-teçhizat üretimi.
             </p>
 

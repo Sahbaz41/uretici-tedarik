@@ -344,7 +344,7 @@ export const PRODUCTS: ProductItem[] = [
     description:
       'Sarı ve natürel döküm polyamid. Yüksek mekanik dayanım, darbe sönümleme ve bronz/çelik yerine mükemmel aşınma performansı sunan temel imalat polimeri.',
     imageUrl:
-      'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
     badge: 'DÖKÜM PA6G',
     badgeType: 'primary',
     secondaryBadge: 'Sarı / Natürel',
@@ -398,7 +398,7 @@ export const PRODUCTS: ProductItem[] = [
     description:
       'DIN 1714 standardında alüminyum ve nikel katkılı süper alaşım bronz. Korozyona, kavitasyona ve 800+ MPa çekme gerilimine dayanıklı.',
     imageUrl:
-      'https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1581092162384-8987c1d64718?auto=format&fit=crop&w=800&q=80',
     badge: 'DIN 1714 ALAŞIM',
     badgeType: 'secondary',
     secondaryBadge: 'Ø 20 - 300 mm',

@@ -41,39 +41,45 @@ export const CorporateSection: React.FC = () => {
           <strong className="text-[#00f0ff]">savunma sanayi</strong> olmak üzere ağır makine, otomotiv ve konveyör hatlarında geniş bir ürün portföyü ve yüksek hassasiyetli talaşlı imalat sunar.
         </p>
 
-        {/* İmalat vs İthalat İkili Tablo */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 my-2">
-          {/* 1. Üretimini Yapmış Olduğumuz */}
-          <div className="p-4 rounded-2xl bg-[#141722] border border-[#2563eb]/40 flex flex-col">
-            <div className="flex items-center gap-2 mb-2">
-              <Factory className="w-4 h-4 text-[#00f0ff]" />
+        {/* İmalat vs İthalat İkili Tablo (Özel Neon Kartlar) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-2">
+          {/* 1. Üretimini Yapmış Olduğumuz - Cobalt / Cyan */}
+          <div className="group relative p-4.5 rounded-2xl bg-[#12141c] border border-[#2563eb]/40 hover:border-[#00f0ff] hover:shadow-[0_4px_25px_rgba(0,240,255,0.2)] hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#2563eb] to-[#00f0ff]" />
+            <div className="flex items-center gap-2.5 mb-2.5">
+              <div className="w-8 h-8 rounded-lg bg-[#2563eb]/20 border border-[#00f0ff]/40 flex items-center justify-center text-[#00f0ff] shadow-[0_0_10px_rgba(0,240,255,0.25)]">
+                <Factory className="w-4 h-4" />
+              </div>
               <span className="font-mono text-xs font-bold text-[#00f0ff] uppercase tracking-wider">
                 Üretimini Yapmış Olduğumuz
               </span>
             </div>
             <p className="text-xs text-[#e2e2e9] leading-relaxed">
-              <strong>Cast Polyamid (Kestamit PA6G)</strong>,{' '}
-              <strong>Polyamid PA6</strong>,{' '}
-              <strong>HDPE Polietilen</strong>,{' '}
-              <strong>PE 1000 (Ulpolen UHMWPE)</strong>,{' '}
-              <strong>POM-C Delrin</strong>, <strong>PTFE Teflon</strong> ve{' '}
-              <strong>Vinç Denge Takozları</strong> başlıca imalat ürünlerimizdir.
+              <strong className="text-[#93c5fd]">Cast Polyamid (Kestamit PA6G)</strong>,{' '}
+              <strong className="text-[#93c5fd]">Polyamid PA6</strong>,{' '}
+              <strong className="text-[#93c5fd]">HDPE Polietilen</strong>,{' '}
+              <strong className="text-[#93c5fd]">PE 1000 (Ulpolen UHMWPE)</strong>,{' '}
+              <strong className="text-[#93c5fd]">POM-C Delrin</strong>, <strong className="text-[#93c5fd]">PTFE Teflon</strong> ve{' '}
+              <strong className="text-[#93c5fd]">Vinç Denge Takozları</strong> başlıca imalat ürünlerimizdir.
             </p>
           </div>
 
-          {/* 2. İthalatını Yapmış Olduğumuz */}
-          <div className="p-4 rounded-2xl bg-[#141722] border border-[#00788c]/40 flex flex-col">
-            <div className="flex items-center gap-2 mb-2">
-              <Globe className="w-4 h-4 text-[#38bdf8]" />
-              <span className="font-mono text-xs font-bold text-[#38bdf8] uppercase tracking-wider">
+          {/* 2. İthalatını Yapmış Olduğumuz - Violet / Magenta */}
+          <div className="group relative p-4.5 rounded-2xl bg-[#12141c] border border-[#a855f7]/40 hover:border-[#c084fc] hover:shadow-[0_4px_25px_rgba(168,85,247,0.25)] hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#7e22ce] to-[#c084fc]" />
+            <div className="flex items-center gap-2.5 mb-2.5">
+              <div className="w-8 h-8 rounded-lg bg-[#a855f7]/20 border border-[#a855f7]/40 flex items-center justify-center text-[#c084fc] shadow-[0_0_10px_rgba(168,85,247,0.25)]">
+                <Globe className="w-4 h-4" />
+              </div>
+              <span className="font-mono text-xs font-bold text-[#c084fc] uppercase tracking-wider">
                 İthalatını Yapmış Olduğumuz
               </span>
             </div>
             <p className="text-xs text-[#e2e2e9] leading-relaxed">
-              <strong>FR4 Epoksi</strong>, <strong>Mikanit Levha</strong>,{' '}
-              <strong>Fenolik Bezli Fiber</strong>, PTFE (Teflon) türevleri,{' '}
-              <strong>PEEK</strong>, <strong>PVDF &amp; PET</strong>, Silikon ve Kauçuk levhalar,{' '}
-              <strong>Yanmaz Kumaşlar</strong> ve Alaşımlı Metaller.
+              <strong className="text-[#e9d5ff]">FR4 Epoksi</strong>, <strong className="text-[#e9d5ff]">Mikanit Levha</strong>,{' '}
+              <strong className="text-[#e9d5ff]">Fenolik Bezli Fiber</strong>, PTFE (Teflon) türevleri,{' '}
+              <strong className="text-[#e9d5ff]">PEEK</strong>, <strong className="text-[#e9d5ff]">PVDF &amp; PET</strong>, Silikon ve Kauçuk levhalar,{' '}
+              <strong className="text-[#e9d5ff]">Yanmaz Kumaşlar</strong> ve Alaşımlı Metaller.
             </p>
           </div>
         </div>
@@ -127,52 +133,68 @@ export const CorporateSection: React.FC = () => {
         </div>
       </div>
 
-      {/* 4 Avantaj Kartı */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-        <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#141722] border border-[#434655]/30 hover:border-[#00f0ff]/50 transition-colors">
-          <Scissors className="w-5 h-5 text-[#00f0ff] shrink-0 mt-0.5" />
+      {/* 4 Avantaj Kartı (Her Biri Ayrı Neon Rengi) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* 1: CNC - Electric Cyan */}
+        <div className="group relative flex items-start gap-3.5 p-4 rounded-2xl bg-[#12141c] border border-[#434655]/30 hover:border-[#00f0ff] hover:shadow-[0_4px_24px_rgba(0,240,255,0.22)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#00788c] to-[#00f0ff]" />
+          <div className="w-10 h-10 rounded-xl bg-[#00f0ff]/15 border border-[#00f0ff]/40 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(0,240,255,0.2)]">
+            <Scissors className="w-5 h-5 text-[#00f0ff]" />
+          </div>
           <div className="flex flex-col">
-            <span className="text-sm text-[#e2e2e9] font-bold">
+            <span className="text-sm text-[#e2e2e9] font-bold group-hover:text-[#00f0ff] transition-colors">
               3 &amp; 5 Eksen CNC Talaşlı İmalat
             </span>
             <span className="text-xs text-[#c3c6d7] mt-0.5">
-              Hassas toleranslı frezeleme &amp; kayar otomat
+              Hassas toleranslı frezeleme, torna &amp; kayar otomat parkuru
             </span>
           </div>
         </div>
 
-        <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#141722] border border-[#434655]/30 hover:border-[#38bdf8]/50 transition-colors">
-          <ShieldCheck className="w-5 h-5 text-[#38bdf8] shrink-0 mt-0.5" />
+        {/* 2: Savunma Sanayi - Golden Amber */}
+        <div className="group relative flex items-start gap-3.5 p-4 rounded-2xl bg-[#12141c] border border-[#434655]/30 hover:border-[#f59e0b] hover:shadow-[0_4px_24px_rgba(245,158,11,0.22)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#b45309] to-[#f59e0b]" />
+          <div className="w-10 h-10 rounded-xl bg-[#f59e0b]/15 border border-[#f59e0b]/40 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(245,158,11,0.2)]">
+            <ShieldCheck className="w-5 h-5 text-[#fbbf24]" />
+          </div>
           <div className="flex flex-col">
-            <span className="text-sm text-[#e2e2e9] font-bold">
+            <span className="text-sm text-[#e2e2e9] font-bold group-hover:text-[#fbbf24] transition-colors">
               Savunma Sanayi Standartları
             </span>
             <span className="text-xs text-[#c3c6d7] mt-0.5">
-              Stratejik iş ortaklıkları ile sertifikalı üretim
+              AS9100 ve ISO 9001 sertifikalı stratejik iş ortaklığı
             </span>
           </div>
         </div>
 
-        <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#141722] border border-[#434655]/30 hover:border-[#ffb77d]/50 transition-colors">
-          <Cpu className="w-5 h-5 text-[#ffb77d] shrink-0 mt-0.5" />
+        {/* 3: İthalat & Yerli - Electric Violet */}
+        <div className="group relative flex items-start gap-3.5 p-4 rounded-2xl bg-[#12141c] border border-[#434655]/30 hover:border-[#a855f7] hover:shadow-[0_4px_24px_rgba(168,85,247,0.22)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#7e22ce] to-[#a855f7]" />
+          <div className="w-10 h-10 rounded-xl bg-[#a855f7]/15 border border-[#a855f7]/40 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(168,85,247,0.2)]">
+            <Cpu className="w-5 h-5 text-[#c084fc]" />
+          </div>
           <div className="flex flex-col">
-            <span className="text-sm text-[#e2e2e9] font-bold">
+            <span className="text-sm text-[#e2e2e9] font-bold group-hover:text-[#c084fc] transition-colors">
               Yerli İmalat &amp; Geniş İthalat
             </span>
             <span className="text-xs text-[#c3c6d7] mt-0.5">
-              Kestamit, PTFE, PEEK, PBI ve FR4 stoktan sevk
+              Kestamit, PTFE, PEEK, PBI ve FR4 doğrudan depodan sevk
             </span>
           </div>
         </div>
 
-        <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#141722] border border-[#434655]/30 hover:border-[#2563eb]/50 transition-colors">
-          <Truck className="w-5 h-5 text-[#2563eb] shrink-0 mt-0.5" />
+        {/* 4: Hızlı Sevk - Cyber Emerald */}
+        <div className="group relative flex items-start gap-3.5 p-4 rounded-2xl bg-[#12141c] border border-[#434655]/30 hover:border-[#10b981] hover:shadow-[0_4px_24px_rgba(16,185,129,0.22)] hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+          <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#047857] to-[#10b981]" />
+          <div className="w-10 h-10 rounded-xl bg-[#10b981]/15 border border-[#10b981]/40 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+            <Truck className="w-5 h-5 text-[#34d399]" />
+          </div>
           <div className="flex flex-col">
-            <span className="text-sm text-[#e2e2e9] font-bold">
+            <span className="text-sm text-[#e2e2e9] font-bold group-hover:text-[#34d399] transition-colors">
               Çayırova Depodan Doğrudan Sevk
             </span>
             <span className="text-xs text-[#c3c6d7] mt-0.5">
-              Hızlı teslimat ve milimetrik fire optimizasyonu
+              Aynı gün kargo, hızlı lojistik &amp; milimetrik fire optimizasyonu
             </span>
           </div>
         </div>
