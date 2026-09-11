@@ -8,7 +8,6 @@ import {
   ChevronDown,
   Menu,
   X,
-  BookOpen,
 } from 'lucide-react';
 import { LOGO_URL, COMPANY_INFO } from '../data/materials';
 import { CompanyLogo } from './CompanyLogo';
@@ -363,18 +362,8 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </nav>
 
-        {/* 3. Sağ Taraf: Katalog + Esnek Arama + Sepet + Hızlı RFQ + İletişim (ASLA TAŞMAZ) */}
+        {/* 3. Sağ Taraf: Esnek Arama + Sepet + Hızlı RFQ + İletişim (ASLA TAŞMAZ) */}
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 ml-auto">
-          {/* Katalog Butonu (Açılır PDF & İndirilebilir CAD Portal) */}
-          <button
-            id="header-catalog-btn"
-            onClick={onOpenCatalog}
-            className="flex items-center justify-center h-9 px-2.5 sm:px-3 rounded-xl bg-[#141824] hover:bg-[#1e2333] border border-[#434655]/40 text-[#c3c6d7] hover:text-[#38bdf8] transition-all cursor-pointer shrink-0 gap-1.5"
-            title={t.catalog}
-          >
-            <BookOpen className="w-3.5 h-3.5 text-[#38bdf8]" />
-            <span className="text-xs font-semibold">{t.catalog}</span>
-          </button>
           {/* Masaüstü Geniş Arama Kutusu (>= 1380px) */}
           <div
             id="search-command-palette-trigger"
