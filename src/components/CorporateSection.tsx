@@ -63,7 +63,7 @@ export const CorporateSection: React.FC = () => {
               <strong>Polyamid PA6</strong>,{' '}
               <strong>HDPE Polietilen</strong>,{' '}
               <strong>Polietilen 1000 (Ulpolen UHMWPE)</strong>,{' '}
-              <strong>Derlin (POM)</strong>, <strong>Teflon (PTFE)</strong> ve{' '}
+              <strong>Delrin (POM)</strong>, <strong>Teflon (PTFE)</strong> ve{' '}
               <strong>Vinç Denge Takozları</strong> başlıca imalat
               ürünlerimizdir.
             </p>

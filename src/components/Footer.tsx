@@ -15,12 +15,15 @@ import { CompanyLogo } from './CompanyLogo';
 interface FooterProps {
   onSelectCategoryFilter: (categoryId: string) => void;
   onOpenCatalog: () => void;
+  onOpenLegal: (tab: 'kvkk' | 'privacy' | 'sales' | 'distance') => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onSelectCategoryFilter,
   onOpenCatalog,
+  onOpenLegal,
 }) => {
+
   const scrollToSection = (id: string) => {
     const elem = document.getElementById(id);
     if (elem) {
@@ -298,17 +301,36 @@ export const Footer: React.FC<FooterProps> = ({
                 </button>
               </li>
               <li>
-                <span className="text-[#8d90a0]">
+                <button
+                  onClick={() => scrollToSection('teknik-bilgi-ve-sss')}
+                  className="hover:text-[#4cd7f6] transition-colors text-left font-medium flex items-center gap-1"
+                >
+                  <span>Teknik SSS & Malzeme Rehberi (AEO)</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onOpenLegal('privacy')}
+                  className="hover:text-[#b4c5ff] transition-colors text-left cursor-pointer"
+                >
                   Gizlilik ve Güvenlik İlkeleri
-                </span>
+                </button>
               </li>
               <li>
-                <span className="text-[#8d90a0]">KVKK Aydınlatma Metni</span>
+                <button
+                  onClick={() => onOpenLegal('kvkk')}
+                  className="hover:text-[#b4c5ff] transition-colors text-left cursor-pointer"
+                >
+                  KVKK Aydınlatma Metni
+                </button>
               </li>
               <li>
-                <span className="text-[#8d90a0]">
+                <button
+                  onClick={() => onOpenLegal('distance')}
+                  className="hover:text-[#b4c5ff] transition-colors text-left cursor-pointer"
+                >
                   Mesafeli Satış Sözleşmesi
-                </span>
+                </button>
               </li>
             </ul>
           </div>
@@ -320,18 +342,28 @@ export const Footer: React.FC<FooterProps> = ({
             © 2026 {COMPANY_INFO.fullName} — {COMPANY_INFO.slogan}
           </p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-[#e2e2e9] transition-colors">
+            <button
+              onClick={() => onOpenLegal('privacy')}
+              className="hover:text-[#e2e2e9] transition-colors cursor-pointer"
+            >
               Gizlilik Politikası
-            </a>
-            <a href="#" className="hover:text-[#e2e2e9] transition-colors">
+            </button>
+            <button
+              onClick={() => onOpenLegal('kvkk')}
+              className="hover:text-[#e2e2e9] transition-colors cursor-pointer"
+            >
               KVKK Aydınlatma Metni
-            </a>
-            <a href="#" className="hover:text-[#e2e2e9] transition-colors">
+            </button>
+            <button
+              onClick={() => onOpenLegal('sales')}
+              className="hover:text-[#e2e2e9] transition-colors cursor-pointer"
+            >
               Satış & Sevkiyat Şartları
-            </a>
+            </button>
           </div>
         </div>
       </div>
     </footer>
   );
 };
+

@@ -12,7 +12,7 @@ import {
   Activity,
   Grid,
 } from 'lucide-react';
-import { CATEGORIES } from '../data/materials';
+import { CATEGORIES, PRODUCTS } from '../data/materials';
 
 interface CategoriesSectionProps {
   selectedCategory: string | null;
@@ -98,43 +98,49 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {CATEGORIES.map((cat) => {
             const isSelected = selectedCategory === cat.id;
+            const productCount = PRODUCTS.filter((p) => p.categoryId === cat.id).length;
             return (
               <div
                 key={cat.id}
                 id={`category-card-${cat.id}`}
                 onClick={() => onSelectCategory(cat.id)}
-                className={`group flex flex-col rounded-xl p-4 transition-all duration-300 shadow-md cursor-pointer border ${
+                className={`group flex flex-col rounded-2xl p-4 sm:p-5 transition-all duration-300 shadow-lg cursor-pointer border relative overflow-hidden ${
                   isSelected
-                    ? 'bg-[#1e1f25] border-[#2563eb] ring-1 ring-[#2563eb]'
-                    : 'bg-[#1a1b21] border-[#434655]/30 hover:bg-[#1e1f25]'
+                    ? 'bg-[#1e1f25] border-[#2563eb] ring-1 ring-[#2563eb] shadow-[0_0_24px_rgba(37,99,235,0.25)]'
+                    : 'bg-[#14161d] border-[#434655]/30 hover:border-[#2563eb]/50 hover:bg-[#1a1b21]'
                 } ${getAccentColor(cat.colorType)}`}
               >
-                {/* Üst İkon & Kategori No */}
+                {/* Üst İkon & Kategori No & Ürün Sayacı */}
                 <div className="flex items-center justify-between mb-3">
-                  <span className="p-2 rounded-lg bg-[#33353a] text-inherit transition-transform duration-200 group-hover:scale-110">
+                  <span className="p-2.5 rounded-xl bg-[#282a2f] text-inherit transition-transform duration-300 group-hover:scale-110 shadow-sm">
                     {getIcon(cat.icon)}
                   </span>
-                  <span className="font-mono text-xs text-[#8d90a0]">
-                    {cat.number}
-                  </span>
+                  <div className="flex items-center gap-1.5 font-mono text-xs">
+                    <span className="px-2 py-0.5 rounded bg-[#1e1f25] text-[#4cd7f6] text-[10px] font-bold border border-[#434655]/40">
+                      {productCount} Ürün
+                    </span>
+                    <span className="text-[#8d90a0]">
+                      #{cat.number}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Kategori Başlığı */}
-                <h3 className="font-display text-[17px] text-[#e2e2e9] group-hover:text-inherit transition-colors font-bold leading-tight">
+                <h3 className="font-display text-[17px] text-[#e2e2e9] group-hover:text-inherit transition-colors font-bold leading-snug">
                   {cat.name}
                 </h3>
 
                 {/* Açıklama */}
-                <p className="text-[12px] text-[#c3c6d7] mt-1.5 mb-3 flex-1 leading-relaxed">
+                <p className="text-[12px] text-[#c3c6d7] mt-2 mb-3.5 flex-1 leading-relaxed line-clamp-3">
                   {cat.description}
                 </p>
 
                 {/* Etiketler */}
-                <div className="flex flex-wrap gap-1 mb-3">
+                <div className="flex flex-wrap gap-1.5 mb-4">
                   {cat.tags.map((tag, idx) => (
                     <span
                       key={idx}
-                      className="px-1.5 py-0.5 rounded bg-[#33353a] text-[#c3c6d7] font-mono text-[10px]"
+                      className="px-2 py-0.5 rounded bg-[#1e1f25] text-[#c3c6d7] font-mono text-[10px] border border-[#434655]/30"
                     >
                       {tag}
                     </span>
@@ -142,20 +148,17 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                 </div>
 
                 {/* Aksiyon Linki */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onNavigateToRfq(cat.id);
-                  }}
-                  className="inline-flex items-center text-xs font-semibold text-inherit group-hover:translate-x-1 transition-transform mt-auto text-left"
-                >
-                  <span>Teknik Detayları Gör</span>
-                  <ChevronRight className="w-3.5 h-3.5 ml-1" />
-                </button>
+                <div className="pt-2 border-t border-[#434655]/20 flex items-center justify-between mt-auto text-inherit">
+                  <span className="text-[11px] font-semibold group-hover:translate-x-0.5 transition-transform flex items-center">
+                    {isSelected ? 'Filtre Aktif' : 'Malzemeleri Listele'}
+                  </span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
             );
           })}
         </div>
+
       </div>
     </section>
   );

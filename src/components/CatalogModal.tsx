@@ -249,6 +249,15 @@ Adres: ${COMPANY_INFO.location}
 
           <div className="flex items-center gap-2">
             <button
+              id="catalog-print-btn"
+              onClick={() => window.print()}
+              className="px-4 h-10 rounded-lg bg-[#282a2f] hover:bg-[#33353a] text-[#4cd7f6] text-xs font-semibold flex items-center gap-2 border border-[#434655]/40 transition-colors cursor-pointer"
+              title="Tarayıcıdan PDF Olarak Kaydet veya Yazdır"
+            >
+              <Printer className="w-4 h-4" />
+              <span>PDF Olarak Kaydet / Yazdır</span>
+            </button>
+            <button
               id="catalog-close-bottom"
               onClick={onClose}
               className="px-4 h-10 rounded-lg bg-[#282a2f] hover:bg-[#33353a] text-[#e2e2e9] text-xs font-semibold transition-colors cursor-pointer"
@@ -261,9 +270,10 @@ Adres: ${COMPANY_INFO.location}
               className="px-5 h-10 rounded-lg bg-[#2563eb] text-[#eeefff] text-xs font-bold flex items-center gap-2 shadow-md hover:bg-[#0053db] transition-all cursor-pointer"
             >
               <Download className="w-4 h-4" />
-              <span>42 Sayfalık Föyü İndir (.TXT / PDF)</span>
+              <span>42 Sayfalık Föyü İndir (.TXT)</span>
             </button>
           </div>
+
         </div>
       </div>
     </div>

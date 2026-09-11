@@ -1,4 +1,4 @@
-import { MaterialCategory, ProductItem } from '../types';
+import { MaterialCategory, ProductItem, TechnicalFaqItem } from '../types';
 
 export const COMPANY_INFO = {
   fullName: 'ÜRETİCİ TEDARİK TEKNİK PLASTİK POLİMER METAL LTD. ŞTİ.®',
@@ -334,6 +334,140 @@ export const PRODUCTS: ProductItem[] = [
       { label: 'Çap / Boy', value: 'Ø 15mm - Ø 250mm / 500mm boy' },
     ],
   },
+  {
+    id: 'cast-polyamid-kestamit',
+    code: 'PA6G-KEST-01',
+    name: 'Cast Polyamid (Kestamit PA6G) Levha & Takoz',
+    subtitle: 'Ağır yük dişlileri, makaralar, kızaklar ve aşınma plakaları',
+    category: 'Mühendislik Plastiği',
+    categoryId: 'muhendislik-plastikleri',
+    description:
+      'Sarı ve natürel döküm polyamid. Yüksek mekanik dayanım, darbe sönümleme ve bronz/çelik yerine mükemmel aşınma performansı sunan temel imalat polimeri.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80',
+    badge: 'DÖKÜM PA6G',
+    badgeType: 'primary',
+    secondaryBadge: 'Sarı / Natürel',
+    priceDisplay: '$8,50 – $320,00',
+    actionText: 'Ölçü Seç',
+    density: 1.15,
+    workingTemp: '-40°C ile +105°C',
+    hardness: '82 Shore D',
+    dinNorm: 'DIN 7728 / ISO 1874',
+    specs: [
+      { label: 'Çekme Dayanımı', value: '80 - 85 MPa' },
+      { label: 'Elastisite Modülü', value: '3400 MPa' },
+      { label: 'Basınç Dayanımı', value: '110 MPa (%2 deformasyon)' },
+      { label: 'Kullanım Alanı', value: 'Vinç makaraları, dişli, aşınma plakası' },
+    ],
+  },
+  {
+    id: 'pom-c-delrin',
+    code: 'POMC-DEL-02',
+    name: 'POM-C Delrin (Polioksimetilen) Çubuk & Levha',
+    subtitle: 'Sıfır nem emilimi, hassas CNC işleme ve boyutsal kararlılık',
+    category: 'Hassas Polimer',
+    categoryId: 'muhendislik-plastikleri',
+    description:
+      'Beyaz ve siyah teknik asetal polimer. Suda ve nemli ortamlarda genleşmez; hassas CNC torna ve freze işleme toleranslarında sektör lideri.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80',
+    badge: 'HASSAS TOLERANS',
+    badgeType: 'tertiary',
+    secondaryBadge: 'Beyaz & Siyah',
+    priceDisplay: '$9,20 – $240,00',
+    actionText: 'Ebat Seç',
+    density: 1.41,
+    workingTemp: '-50°C ile +100°C',
+    hardness: '85 Shore D',
+    dinNorm: 'DIN ISO 9988',
+    specs: [
+      { label: 'Su Emilimi', value: '%0.2 (Çok düşük)' },
+      { label: 'Boyutsal Kararlılık', value: 'Mikron Düzeyinde Sabit' },
+      { label: 'Gıda Uyumu', value: 'FDA Onaylı (Beyaz Seri)' },
+      { label: 'Kullanım', value: 'Hassas dişliler, burçlar, gıda ekipmanı' },
+    ],
+  },
+  {
+    id: 'alasimli-aluminyum-bronz',
+    code: 'BRZ-ALU-105',
+    name: 'CuAl10Ni5Fe4 Alüminyum Bronzu Burç & Mil',
+    subtitle: 'Ağır yük, deniz suyu ve ekstrem sürtünme yatakları',
+    category: 'Ağır Sanayi Alaşımı',
+    categoryId: 'alasimli-bakir-bronz',
+    description:
+      'DIN 1714 standardında alüminyum ve nikel katkılı süper alaşım bronz. Korozyona, kavitasyona ve 800+ MPa çekme gerilimine dayanıklı.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80',
+    badge: 'DIN 1714 ALAŞIM',
+    badgeType: 'secondary',
+    secondaryBadge: 'Ø 20 - 300 mm',
+    priceDisplay: 'Teklif Alınız',
+    actionText: 'Çap Seç',
+    density: 7.6,
+    workingTemp: 'Maks +350°C',
+    hardness: '180 - 220 HB (Brinell)',
+    dinNorm: 'DIN EN 1982 / CuAl10Ni5Fe4',
+    specs: [
+      { label: 'Çekme Mukavemeti', value: '680 - 820 N/mm²' },
+      { label: 'Akma Sınırı', value: '> 300 N/mm²' },
+      { label: 'Korozyon Direnci', value: 'Deniz Suyu & Kimyasal Tam Direnç' },
+      { label: 'Kullanım', value: 'Gemi şaft yatakları, hidrolik burçlar' },
+    ],
+  },
+  {
+    id: 'eva-tatami-zemin',
+    code: 'EVA-TAT-26',
+    name: 'Eva Rulo & 26mm Darbe Emici Tatami Zemin Matı',
+    subtitle: 'Endüstriyel zemin koruma, spor ve makine titreşim sönümleme',
+    category: 'Darbe İzolasyonu',
+    categoryId: 'eva-tatami',
+    description:
+      'Çift taraflı kilitli tatami eva matlar ve sanayi rulo levhaları. Yüksek esneklik, kaymaz doku ve bakteri barındırmayan kapalı hücre yapısı.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80',
+    badge: '26 MM KİLİTLİ',
+    badgeType: 'tertiary',
+    secondaryBadge: '100x100 cm',
+    priceDisplay: '$14,00 – $48,00',
+    actionText: 'Kalınlık',
+    density: 0.12,
+    workingTemp: '-20°C ile +70°C',
+    hardness: '35 - 40 Shore C',
+    dinNorm: 'EN 71-3 Güvenlik Onaylı',
+    specs: [
+      { label: 'Kalınlık Seçenekleri', value: '13 mm / 26 mm' },
+      { label: 'Darbe Sönümleme', value: 'Yüksek Enerji Emilimi' },
+      { label: 'Antibakteriyel', value: 'Koku Yapmaz, Yıkanabilir' },
+      { label: 'Kullanım', value: 'Zemin koruma, spor salonu, çocuk oyun alanı' },
+    ],
+  },
+  {
+    id: 'peek-termoplastik',
+    code: 'PEEK-450G',
+    name: 'PEEK (Polietereterketon) Levha & Çubuk',
+    subtitle: '+260°C sürekli çalışma, havacılık ve medikal uyumlu ekstrem polimer',
+    category: 'Ekstrem Termoplastik',
+    categoryId: 'muhendislik-plastikleri',
+    description:
+      'Havacılık, savunma sanayi ve yarı iletken sektörlerinde metal yerine kullanılan en yüksek mekanik ve termal performanslı mühendislik plastiği.',
+    imageUrl: '',
+    badge: '+260°C EKSTREM',
+    badgeType: 'error',
+    secondaryBadge: 'Sınıf V-0',
+    priceDisplay: 'Teklif Alınız',
+    actionText: 'Teklif İste',
+    density: 1.32,
+    workingTemp: '-60°C ile +260°C (Kısa +310°C)',
+    hardness: '88 Shore D',
+    dinNorm: 'ISO 1043 / UL94 V-0',
+    specs: [
+      { label: 'Sürekli Çalışma Sıcaklığı', value: '+260°C' },
+      { label: 'Alev İlerletmezlik', value: 'UL94 V-0 Kendi Söndüren' },
+      { label: 'Radyasyon Direnci', value: 'Gama Işınlarına Dayanıklı' },
+      { label: 'Kullanım', value: 'Savunma, havacılık ve kimya reaktörleri' },
+    ],
+  },
 ];
 
 // Helper to calculate theoretical weight in KG:
@@ -358,15 +492,91 @@ export function calculateWeight(
   }
 }
 
-// Approximate price estimation multiplier per kg
+// Approximate price estimation multiplier per kg ($ / kg)
 export const MATERIAL_BASE_RATES: Record<string, number> = {
-  'pe-1000-levha': 9.5, // $ / kg
-  'saf-teflon-levha': 42.0, // $ / kg
-  'civa-celigi-h8': 8.2, // $ / kg
-  'contalon-ptfe-bant': 65.0, // $ / kg
-  'besinci-teker-kaydirici': 14.0, // $ / kg
-  'yanmaz-nikel-kablo': 28.0, // $ / kg
-  'epoksi-fr4-levha': 16.5, // $ / kg
-  'poliuretan-pu-desmadur': 18.0, // $ / kg
+  'cast-polyamid-kestamit': 8.8,
+  'pom-c-delrin': 9.5,
+  'pe-1000-levha': 9.5,
+  'saf-teflon-levha': 42.0,
+  'civa-celigi-h8': 8.2,
+  'contalon-ptfe-bant': 65.0,
+  'besinci-teker-kaydirici': 14.0,
+  'yanmaz-nikel-kablo': 28.0,
+  'epoksi-fr4-levha': 16.5,
+  'poliuretan-pu-desmadur': 18.0,
+  'alasimli-aluminyum-bronz': 19.5,
+  'eva-tatami-zemin': 7.5,
+  'peek-termoplastik': 145.0,
   default: 12.0,
 };
+
+// Technical Q&A Data for AEO (Answer Engine Optimization) and User Knowledge Base
+export const TECHNICAL_FAQS: TechnicalFaqItem[] = [
+  {
+    id: 'faq-kestamit-delrin-fark',
+    question: 'Kestamit (Cast Polyamid) ile Delrin (POM-C) arasındaki temel fark nedir?',
+    shortAnswer:
+      'Kestamit yüksek darbe dayanımı ve ağır yük aşınma direnci için üretilirken; Delrin sıfır nem emilimi, yüksek boyutsal kararlılık ve hassas CNC toleransları için tercih edilir.',
+    detailedAnswer:
+      'Cast Polyamid (PA6G Kestamit), döküm yoluyla üretilir ve yüksek mekanik gerilim, vinç makaraları ve büyük dişlilerde üstün yük taşıma kabiliyetine sahiptir. Delrin (POM-C) ise ekstrüzyon poliasetal olup higroskopik değildir (su emmez). Sulu veya buharlı ortamlarda şişme yapmaz; bu sebeple mikron toleranslı hassas dişliler, gıda ekipmanları ve otomotiv parçalarında Delrin kullanılır.',
+    category: 'Mühendislik Plastikleri',
+    recommendedMaterialId: 'cast-polyamid-kestamit',
+    tags: ['Kestamit', 'Delrin', 'POM-C', 'PA6G', 'CNC İşleme'],
+  },
+  {
+    id: 'faq-pe1000-kullanim-alani',
+    question: 'PE 1000 (Ulpolen UHMWPE) hangi çalışma koşullarında tercih edilmelidir?',
+    shortAnswer:
+      'PE 1000, sürtünme katsayısının minimum olması gereken konveyör hatlarında, aşınma bantlarında, bunker kaplamalarında ve kimyasal temas gerektiren gıda makinelerinde kullanılır.',
+    detailedAnswer:
+      'Yaklaşık 4.500.000 g/mol ultra yüksek moleküler ağırlığa sahip PE 1000, yapışmazlık özelliğiyle bilinir. Katı maddelerin bunkerlere yapışmasını engeller, konveyör kızaklarında zincir aşınmasını sıfıra indirir. -200°C ile +80°C arasında esnekliğini korur, çatlama yapmaz ve FDA gıda onayına sahiptir.',
+    category: 'Aşınma & Konveyör',
+    recommendedMaterialId: 'pe-1000-levha',
+    tags: ['UHMWPE', 'PE 1000', 'Ulpolen', 'Sürtünme', 'Gıda Onayı'],
+  },
+  {
+    id: 'faq-teflon-ptfe-sicaklik',
+    question: 'Saf Teflon (PTFE) levha ve contaların sıcaklık ve kimyasal dayanımı nedir?',
+    shortAnswer:
+      'PTFE Teflon, -200°C ile +260°C arasında sürekli çalışabilir ve neredeyse bilinen tüm asit, baz ve solventlere karşı tam kimyasal atalet gösterir.',
+    detailedAnswer:
+      'PTFE (Politetrafloroetilen), 0.04 sürtünme katsayısı ile bilinen en kaygan katı malzemedir. Kimyasal reaktörler, asit flanşları, yüksek gerilim izolasyon baraları ve gıda fırınlarında kullanılır. Genişletilmiş yapıda üretilen Contalon şerit bantlar ise düzensiz flanş yüzeylerinde mikroporoz yapısıyla sıfır kaçak sağlar.',
+    category: 'Yüksek Sıcaklık & Kimya',
+    recommendedMaterialId: 'saf-teflon-levha',
+    tags: ['PTFE', 'Teflon', '+260°C', 'Kimyasal Direnç', 'Flanş Contası'],
+  },
+  {
+    id: 'faq-vinc-ayak-denge-guvenlik',
+    question: 'Vinç ayak denge takozları kaç ton yüke dayanıklıdır ve neden ahşap yerine polimer kullanılmalıdır?',
+    shortAnswer:
+      'Özel imalat yüksek yoğunluklu polimer denge takozlarımız tek pabuçta 75 tona kadar basma yüküne dayanıklıdır; ahşap gibi çürümez, kırılmaz ve çatlamaz.',
+    detailedAnswer:
+      'Mobil vinçler, itfaiye merdivenleri ve beton pompaları ayak pabuçlarının zemine uyguladığı tonlarca basma kuvveti vardır. Ahşap takozlar zamanla nemden çürür, liflerinden ayrılarak kırılma riski taşır. Polimer vinç takozlarımız esnek yapısıyla zemin şokunu emer, kırılmaz, yağ ve petrolden etkilenmez ve taşıma kulpuyla ergonomik güvenlik sağlar.',
+    category: 'Ağır Sanayi & Güvenlik',
+    recommendedMaterialId: 'besinci-teker-kaydirici',
+    tags: ['Vinç Takozu', '75 Ton Dayanım', 'İş Güvenliği', 'Çekici Dorse'],
+  },
+  {
+    id: 'faq-cnc-plastik-tolerans',
+    question: '3 ve 5 eksen CNC tezgahlarda plastik işlerken hangi toleranslara ulaşılabilir?',
+    shortAnswer:
+      'Doğru takım ucu, soğutma ve gerilim alma ısıl işlemiyle mühendislik plastiklerinde ±0.02 mm (ISO h7) hassasiyetinde CNC işleme yapılabilmektedir.',
+    detailedAnswer:
+      'Plastiklerin ısıl genleşme katsayısı metallerden yüksektir. Çayırova tesisimizdeki 3 ve 5 eksen CNC freze ve kayar otomat parkurumuzda; Kestamit, POM-C Delrin, PEEK ve Alüminyum Bronz parçalar CAD/STEP modellerine göre mikron düzeyinde hassas toleranslarla işlenir. Çapak alma ve koordinat ölçüm (CMM) kontrolleri ile savunma sanayi standartlarında teslimat yapılır.',
+    category: 'CNC İmalat & Hassasiyet',
+    recommendedMaterialId: 'pom-c-delrin',
+    tags: ['3 Eksen CNC', '5 Eksen CNC', 'Kayar Otomat', 'Hassas Tolerans'],
+  },
+  {
+    id: 'faq-civa-celigi-h8-ozellik',
+    question: 'Civa çeliği 1.2210 (115CrV3) h8 mil özellikleri ve ısıl işlem sertliği nedir?',
+    shortAnswer:
+      'DIN 1.2210 krom-vanadyum alaşımlı takım çeliğidir; h8 toleransında hassas taşlanmıştır ve su/yağ verme ısıl işlemi sonrası 64 HRC sertliğe ulaşır.',
+    detailedAnswer:
+      'Çapları Ø 2mm ile Ø 50mm arasında değişen 1000 mm ve 2000 mm boylarındaki civa çeliği miller; kalıp pimi, zımba, rayba, matkap ucu ve hassas mil yapımında kullanılır. Taşlanmış pürüzsüz yüzeyi (Ra < 0.6 µm) sayesinde ekstra talaşlı işlem gerektirmeden montaja hazırdır.',
+    category: 'Takım Çeliği & Miller',
+    recommendedMaterialId: 'civa-celigi-h8',
+    tags: ['Civa Çeliği', '1.2210', '115CrV3', '64 HRC', 'h8 Tolerans'],
+  },
+];
+

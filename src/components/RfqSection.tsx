@@ -9,7 +9,9 @@ import {
   Clock,
   Sparkles,
   Paperclip,
+  MessageCircle,
 } from 'lucide-react';
+
 import { calculateWeight, MATERIAL_BASE_RATES, PRODUCTS } from '../data/materials';
 import { RfqCartItem } from '../types';
 
@@ -32,7 +34,7 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
   const [quantity, setQuantity] = useState<number>(10);
   const [processing, setProcessing] = useState<string>('Sadece Ham Kesim');
   const [companyName, setCompanyName] = useState<string>('');
-  const [phone, setPhone] = useState<string>('+90 (533) 377 18 97');
+  const [phone, setPhone] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
   const [attachedFileName, setAttachedFileName] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState<boolean>(false);
@@ -312,7 +314,7 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                placeholder="+90 (533) 377 18 97"
+                placeholder="Örn: 0533 123 45 67"
                 required
                 className="h-11 px-3 rounded-lg bg-[#1a1b21] border border-[#434655]/40 text-[#e2e2e9] font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
               />
@@ -356,27 +358,39 @@ export const RfqSection: React.FC<RfqSectionProps> = ({
             </div>
           </div>
 
-          {/* Gönder & Sepete Ekle Butonları */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
+          {/* Gönder & Sepete Ekle Butonları (3'lü Aksiyon Grubu) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mt-1">
             <button
               id="rfq-submit-btn"
               type="submit"
-              className="h-12 w-full rounded-lg bg-[#2563eb] text-[#eeefff] font-semibold text-sm flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:bg-[#0053db] transition-all cursor-pointer"
+              className="h-12 w-full rounded-xl bg-[#2563eb] text-[#eeefff] font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:bg-[#0053db] transition-all cursor-pointer"
             >
               <Send className="w-4 h-4" />
-              <span>Hızlı Fiyat Teklifi Al (RFQ)</span>
+              <span>Teklif Talebi Gönder</span>
             </button>
 
             <button
               id="rfq-add-to-cart-btn"
               type="button"
               onClick={handleAddToCart}
-              className="h-12 w-full rounded-lg bg-[#282a2f] hover:bg-[#33353a] text-[#e2e2e9] font-semibold text-sm flex items-center justify-center gap-2 border border-[#434655]/40 transition-colors cursor-pointer"
+              className="h-12 w-full rounded-xl bg-[#282a2f] hover:bg-[#33353a] text-[#e2e2e9] font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 border border-[#434655]/40 transition-colors cursor-pointer"
             >
               <PlusCircle className="w-4 h-4 text-[#4cd7f6]" />
-              <span>Teklif Sepetine Ekle</span>
+              <span>Sepete Ekle</span>
             </button>
+
+            <a
+              id="rfq-direct-whatsapp-btn"
+              href={`https://api.whatsapp.com/send?phone=905333771897&text=Merhaba,%20${encodeURIComponent(currentProduct.name)}%20için%20RFQ%20fiyat%20teklifi%20almak%20istiyorum.%0AŞekil:%20${shape === 'plate' ? 'Levha' : 'Çubuk'}%0AÖlçü:%20${width}x${length}${shape === 'plate' ? `x${thickness}` : ''}mm%0AAdet:%20${quantity}%20(Teorik:%20${totalWeightKg}%20kg)%0Aİşleme:%20${encodeURIComponent(processing)}${companyName ? `%0AFirma:%20${encodeURIComponent(companyName)}` : ''}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-12 w-full rounded-xl bg-[#15803d] hover:bg-[#166534] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span>WhatsApp'a Aktar</span>
+            </a>
           </div>
+
 
           {/* Onay Bildirimi */}
           {submitted && (

@@ -13,7 +13,10 @@ import { SearchModal } from './components/SearchModal';
 import { TdsModal } from './components/TdsModal';
 import { CatalogModal } from './components/CatalogModal';
 import { MaterialShortcutFab } from './components/MaterialShortcutFab';
+import { FaqSection } from './components/FaqSection';
+import { LegalModal, LegalDocType } from './components/LegalModal';
 import { RfqCartItem } from './types';
+
 
 export default function App() {
   const [currency, setCurrency] = useState<'USD' | 'TRY' | 'EUR'>('USD');
@@ -41,6 +44,7 @@ export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCatalogOpen, setIsCatalogOpen] = useState(false);
   const [tdsProductId, setTdsProductId] = useState<string | null>(null);
+  const [legalModalTab, setLegalModalTab] = useState<LegalDocType | null>(null);
 
   // Global keyboard shortcut for ⌘K
   useEffect(() => {
@@ -179,15 +183,19 @@ export default function App() {
 
         {/* Hizmet Verilen Ağır Sanayi Kolları & Uzman Destek Şeridi */}
         <SectorsSection />
+
+        {/* 4. Yapay Zeka Destekli Malzeme Seçim & Sıkça Sorulan Teknik Sorular (AEO) */}
+        <FaqSection onSelectProductForRfq={handleSelectProductForRfq} />
       </main>
 
-      {/* 4. Kurumsal Alt Bilgi (Footer) */}
+      {/* 5. Kurumsal Alt Bilgi (Footer) */}
       <Footer
         onSelectCategoryFilter={handleCategoryClick}
         onOpenCatalog={() => setIsCatalogOpen(true)}
+        onOpenLegal={(tab) => setLegalModalTab(tab)}
       />
 
-      {/* 5. Modallar ve Drawer'lar */}
+      {/* 6. Modallar ve Drawer'lar */}
       <RfqDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
@@ -219,7 +227,13 @@ export default function App() {
         onClose={() => setIsCatalogOpen(false)}
       />
 
-      {/* 6. Hızlı Malzeme Seçici Yüzen Eylem Çubuğu (FAB / Shortcut Menu) */}
+      <LegalModal
+        isOpen={legalModalTab !== null}
+        onClose={() => setLegalModalTab(null)}
+        initialTab={legalModalTab || 'kvkk'}
+      />
+
+      {/* 7. Hızlı Malzeme Seçici Yüzen Eylem Çubuğu (FAB / Shortcut Menu) */}
       <MaterialShortcutFab
         selectedCategory={selectedCategory}
         onSelectCategory={handleCategoryClick}
@@ -228,3 +242,4 @@ export default function App() {
     </div>
   );
 }
+

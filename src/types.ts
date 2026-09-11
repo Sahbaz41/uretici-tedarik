@@ -60,3 +60,14 @@ export interface RfqFormSubmission {
   notes: string;
   attachedFile?: string;
 }
+
+export interface TechnicalFaqItem {
+  id: string;
+  question: string;
+  shortAnswer: string;
+  detailedAnswer: string;
+  category: string;
+  recommendedMaterialId?: string;
+  tags: string[];
+}
+

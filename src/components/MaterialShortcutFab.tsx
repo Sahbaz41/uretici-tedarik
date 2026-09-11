@@ -52,7 +52,7 @@ const COMMON_MATERIALS: CommonMaterial[] = [
     label: 'Polyamid (Kestamit)',
     shortLabel: 'Polyamid',
     badge: 'PA6G / Delrin',
-    sampleProductId: 'pe-1000-levha',
+    sampleProductId: 'cast-polyamid-kestamit',
     iconName: 'Layers',
   },
   {
@@ -76,10 +76,11 @@ const COMMON_MATERIALS: CommonMaterial[] = [
     label: 'Poliüretan (PU)',
     shortLabel: 'Poliüretan',
     badge: '90-95 Shore',
-    sampleProductId: 'poliuretan-desmadur',
+    sampleProductId: 'poliuretan-pu-desmadur',
     iconName: 'Maximize2',
   },
 ];
+
 
 export const MaterialShortcutFab: React.FC<MaterialShortcutFabProps> = ({
   selectedCategory,

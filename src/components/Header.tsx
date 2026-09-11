@@ -47,17 +47,18 @@ export const Header: React.FC<HeaderProps> = ({
     >
       <div className="h-20 w-full px-4 sm:px-6 mx-auto max-w-[90rem] flex items-center justify-between gap-4">
         {/* Logo & Şirket Başlığı (Resmi Amblem ve Fabrika Çizimi) */}
-        <a
+        <button
           id="header-brand-logo"
-          href="#"
-          className="flex items-center gap-3 group shrink-0"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="flex items-center gap-3 group shrink-0 cursor-pointer text-left bg-transparent border-none p-0"
         >
           <CompanyLogo
             className="h-10 sm:h-11"
             showText={true}
             showSlogan={true}
           />
-        </a>
+        </button>
+
 
         {/* ⌘K Hızlı Arama Butonu (Command Palette Trigger) */}
         <button
