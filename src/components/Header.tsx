@@ -8,6 +8,7 @@ import {
   ChevronDown,
   Menu,
   X,
+  BookOpen,
 } from 'lucide-react';
 import { LOGO_URL, COMPANY_INFO } from '../data/materials';
 import { CompanyLogo } from './CompanyLogo';
@@ -75,12 +76,12 @@ export const Header: React.FC<HeaderProps> = ({
       id="main-header-bar"
       className="w-full select-none"
     >
-      <div className="h-16 lg:h-17 w-full px-4 sm:px-6 mx-auto max-w-[92rem] flex items-center justify-between gap-2.5 lg:gap-3">
+      <div className="h-16 lg:h-17 w-full px-4 sm:px-6 mx-auto max-w-[96rem] flex items-center justify-between gap-3">
         {/* 1. Logo & Şirket Başlığı (Orijinal Amblem & Prestijli Başlık) */}
         <button
           id="header-brand-logo"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-2.5 shrink-0 cursor-pointer text-left bg-transparent border-none p-0 mr-1"
+          className="flex items-center gap-2.5 shrink-0 cursor-pointer text-left bg-transparent border-none p-0"
         >
           <CompanyLogo
             className="h-9 sm:h-10"
@@ -92,7 +93,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* 2. Masaüstü Navigasyon - Göz Yormayan Tek Satır Düzenli Pill Menüsü (Esnek & Taşmaz) */}
         <nav
           id="desktop-navigation-menu"
-          className="hidden lg:flex items-center gap-0.5 xl:gap-1 bg-[#12141c]/90 border border-[#434655]/35 p-1 rounded-xl shadow-inner shrink min-w-0"
+          className="hidden lg:flex items-center gap-0.5 xl:gap-1 bg-[#12141c]/90 border border-[#434655]/35 p-1 rounded-xl shadow-inner shrink-0"
         >
           {/* 1: Mühendislik Plastikleri */}
           <div className="relative group">
@@ -104,60 +105,63 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{t.engineeringPlastics}</span>
               <ChevronDown className="w-3 h-3 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#38bdf8] transition-transform duration-200" />
             </button>
-            <div className="absolute left-0 top-full mt-2 hidden group-hover:flex flex-col w-72 p-2 bg-[#0e1017]/98 border border-[#3b82f6]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-50 animate-in fade-in-50 slide-in-from-top-1">
-              <div className="h-0.5 w-full bg-gradient-to-r from-[#2563eb] to-[#38bdf8] rounded-t-xl -mt-2 mb-1.5" />
-              <button
-                onClick={() =>
-                  handleProductItemClick('cast-polyamid-kestamit', 'muhendislik-plastikleri')
-                }
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#60a5fa] group-hover/item:text-[#93c5fd] flex items-center justify-between">
-                  Cast Polyamid (Kestamit PA6G)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Sarı/Natürel Levha, Takoz &amp; Çubuk (82 Shore D)
-                </span>
-              </button>
-              <button
-                onClick={() =>
-                  handleProductItemClick('pom-c-delrin', 'muhendislik-plastikleri')
-                }
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#e2e2e9] group-hover/item:text-[#38bdf8] flex items-center justify-between">
-                  POM-C Delrin (Polioksimetilen)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Beyaz &amp; Siyah Sıfır Nem Emici CNC Poliasetal
-                </span>
-              </button>
-              <button
-                onClick={() => handleProductItemClick('pe-1000-levha', 'pe1000-hdpe')}
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#34d399] group-hover/item:text-[#6ee7b7] flex items-center justify-between">
-                  PE 1000 (Ulpolen UHMWPE)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Aşınma Plakaları &amp; Konveyör Kızağı (FDA Gıda)
-                </span>
-              </button>
-              <button
-                onClick={() => handleProductItemClick('peek-termoplastik', 'muhendislik-plastikleri')}
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#f87171] group-hover/item:text-[#fca5a5] flex items-center justify-between">
-                  PEEK Termoplastik (+260°C)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Havacılık, Savunma ve Medikal Ekstrem Polimer
-                </span>
-              </button>
+            {/* Görünmez hover köprüsü (pt-1.5) ile menü kapanma sorunu 0'a indirildi */}
+            <div className="absolute left-0 top-full pt-1.5 hidden group-hover:block z-50 animate-in fade-in-50 slide-in-from-top-1">
+              <div className="flex flex-col w-72 p-2 bg-[#0e1017]/98 border border-[#3b82f6]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl">
+                <div className="h-0.5 w-full bg-gradient-to-r from-[#2563eb] to-[#38bdf8] rounded-t-xl -mt-2 mb-1.5" />
+                <button
+                  onClick={() =>
+                    handleProductItemClick('cast-polyamid-kestamit', 'muhendislik-plastikleri')
+                  }
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#60a5fa] group-hover/item:text-[#93c5fd] flex items-center justify-between">
+                    Cast Polyamid (Kestamit PA6G)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Sarı/Natürel Levha, Takoz &amp; Çubuk (82 Shore D)
+                  </span>
+                </button>
+                <button
+                  onClick={() =>
+                    handleProductItemClick('pom-c-delrin', 'muhendislik-plastikleri')
+                  }
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#e2e2e9] group-hover/item:text-[#38bdf8] flex items-center justify-between">
+                    POM-C Delrin (Polioksimetilen)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Beyaz &amp; Siyah Sıfır Nem Emici CNC Poliasetal
+                  </span>
+                </button>
+                <button
+                  onClick={() => handleProductItemClick('pe-1000-levha', 'pe1000-hdpe')}
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#34d399] group-hover/item:text-[#6ee7b7] flex items-center justify-between">
+                    PE 1000 (Ulpolen UHMWPE)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Aşınma Plakaları &amp; Konveyör Kızağı (FDA Gıda)
+                  </span>
+                </button>
+                <button
+                  onClick={() => handleProductItemClick('peek-termoplastik', 'muhendislik-plastikleri')}
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#f87171] group-hover/item:text-[#fca5a5] flex items-center justify-between">
+                    PEEK Termoplastik (+260°C)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Havacılık, Savunma ve Medikal Ekstrem Polimer
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -171,62 +175,64 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{t.highTempInsulation}</span>
               <ChevronDown className="w-3 h-3 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#c084fc] transition-transform duration-200" />
             </button>
-            <div className="absolute left-0 top-full mt-2 hidden group-hover:flex flex-col w-72 p-2 bg-[#0e1017]/98 border border-[#a855f7]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-50 animate-in fade-in-50 slide-in-from-top-1">
-              <div className="h-0.5 w-full bg-gradient-to-r from-[#7e22ce] to-[#c084fc] rounded-t-xl -mt-2 mb-1.5" />
-              <button
-                onClick={() =>
-                  handleProductItemClick('epoksi-fr4-levha', 'epoksi-fr4-mikanit')
-                }
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#c084fc] group-hover/item:text-[#e9d5ff] flex items-center justify-between">
-                  Epoksi FR4 Yeşil Levha &amp; Çubuk
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Sınıf F Yüksek Gerilim &amp; Ark İzolasyonu (&gt;14 kV/mm)
-                </span>
-              </button>
-              <button
-                onClick={() =>
-                  handleProductItemClick('mikanit-levha-500c', 'epoksi-fr4-mikanit')
-                }
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#fbbf24] group-hover/item:text-[#fde68a] flex items-center justify-between">
-                  Mikanit Levha (500°C - 700°C Isı)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Muskovit &amp; Flogopit Fırın Rezistans İzolasyonu
-                </span>
-              </button>
-              <button
-                onClick={() => handleProductItemClick('silikon-levha-contalar', 'teflon-ptfe')}
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#f87171] group-hover/item:text-[#fca5a5] flex items-center justify-between">
-                  Silikon Levha &amp; Contalar (+250°C)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Gıda &amp; İlaç Onaylı Kırmızı/Şeffaf Fırın Contası
-                </span>
-              </button>
-              <button
-                onClick={() =>
-                  handleProductItemClick('fenolik-pamuklu-bezli-fiber', 'epoksi-fr4-mikanit')
-                }
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#e2e2e9] group-hover/item:text-[#38bdf8] flex items-center justify-between">
-                  Fenolik Pamuklu Bezli Fiber (HGW 2082)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Sessiz Dişli &amp; Ağır Mekanik Yatak Plakaları
-                </span>
-              </button>
+            <div className="absolute left-0 top-full pt-1.5 hidden group-hover:block z-50 animate-in fade-in-50 slide-in-from-top-1">
+              <div className="flex flex-col w-72 p-2 bg-[#0e1017]/98 border border-[#a855f7]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl">
+                <div className="h-0.5 w-full bg-gradient-to-r from-[#7e22ce] to-[#c084fc] rounded-t-xl -mt-2 mb-1.5" />
+                <button
+                  onClick={() =>
+                    handleProductItemClick('epoksi-fr4-levha', 'epoksi-fr4-mikanit')
+                  }
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#c084fc] group-hover/item:text-[#e9d5ff] flex items-center justify-between">
+                    Epoksi FR4 Yeşil Levha &amp; Çubuk
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Sınıf F Yüksek Gerilim &amp; Ark İzolasyonu (&gt;14 kV/mm)
+                  </span>
+                </button>
+                <button
+                  onClick={() =>
+                    handleProductItemClick('mikanit-levha-500c', 'epoksi-fr4-mikanit')
+                  }
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#fbbf24] group-hover/item:text-[#fde68a] flex items-center justify-between">
+                    Mikanit Levha (500°C - 700°C Isı)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Muskovit &amp; Flogopit Fırın Rezistans İzolasyonu
+                  </span>
+                </button>
+                <button
+                  onClick={() => handleProductItemClick('silikon-levha-contalar', 'teflon-ptfe')}
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#f87171] group-hover/item:text-[#fca5a5] flex items-center justify-between">
+                    Silikon Levha &amp; Contalar (+250°C)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Gıda &amp; İlaç Onaylı Kırmızı/Şeffaf Fırın Contası
+                  </span>
+                </button>
+                <button
+                  onClick={() =>
+                    handleProductItemClick('fenolik-pamuklu-bezli-fiber', 'epoksi-fr4-mikanit')
+                  }
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#e2e2e9] group-hover/item:text-[#38bdf8] flex items-center justify-between">
+                    Fenolik Pamuklu Bezli Fiber (HGW 2082)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Sessiz Dişli &amp; Ağır Mekanik Yatak Plakaları
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -240,62 +246,64 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{t.heavyIndustry}</span>
               <ChevronDown className="w-3 h-3 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#fbbf24] transition-transform duration-200" />
             </button>
-            <div className="absolute left-0 top-full mt-2 hidden group-hover:flex flex-col w-72 p-2 bg-[#0e1017]/98 border border-[#f59e0b]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-50 animate-in fade-in-50 slide-in-from-top-1">
-              <div className="h-0.5 w-full bg-gradient-to-r from-[#b45309] to-[#fbbf24] rounded-t-xl -mt-2 mb-1.5" />
-              <button
-                onClick={() =>
-                  handleProductItemClick('vinc-ayak-denge-takozu', 'vinc-denge-5th-wheel')
-                }
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#fbbf24] group-hover/item:text-[#fde68a] flex items-center justify-between">
-                  Vinç Ayak Denge Destek Takozu (75T)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Kırılmaz Yüksek Yoğunluklu Polimer Pabuç Tablası
-                </span>
-              </button>
-              <button
-                onClick={() =>
-                  handleProductItemClick('besinci-teker-kaydirici', 'vinc-denge-5th-wheel')
-                }
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#e2e2e9] group-hover/item:text-[#38bdf8] flex items-center justify-between">
-                  Beşinci Teker Kaydırıcı (Fifth Wheel)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Çekici Dorse Tablası Yağsız Polimer Aşınma Kiti
-                </span>
-              </button>
-              <button
-                onClick={() => handleProductItemClick('civa-celigi-h8', 'civa-celigi')}
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#cbd5e1] group-hover/item:text-white flex items-center justify-between">
-                  Civa Çeliği H8 (1.2210 / 115CrV3)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Taşlanmış Kalıp Pimi, Zımba &amp; Mil (64 HRC)
-                </span>
-              </button>
-              <button
-                onClick={() =>
-                  handleProductItemClick('poliuretan-pu-desmadur', 'poliuretan-kalip')
-                }
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#f59e0b] group-hover/item:text-[#fbbf24] flex items-center justify-between">
-                  Poliüretan Kalıp Yayları (Desmadur)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  90 Shore A Döküm Elastomer Çubuk ve Yaylar
-                </span>
-              </button>
+            <div className="absolute left-0 top-full pt-1.5 hidden group-hover:block z-50 animate-in fade-in-50 slide-in-from-top-1">
+              <div className="flex flex-col w-72 p-2 bg-[#0e1017]/98 border border-[#f59e0b]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl">
+                <div className="h-0.5 w-full bg-gradient-to-r from-[#b45309] to-[#fbbf24] rounded-t-xl -mt-2 mb-1.5" />
+                <button
+                  onClick={() =>
+                    handleProductItemClick('vinc-ayak-denge-takozu', 'vinc-denge-5th-wheel')
+                  }
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#fbbf24] group-hover/item:text-[#fde68a] flex items-center justify-between">
+                    Vinç Ayak Denge Destek Takozu (75T)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Kırılmaz Yüksek Yoğunluklu Polimer Pabuç Tablası
+                  </span>
+                </button>
+                <button
+                  onClick={() =>
+                    handleProductItemClick('besinci-teker-kaydirici', 'vinc-denge-5th-wheel')
+                  }
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#e2e2e9] group-hover/item:text-[#38bdf8] flex items-center justify-between">
+                    Beşinci Teker Kaydırıcı (Fifth Wheel)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Çekici Dorse Tablası Yağsız Polimer Aşınma Kiti
+                  </span>
+                </button>
+                <button
+                  onClick={() => handleProductItemClick('civa-celigi-h8', 'civa-celigi')}
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#cbd5e1] group-hover/item:text-white flex items-center justify-between">
+                    Civa Çeliği H8 (1.2210 / 115CrV3)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Taşlanmış Kalıp Pimi, Zımba &amp; Mil (64 HRC)
+                  </span>
+                </button>
+                <button
+                  onClick={() =>
+                    handleProductItemClick('poliuretan-pu-desmadur', 'poliuretan-kalip')
+                  }
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#f59e0b] group-hover/item:text-[#fbbf24] flex items-center justify-between">
+                    Poliüretan Kalıp Yayları (Desmadur)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    90 Shore A Döküm Elastomer Çubuk ve Yaylar
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -309,64 +317,64 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{t.alloysCables}</span>
               <ChevronDown className="w-3 h-3 text-[#8d90a0] group-hover:rotate-180 group-hover:text-[#f87171] transition-transform duration-200" />
             </button>
-            <div className="absolute left-0 top-full mt-2 hidden group-hover:flex flex-col w-72 p-2 bg-[#0e1017]/98 border border-[#ef4444]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl z-50 animate-in fade-in-50 slide-in-from-top-1">
-              <div className="h-0.5 w-full bg-gradient-to-r from-[#b91c1c] to-[#f87171] rounded-t-xl -mt-2 mb-1.5" />
-              <button
-                onClick={() =>
-                  handleProductItemClick('alasimli-aluminyum-bronz', 'alasimli-bakir-bronz')
-                }
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#f87171] group-hover/item:text-[#fca5a5] flex items-center justify-between">
-                  Alaşımlı Bakır &amp; Bronz Burçlar
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  CuAl10Ni5Fe4 Ağır Yük &amp; Deniz Suyu Yatakları
-                </span>
-              </button>
-              <button
-                onClick={() => handleProductItemClick('yanmaz-nikel-kablo', 'yanmaz-kablo')}
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#f87171] group-hover/item:text-[#fca5a5] flex items-center justify-between">
-                  Yanmaz Nikel Kaplı Kablo (400°C)
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Cam Elyaf Silikon Örgülü Rezistans &amp; Fırın Hattı
-                </span>
-              </button>
-              <button
-                onClick={() => handleProductItemClick('eva-tatami-zemin', 'eva-tatami')}
-                className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
-              >
-                <span className="font-bold text-[#34d399] group-hover/item:text-[#6ee7b7] flex items-center justify-between">
-                  Eva Rulo &amp; 26mm Tatami Zemin
-                  <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
-                </span>
-                <span className="text-[11px] text-[#8d90a0] mt-0.5">
-                  Darbe Sönümleyici Kilitli Endüstriyel Zemin Matı
-                </span>
-              </button>
+            <div className="absolute left-0 top-full pt-1.5 hidden group-hover:block z-50 animate-in fade-in-50 slide-in-from-top-1">
+              <div className="flex flex-col w-72 p-2 bg-[#0e1017]/98 border border-[#ef4444]/40 rounded-2xl shadow-[0_16px_40px_rgba(0,0,0,0.85)] backdrop-blur-2xl">
+                <div className="h-0.5 w-full bg-gradient-to-r from-[#b91c1c] to-[#f87171] rounded-t-xl -mt-2 mb-1.5" />
+                <button
+                  onClick={() =>
+                    handleProductItemClick('alasimli-aluminyum-bronz', 'alasimli-bakir-bronz')
+                  }
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#f87171] group-hover/item:text-[#fca5a5] flex items-center justify-between">
+                    Alaşımlı Bakır &amp; Bronz Burçlar
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    CuAl10Ni5Fe4 Ağır Yük &amp; Deniz Suyu Yatakları
+                  </span>
+                </button>
+                <button
+                  onClick={() => handleProductItemClick('yanmaz-nikel-kablo', 'yanmaz-kablo')}
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#f87171] group-hover/item:text-[#fca5a5] flex items-center justify-between">
+                    Yanmaz Nikel Kaplı Kablo (400°C)
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Cam Elyaf Silikon Örgülü Rezistans &amp; Fırın Hattı
+                  </span>
+                </button>
+                <button
+                  onClick={() => handleProductItemClick('eva-tatami-zemin', 'eva-tatami')}
+                  className="px-3 py-2 text-left rounded-xl hover:bg-[#181b24] text-xs text-[#e2e2e9] transition-colors flex flex-col group/item cursor-pointer"
+                >
+                  <span className="font-bold text-[#34d399] group-hover/item:text-[#6ee7b7] flex items-center justify-between">
+                    Eva Rulo &amp; 26mm Tatami Zemin
+                    <span className="text-[10px] font-mono text-[#38bdf8] opacity-0 group-hover/item:opacity-100 transition-opacity">TDS Föyü ↗</span>
+                  </span>
+                  <span className="text-[11px] text-[#8d90a0] mt-0.5">
+                    Darbe Sönümleyici Kilitli Endüstriyel Zemin Matı
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
-
-          <div className="h-4 w-[1px] bg-[#434655]/40 mx-0.5" />
-
-          {/* 5: Katalog */}
-          <button
-            id="nav-catalog-btn"
-            onClick={onOpenCatalog}
-            className="px-2 xl:px-2.5 py-1.5 rounded-lg text-[12px] xl:text-[12.5px] font-semibold text-[#38bdf8] hover:bg-[#181b24] transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer"
-          >
-            <FileText className="w-3.5 h-3.5 text-[#38bdf8]" />
-            <span>{t.catalog}</span>
-          </button>
         </nav>
 
-        {/* 3. Sağ Taraf: Esnek Arama + Sepet + Hızlı RFQ + İletişim (ASLA TAŞMAZ) */}
+        {/* 3. Sağ Taraf: Katalog + Esnek Arama + Sepet + Hızlı RFQ + İletişim (ASLA TAŞMAZ) */}
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 ml-auto">
+          {/* Katalog Butonu (Açılır PDF & İndirilebilir CAD Portal) */}
+          <button
+            id="header-catalog-btn"
+            onClick={onOpenCatalog}
+            className="flex items-center justify-center h-9 px-2.5 sm:px-3 rounded-xl bg-[#141824] hover:bg-[#1e2333] border border-[#434655]/40 text-[#c3c6d7] hover:text-[#38bdf8] transition-all cursor-pointer shrink-0 gap-1.5"
+            title={t.catalog}
+          >
+            <BookOpen className="w-3.5 h-3.5 text-[#38bdf8]" />
+            <span className="text-xs font-semibold">{t.catalog}</span>
+          </button>
           {/* Masaüstü Geniş Arama Kutusu (>= 1380px) */}
           <div
             id="search-command-palette-trigger"
