@@ -33,18 +33,14 @@ export const TopBar: React.FC<TopBarProps> = ({
       className="w-full bg-[#05070d]/95 border-b border-[#2d3142]/60 text-[#c3c6d7] text-xs h-8 flex items-center select-none"
     >
       <div className="w-full px-4 sm:px-6 mx-auto max-w-[92rem] flex items-center justify-between gap-3 overflow-hidden">
-        {/* Sol: Slogan & Konum & Sevkiyat */}
-        <div className="flex items-center gap-3 shrink-0">
-          <span className="font-mono text-[10px] font-bold text-[#ffb77d] px-2 py-0.5 rounded bg-[#181b24] border border-[#ffb77d]/35 tracking-wider uppercase whitespace-nowrap">
-            {t.slogan}
-          </span>
-          <span className="hidden md:inline text-[#2d3142]">|</span>
-          <div className="hidden sm:flex items-center gap-1 text-[11px] text-[#8d90a0] hover:text-[#e2e2e9] transition-colors whitespace-nowrap">
+        {/* Sol: Konum & Sevkiyat (Masaüstü) */}
+        <div className="hidden sm:flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 text-[11px] text-[#8d90a0] hover:text-[#e2e2e9] transition-colors whitespace-nowrap">
             <MapPin className="w-3 h-3 text-[#38bdf8]" />
             <span>{t.location}</span>
           </div>
-          <span className="hidden xl:inline text-[#2d3142]">|</span>
-          <div className="hidden xl:flex items-center gap-1 text-emerald-400 font-semibold text-[11px] whitespace-nowrap">
+          <span className="text-[#2d3142]">|</span>
+          <div className="flex items-center gap-1.5 text-emerald-400 font-semibold text-[11px] whitespace-nowrap">
             <Truck className="w-3.5 h-3.5" />
             <span>{t.shipment}</span>
           </div>

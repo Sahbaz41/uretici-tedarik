@@ -384,27 +384,27 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="compact-search-btn"
             onClick={onOpenSearch}
-            className="min-[1380px]:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-[#12141c] hover:bg-[#181b24] text-[#8d90a0] hover:text-[#38bdf8] border border-[#434655]/40 transition-colors cursor-pointer shrink-0"
+            className="min-[1380px]:hidden flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#12141c] hover:bg-[#181b24] text-[#8d90a0] hover:text-[#38bdf8] border border-[#434655]/40 transition-colors cursor-pointer shrink-0"
             title={`${t.searchPlaceholder} (⌘K)`}
           >
-            <Search className="w-4 h-4" />
+            <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
 
           {/* Teklif Sepetim (RFQ Basket) */}
           <button
             id="header-rfq-cart-btn"
             onClick={onOpenCart}
-            className="relative flex items-center justify-center h-9 px-2.5 sm:px-3 rounded-xl bg-[#141824] hover:bg-[#1e2333] border border-[#434655]/40 text-[#e2e2e9] transition-all cursor-pointer shrink-0"
+            className="relative flex items-center justify-center h-8 sm:h-9 px-2 sm:px-3 rounded-xl bg-[#141824] hover:bg-[#1e2333] border border-[#434655]/40 text-[#e2e2e9] transition-all cursor-pointer shrink-0"
             title={t.rfqCart}
           >
-            <FileText className="w-4 h-4 text-[#38bdf8]" />
+            <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#38bdf8]" />
             <span className="hidden sm:inline-block ml-1.5 text-xs font-semibold text-[#e2e2e9]">
               {t.rfqCart}
             </span>
             {cartCount > 0 && (
               <span
                 id="header-rfq-cart-badge"
-                className="ml-1.5 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-[#d97707] text-white text-[10px] font-bold shadow-md animate-pulse"
+                className="ml-1 sm:ml-1.5 flex h-4 min-w-4 px-1 items-center justify-center rounded-full bg-[#d97707] text-white text-[9.5px] sm:text-[10px] font-bold shadow-md animate-pulse"
               >
                 {cartCount}
               </span>
@@ -415,18 +415,18 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="header-quick-rfq-btn"
             onClick={() => handleNavClick('rfq-formu')}
-            className="flex items-center justify-center h-9 px-3 sm:px-4 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold text-xs shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all cursor-pointer shrink-0"
+            className="flex items-center justify-center h-8 sm:h-9 px-2.5 sm:px-4 rounded-xl bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold text-[11px] sm:text-xs shadow-[0_0_15px_rgba(37,99,235,0.4)] transition-all cursor-pointer shrink-0"
             title={t.quickRfq}
           >
-            <Zap className="w-3.5 h-3.5 mr-1 text-[#acedff]" />
-            <span>{t.quickRfq}</span>
+            <Zap className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-0.5 sm:mr-1 text-[#acedff]" />
+            <span>RFQ</span>
           </button>
 
-          {/* B2B İletişim Butonu */}
+          {/* B2B İletişim Butonu (Masaüstü & Tablet) */}
           <button
             id="header-contact-btn"
             onClick={onOpenContact || (() => handleNavClick('rfq-formu'))}
-            className="hidden sm:flex items-center justify-center h-9 px-3 rounded-xl bg-[#121520] hover:bg-[#1a1f2e] border border-[#38bdf8]/40 hover:border-[#38bdf8] text-[#38bdf8] hover:text-white font-semibold text-xs transition-all cursor-pointer shrink-0 gap-1"
+            className="hidden md:flex items-center justify-center h-9 px-3 rounded-xl bg-[#121520] hover:bg-[#1a1f2e] border border-[#38bdf8]/40 hover:border-[#38bdf8] text-[#38bdf8] hover:text-white font-semibold text-xs transition-all cursor-pointer shrink-0 gap-1"
             title={t.contact}
           >
             <MessageCircle className="w-3.5 h-3.5 text-[#38bdf8]" />
@@ -437,12 +437,12 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="mobile-menu-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden flex items-center justify-center w-10 h-10 rounded-lg bg-[#1e1f25] text-[#e2e2e9] border border-[#434655]/40"
+            className="lg:hidden flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#1e1f25] text-[#e2e2e9] border border-[#434655]/40 shrink-0"
           >
             {mobileMenuOpen ? (
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             ) : (
-              <Menu className="w-5 h-5" />
+              <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
             )}
           </button>
         </div>
